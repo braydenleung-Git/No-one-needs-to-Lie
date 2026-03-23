@@ -7,10 +7,12 @@ public class OwnerPatrol : MonoBehaviour
 
     private int currentIndex = 0;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -23,7 +25,6 @@ public class OwnerPatrol : MonoBehaviour
         if (waypoints.Length == 0) return;
 
         Transform target = waypoints[currentIndex];
-
         Vector2 direction = (target.position - transform.position).normalized;
 
         transform.position = Vector2.MoveTowards(
@@ -32,6 +33,7 @@ public class OwnerPatrol : MonoBehaviour
             speed * Time.deltaTime
         );
 
+        UpdateAnimator(direction);
         FlipSprite(direction);
 
         if (Vector2.Distance(transform.position, target.position) < 0.1f)
@@ -40,11 +42,17 @@ public class OwnerPatrol : MonoBehaviour
         }
     }
 
+    private void UpdateAnimator(Vector2 direction)
+    {
+        animator.SetFloat("MoveX", direction.x);
+        animator.SetFloat("MoveY", direction.y);
+    }
+
     private void FlipSprite(Vector2 direction)
     {
         if (direction.x > 0.1f)
-            spriteRenderer.flipX = false; // moving right
+            spriteRenderer.flipX = false;
         else if (direction.x < -0.1f)
-            spriteRenderer.flipX = true;  // moving left
+            spriteRenderer.flipX = true;
     }
 }
