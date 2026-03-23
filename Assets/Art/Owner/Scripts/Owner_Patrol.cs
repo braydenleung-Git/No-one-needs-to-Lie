@@ -17,7 +17,7 @@ public class NPC_Patrol : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>(); 
-        StartCoroutine(SetPatrolPoint());
+        target = patrolPoints[0];
     }
 
     void Update()
@@ -29,16 +29,29 @@ public class NPC_Patrol : MonoBehaviour
         }
 
         Vector2 direction = ((Vector3)target - transform.position).normalized;
+
         if (direction.x < 0 && transform.localScale.x > 0 || direction.x > 0 && transform.localScale.x < 0)
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.x);
         
         rb.linearVelocity = direction * speed;
 
+        UpdateAnimator(direction);
+
         if (Vector2.Distance(transform.position, target) < .1f)
             StartCoroutine(SetPatrolPoint());
     }
 
-IEnumerator SetPatrolPoint()
+    private void UpdateAnimator(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            anim.Play("Walk");
+        else if (direction.y < 0)
+            anim.Play("WalkDown");
+        else if (direction.y > 0)
+            anim.Play("WalkUp");
+    }
+
+    IEnumerator SetPatrolPoint()
     {
         isPaused = true;
         anim.Play("Idle");
@@ -46,6 +59,6 @@ IEnumerator SetPatrolPoint()
         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
         target = patrolPoints[currentPatrolIndex];
         isPaused = false;
-        anim.Play("Owner_WalkRight");
+        anim.Play("Walk");
     }
 }
