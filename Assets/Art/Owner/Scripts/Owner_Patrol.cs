@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Owner_Patrol : MonoBehaviour
+public class Owner_Patrol : MonoBehaviour, IPatroller
 {
     public Vector2[] patrolPoints;
     public float speed = 2;
