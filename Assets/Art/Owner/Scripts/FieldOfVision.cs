@@ -37,7 +37,7 @@ public class FieldOfVision : MonoBehaviour
         coneMaterial.color = new Color(1f, 1f, 1f, 0.15f);
         meshRenderer.material = coneMaterial;
 
-        patrol = GetComponentInParent<IPatroller>();
+        patrol = GetComponentInParent<Owner_Patrol>();
         ownerPatrol = GetComponentInParent<Owner_Patrol>();
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
