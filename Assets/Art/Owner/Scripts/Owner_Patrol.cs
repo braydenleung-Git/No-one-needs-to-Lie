@@ -1,13 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class NPC_Patrol : MonoBehaviour
+public class Owner_Patrol : MonoBehaviour
 {
     public Vector2[] patrolPoints;
     public float speed = 2;
     public float pauseDuration = 1.5f;
 
     private bool isPaused;
+    private bool isChasing;
     private int currentPatrolIndex;
     private Vector2 target;
     private Rigidbody2D rb;
@@ -37,7 +38,7 @@ public class NPC_Patrol : MonoBehaviour
 
         UpdateAnimator(direction);
 
-        if (Vector2.Distance(transform.position, target) < .1f)
+        if (!isChasing && Vector2.Distance(transform.position, target) < .1f)
             StartCoroutine(SetPatrolPoint());
     }
 
@@ -60,5 +61,20 @@ public class NPC_Patrol : MonoBehaviour
         target = patrolPoints[currentPatrolIndex];
         isPaused = false;
         anim.Play("Walk");
+    }
+
+    public void StartChase(Transform player)
+    {
+        isChasing = true;
+        isPaused = false;
+        StopAllCoroutines();
+        target = player.position;
+    }
+
+    public void StopChase()
+    {
+        isChasing = false;
+        currentPatrolIndex = 0;
+        target = patrolPoints[0];
     }
 }

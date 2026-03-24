@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameOverUI
+public class IPatroller
 {
     
 }
