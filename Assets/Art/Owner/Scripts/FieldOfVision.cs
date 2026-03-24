@@ -20,6 +20,7 @@ public class FieldOfVision : MonoBehaviour
     private Mesh mesh;
     private float alertTimer = 0f;
     private bool playerInSight = false;
+    private bool isChaseRunning = false;
     private Transform player;
     private IPatroller patrol;
     private MeshRenderer meshRenderer;
@@ -150,7 +151,8 @@ public class FieldOfVision : MonoBehaviour
             {
                 currentState = AlertState.Chasing;
                 patrol.StartChase(player);
-                StartCoroutine(ChaseTimeout());
+                if (!isChaseRunning)
+                    StartCoroutine(ChaseTimeout());
             }
             else if (alertTimer >= yellowAlertTime && currentState == AlertState.Yellow)
             {
@@ -190,7 +192,14 @@ public class FieldOfVision : MonoBehaviour
 
     IEnumerator ChaseTimeout()
     {
-        yield return new WaitForSeconds(chaseTime);
+        isChaseRunning = true;
+        float timer = 0f;
+        while (timer < chaseTime)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        isChaseRunning = false;
         currentState = AlertState.None;
         alertTimer = 0f;
         patrol.StopChase();
