@@ -100,7 +100,7 @@ public class RuntimeSceneSetup : MonoBehaviour
     {
         var npc = new GameObject("Grandpa");
         npc.transform.position   = new Vector3(3f, 0f, 0f);
-        npc.transform.localScale = new Vector3(3f, 3f, 1f);
+        npc.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
 
         var sr    = npc.AddComponent<SpriteRenderer>();
         sr.sprite = npcSprite;
@@ -110,7 +110,7 @@ public class RuntimeSceneSetup : MonoBehaviour
 
         var col       = npc.AddComponent<CircleCollider2D>();
         col.isTrigger = true;
-        col.radius    = 0.8f;
+        col.radius    = 3.0f;   // 3.0 × scale 0.4 = 1.2 world units
 
         var ctrl           = npc.AddComponent<NPCController>();
         ctrl.npcName       = "Old Man";
