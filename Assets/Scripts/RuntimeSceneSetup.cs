@@ -145,12 +145,12 @@ public class RuntimeSceneSetup : MonoBehaviour
         var nameText = MakeText(panel.transform, "SpeakerNameText",
             new Vector2(0f, 0.72f), new Vector2(0.45f, 1f),
             new Vector2(15f, -8f),  new Vector2(-5f, -8f),
-            "Speaker", 20, new Color(1f, 0.85f, 0.2f), bold: true);
+            "Speaker", 32, new Color(1f, 0.85f, 0.2f), bold: true);
 
         var bodyText = MakeText(panel.transform, "DialogueBodyText",
             Vector2.zero,          new Vector2(1f, 0.72f),
             new Vector2(15f, 12f), new Vector2(-15f, -5f),
-            "", 17, Color.white);
+            "", 28, Color.white);
 
         var contGO        = new GameObject("ContinuePrompt");
         contGO.transform.SetParent(panel.transform, false);
@@ -161,7 +161,7 @@ public class RuntimeSceneSetup : MonoBehaviour
         cRT.offsetMax     = new Vector2(-10f, 0f);
         var contTMP       = contGO.AddComponent<TextMeshProUGUI>();
         contTMP.text      = "[ E ]";        // avoid special unicode triangle
-        contTMP.fontSize  = 15;
+        contTMP.fontSize  = 24;
         contTMP.color     = new Color(0.4f, 1f, 1f);
         contTMP.alignment = TextAlignmentOptions.BottomRight;
 
@@ -195,7 +195,7 @@ public class RuntimeSceneSetup : MonoBehaviour
         var promptText       = MakeText(panel.transform, "PromptText",
             Vector2.zero, Vector2.one,
             new Vector2(8f, 4f), new Vector2(-8f, -4f),
-            "Press [E] to talk", 15, Color.white);
+            "Press [E] to talk", 24, Color.white);
         promptText.alignment = TextAlignmentOptions.Center;
 
         var ipUI = canvasGO.AddComponent<InteractionPromptUI>();
