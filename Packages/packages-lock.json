@@ -1,5 +1,6 @@
 {
   "dependencies": {
+<<<<<<< HEAD
     "com.unity.2d.animation": {
       "version": "13.0.4",
       "depth": 1,
@@ -61,12 +62,15 @@
       },
       "url": "https://packages.unity.com"
     },
+=======
+>>>>>>> 08542773ce7345bed70d4ea6e0a94cc6dcae0341
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
       "source": "builtin",
       "dependencies": {}
     },
+<<<<<<< HEAD
     "com.unity.2d.spriteshape": {
       "version": "13.0.0",
       "depth": 1,
@@ -78,6 +82,8 @@
       },
       "url": "https://packages.unity.com"
     },
+=======
+>>>>>>> 08542773ce7345bed70d4ea6e0a94cc6dcae0341
     "com.unity.2d.tilemap": {
       "version": "1.0.0",
       "depth": 0,
