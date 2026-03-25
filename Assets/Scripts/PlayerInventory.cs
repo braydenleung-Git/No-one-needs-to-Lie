@@ -1,7 +1,17 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class PlayerInventory : Inventory
+public class PlayerInventory : MonoBehaviour, Inventory
 {
+    void Start()
+    {
+        
+    }
+
+    void Update()
+    {
+        
+    }
     public void AddItem(GameItem item)
     {
         
