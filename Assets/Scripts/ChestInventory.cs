@@ -1,19 +1,41 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ChestInventory : MonoBehaviour, Inventory
 {
-    void Start() { }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+    }
 
-    void Update() { }
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
-    public void AddItem(GameItem item) { }
+    public void AddItem(GameItem item)
+    {
+        throw new System.NotImplementedException();
+    }
 
-    public void RemoveItem(GameItem item) { }
+    public void RemoveItem(GameItem item)
+    {
+        throw new System.NotImplementedException();
+    }
 
-    public bool HasItem(GameItem item) { return false; }
+    public bool HasItem(GameItem item)
+    {
+        throw new System.NotImplementedException();
+    }
 
-    public List<GameItem> ListItems() { return new List<GameItem>(); }
+    public List<GameItem> ListItems()
+    {
+        throw new System.NotImplementedException();
+    }
 
-    public void TransferItem(Inventory other, GameItem item) { }
+    public void TransferItem(Inventory other, GameItem item)
+    {
+        throw new System.NotImplementedException();
+    }
 }
