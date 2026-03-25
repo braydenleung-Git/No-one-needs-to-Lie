@@ -519,6 +519,7 @@ GameObject:
   - component: {fileID: 1797875796}
   - component: {fileID: 1797875795}
   - component: {fileID: 1797875794}
+  - component: {fileID: 1797875797}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -657,6 +658,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c20d38af91a6848ae9dcc45a483e676a, type: 3}
+--- !u!114 &1797875797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797875793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f3c721b4e805d62c48f9a017b3e456, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::RuntimeSceneSetup
+  npcSprite: {fileID: -7499484116963482870, guid: 76d4ca862f01a1546b44397f685695bd, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -43,7 +43,19 @@ public class DialogueManager : MonoBehaviour
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
-        dialoguePanel.SetActive(false);
+        if (dialoguePanel != null) dialoguePanel.SetActive(false);
+    }
+
+    /// <summary>Wire up UI references at runtime (used by RuntimeSceneSetup).</summary>
+    public void Initialize(GameObject panel, TextMeshProUGUI nameText,
+        TextMeshProUGUI bodyText, GameObject continuePromptObj, float delay = 0.04f)
+    {
+        dialoguePanel    = panel;
+        speakerNameText  = nameText;
+        dialogueBodyText = bodyText;
+        continuePrompt   = continuePromptObj;
+        charDelay        = delay;
+        if (dialoguePanel != null) dialoguePanel.SetActive(false);
     }
 
     private void Update()

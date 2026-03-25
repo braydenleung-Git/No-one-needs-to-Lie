@@ -31,7 +31,17 @@ public class InteractionPromptUI : MonoBehaviour
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         mainCam = Camera.main;
-        promptPanel.SetActive(false);
+        if (promptPanel != null) promptPanel.SetActive(false);
+    }
+
+    /// <summary>Wire up UI references at runtime (used by RuntimeSceneSetup).</summary>
+    public void Initialize(GameObject panel, TextMeshProUGUI text, float offset = 1.2f)
+    {
+        promptPanel    = panel;
+        promptText     = text;
+        verticalOffset = offset;
+        mainCam        = Camera.main;
+        if (promptPanel != null) promptPanel.SetActive(false);
     }
 
     private void LateUpdate()
