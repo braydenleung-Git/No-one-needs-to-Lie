@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using DefaultNamespace;
 using UnityEngine;
 
 public class ChestInventory : MonoBehaviour, Inventory
@@ -7,7 +6,6 @@ public class ChestInventory : MonoBehaviour, Inventory
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AddItem(new Item())
     }
 
     // Update is called once per frame
