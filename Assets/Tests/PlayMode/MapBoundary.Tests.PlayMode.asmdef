@@ -1,7 +1,8 @@
 {
     "name": "MapBoundary.Tests.PlayMode",
     "references": [
-        "UnityEngine.TestRunner"
+        "UnityEngine.TestRunner",
+        "GameCode"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
