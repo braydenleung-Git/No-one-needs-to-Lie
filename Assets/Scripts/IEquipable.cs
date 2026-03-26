@@ -2,7 +2,8 @@ using UnityEngine;
 public interface IEquipable
 {
     public GameObject Owner {get; set;}
-    public void Equip(int position);
+    public void Equip(EquipPosition position);
     public void Unequip();
-    public int GetEquipPosition();
+    public EquipPosition GetEquipPosition();
 }
+public enum EquipPosition {None, Head, Chest, Legs, Feet, Hands};
