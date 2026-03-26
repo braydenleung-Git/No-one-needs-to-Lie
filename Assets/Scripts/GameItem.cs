@@ -1,5 +1,8 @@
 using UnityEngine;
-
+/// <summary>
+/// This Abstract class is meant for any item used in the game.
+/// e.g dropped items would extend from this class
+/// </summary>
 public abstract class GameItem : MonoBehaviour, Hintable
 {
     [Header("Item Info")]
