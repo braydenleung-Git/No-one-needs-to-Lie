@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class GameItem : ScriptableObject, Hintable
+public abstract class GameItem : MonoBehaviour, Hintable
 {
     [Header("Item Info")]
     [field: SerializeField] public string ItemName { get; set; }
