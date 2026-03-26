@@ -4,13 +4,13 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
 
-/// <summary>
-/// Attach to Main Camera in Sunny Player scene.
-/// Builds Grandpa NPC, DialogueCanvas, PromptCanvas and EventSystem on Awake.
-/// All objects are explicitly placed in the SAME scene as this script so that
-/// 2D physics (OnTriggerEnter2D) works correctly even when multiple scenes are
-/// open simultaneously in the editor.
-/// </summary>
+// attach this to the Main Camera in the Sunny Player scene
+// it builds the grandpa NPC, dialogue box, prompt UI and event system at runtime
+// so we don't have to manually recreate everything in the Unity inspector
+//
+// important: everything gets moved into the same scene as this script using
+// SceneManager.MoveGameObjectToScene - had a bug where objects were landing in
+// the wrong scene and 2D physics wouldn't fire across scene boundaries
 public class RuntimeSceneSetup : MonoBehaviour
 {
     [Header("NPC Sprite")]
@@ -22,6 +22,7 @@ public class RuntimeSceneSetup : MonoBehaviour
 
         EnsurePlayerColliderAndSorting(myScene);
 
+        // only create stuff that doesn't already exist
         if (!FindInScene(myScene, "Grandpa"))
         {
             var go = CreateNPC();
@@ -47,7 +48,7 @@ public class RuntimeSceneSetup : MonoBehaviour
         }
     }
 
-    // Returns true if a root GameObject with this name exists in the given scene
+    // checks root objects in the scene by name, avoids searching other open scenes
     static bool FindInScene(Scene scene, string name)
     {
         foreach (var root in scene.GetRootGameObjects())
@@ -59,7 +60,7 @@ public class RuntimeSceneSetup : MonoBehaviour
 
     void EnsurePlayerColliderAndSorting(Scene scene)
     {
-        // Only look inside the same scene to avoid touching other scenes' players
+        // scope the search to this scene only so we don't mess with other scenes' players
         foreach (var root in scene.GetRootGameObjects())
         {
             var player = root.CompareTag("Player") ? root
@@ -69,6 +70,7 @@ public class RuntimeSceneSetup : MonoBehaviour
 
             if (player == null) continue;
 
+            // player needs a non-trigger collider or OnTriggerEnter2D never fires on the npc
             if (player.GetComponent<Collider2D>() == null)
             {
                 var col   = player.AddComponent<CapsuleCollider2D>();
@@ -100,7 +102,7 @@ public class RuntimeSceneSetup : MonoBehaviour
     {
         var npc = new GameObject("Grandpa");
         npc.transform.position   = new Vector3(3f, 0f, 0f);
-        npc.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+        npc.transform.localScale = new Vector3(0.4f, 0.4f, 1f);  // scaled down, looks better
 
         var sr    = npc.AddComponent<SpriteRenderer>();
         sr.sprite = npcSprite;
@@ -108,9 +110,10 @@ public class RuntimeSceneSetup : MonoBehaviour
         npc.AddComponent<Animator>();
         npc.AddComponent<YSortingOrder>();
 
+        // trigger zone - radius 3.0 at scale 0.4 = 1.2 world units, feels natural
         var col       = npc.AddComponent<CircleCollider2D>();
         col.isTrigger = true;
-        col.radius    = 3.0f;   // 3.0 × scale 0.4 = 1.2 world units
+        col.radius    = 3.0f;
 
         var ctrl           = npc.AddComponent<NPCController>();
         ctrl.npcName       = "Old Man";
@@ -137,6 +140,7 @@ public class RuntimeSceneSetup : MonoBehaviour
         scaler.referenceResolution = new Vector2(1920, 1080);
         canvasGO.AddComponent<GraphicRaycaster>();
 
+        // dark panel at the bottom of the screen for dialogue text
         var panel = MakePanel(canvasGO.transform, "DialoguePanel",
             new Vector2(0f, 0f),   new Vector2(1f, 0.22f),
             new Vector2(30f, 20f), new Vector2(-30f, -10f),
@@ -152,6 +156,7 @@ public class RuntimeSceneSetup : MonoBehaviour
             new Vector2(15f, 12f), new Vector2(-15f, -5f),
             "", 28, Color.white);
 
+        // little "[ E ]" hint at the bottom right so the player knows to press E
         var contGO        = new GameObject("ContinuePrompt");
         contGO.transform.SetParent(panel.transform, false);
         var cRT           = contGO.AddComponent<RectTransform>();
@@ -160,7 +165,7 @@ public class RuntimeSceneSetup : MonoBehaviour
         cRT.offsetMin     = Vector2.zero;
         cRT.offsetMax     = new Vector2(-10f, 0f);
         var contTMP       = contGO.AddComponent<TextMeshProUGUI>();
-        contTMP.text      = "[ E ]";        // avoid special unicode triangle
+        contTMP.text      = "[ E ]";        // unicode triangle caused a font warning so using this instead
         contTMP.fontSize  = 24;
         contTMP.color     = new Color(0.4f, 1f, 1f);
         contTMP.alignment = TextAlignmentOptions.BottomRight;
@@ -178,7 +183,7 @@ public class RuntimeSceneSetup : MonoBehaviour
         var canvasGO = new GameObject("PromptCanvas");
         var canvas   = canvasGO.AddComponent<Canvas>();
         canvas.renderMode   = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 11;
+        canvas.sortingOrder = 11;  // above dialogue canvas
         var scaler = canvasGO.AddComponent<CanvasScaler>();
         scaler.uiScaleMode         = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920, 1080);

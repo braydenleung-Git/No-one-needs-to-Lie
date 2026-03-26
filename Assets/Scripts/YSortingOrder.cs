@@ -1,14 +1,12 @@
 using UnityEngine;
 
-/// <summary>
-/// Attach to any sprite that should participate in Y-axis depth sorting.
-/// Objects lower on screen (smaller Y) get a higher sorting order so they
-/// render in front — giving the illusion of depth in a top-down/isometric view.
-/// </summary>
+// attach this to any sprite so it sorts correctly on the Y axis
+// lower on screen = higher sort order = draws in front, gives the 2.5D illusion
+// without this the player walks behind the npc which looks super wrong
 [RequireComponent(typeof(SpriteRenderer))]
 public class YSortingOrder : MonoBehaviour
 {
-    [Tooltip("Multiplier for how aggressively sorting order changes with Y position.")]
+    [Tooltip("how aggressively the sort order changes as Y changes, 10 works fine for most setups")]
     [SerializeField] private int sortingScale = 10;
 
     SpriteRenderer sr;
@@ -17,6 +15,7 @@ public class YSortingOrder : MonoBehaviour
 
     void LateUpdate()
     {
+        // negative Y because lower on screen = smaller Y = should draw in front
         sr.sortingOrder = Mathf.RoundToInt(-transform.position.y * sortingScale);
     }
 }

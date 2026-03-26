@@ -3,19 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// Singleton that manages the dialogue UI panel.
-/// Displays lines with a typewriter effect; press E to skip typing or advance.
-///
-/// Canvas setup (do this once):
-///   DialogueCanvas (Screen Space – Overlay)
-///     └── DialoguePanel
-///           ├── SpeakerNameText  (TextMeshProUGUI)
-///           ├── DialogueBodyText (TextMeshProUGUI)
-///           └── ContinuePrompt   (e.g. a small "▶" or "Press E" label)
-///
-/// Attach this script to DialogueCanvas and wire up the 4 serialised fields.
-/// </summary>
+// manages the dialogue box UI - typewriter effect, advancing lines, closing it
+// singleton so any NPC can call it without needing a reference
+// attach this to the DialogueCanvas in the scene
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
@@ -24,20 +14,16 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI speakerNameText;
     [SerializeField] private TextMeshProUGUI dialogueBodyText;
-    [SerializeField] private GameObject continuePrompt;   // small "▶ E" indicator
+    [SerializeField] private GameObject continuePrompt; // the little "press E" indicator at the bottom
 
     [Header("Typewriter")]
-    [SerializeField] private float charDelay = 0.04f;     // seconds between each character
-
-    // ── State ──────────────────────────────────────────────────────────────────
+    [SerializeField] private float charDelay = 0.04f; // seconds between each character appearing
 
     private string[] lines;
     private int lineIndex;
     private bool isTyping;
     private bool dialogueActive;
     private Coroutine typewriterRoutine;
-
-    // ── Lifecycle ──────────────────────────────────────────────────────────────
 
     private void Awake()
     {
@@ -46,27 +32,16 @@ public class DialogueManager : MonoBehaviour
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
     }
 
-    /// <summary>Wire up UI references at runtime (used by RuntimeSceneSetup).</summary>
-    public void Initialize(GameObject panel, TextMeshProUGUI nameText,
-        TextMeshProUGUI bodyText, GameObject continuePromptObj, float delay = 0.04f)
-    {
-        dialoguePanel    = panel;
-        speakerNameText  = nameText;
-        dialogueBodyText = bodyText;
-        continuePrompt   = continuePromptObj;
-        charDelay        = delay;
-        if (dialoguePanel != null) dialoguePanel.SetActive(false);
-    }
-
     private void Update()
     {
         if (!dialogueActive) return;
 
+        // E to skip typing animation or move to next line
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
             if (isTyping)
             {
-                // Skip the rest of the typewriter for this line
+                // skip the rest of the animation and show full line immediately
                 StopCoroutine(typewriterRoutine);
                 dialogueBodyText.text = lines[lineIndex];
                 isTyping = false;
@@ -79,9 +54,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    // ── Public API ─────────────────────────────────────────────────────────────
-
-    /// <summary>Begin a dialogue sequence. Called by NPCController.Interact().</summary>
+    // called by NPCController when the player interacts
     public void StartDialogue(string speakerName, string[] dialogueLines)
     {
         lines = dialogueLines;
@@ -95,10 +68,19 @@ public class DialogueManager : MonoBehaviour
         typewriterRoutine = StartCoroutine(TypeLine(lines[0]));
     }
 
-    /// <summary>Returns true while a dialogue is currently open.</summary>
     public bool IsDialogueActive() => dialogueActive;
 
-    // ── Private helpers ────────────────────────────────────────────────────────
+    // lets RuntimeSceneSetup wire up references at runtime without needing the inspector
+    public void Initialize(GameObject panel, TextMeshProUGUI nameText,
+        TextMeshProUGUI bodyText, GameObject continuePromptObj, float delay = 0.04f)
+    {
+        dialoguePanel    = panel;
+        speakerNameText  = nameText;
+        dialogueBodyText = bodyText;
+        continuePrompt   = continuePromptObj;
+        charDelay        = delay;
+        if (dialoguePanel != null) dialoguePanel.SetActive(false);
+    }
 
     private void AdvanceLine()
     {

@@ -1,12 +1,9 @@
 using NUnit.Framework;
 using UnityEngine;
 
-/// <summary>
-/// EditMode tests for MapBoundary.
-/// These run without entering Play mode so they execute instantly.
-///
-/// Run via: Window > General > Test Runner > EditMode tab > Run All
-/// </summary>
+// edit mode tests for MapBoundary - these run instantly without entering play mode
+// good for checking collider logic without waiting for the full physics sim to boot up
+// run via: Window > General > Test Runner > EditMode tab > Run All
 public class MapBoundaryEditModeTests
 {
     GameObject go;
@@ -23,19 +20,19 @@ public class MapBoundaryEditModeTests
         Object.DestroyImmediate(go);
     }
 
-    // ── Collider enforcement ──────────────────────────────────────────────────
+    // ── collider enforcement ──────────────────────────────────────────────────
 
     [Test]
     public void Awake_ForcesIsTrigger_ToFalse_WhenColliderWasATrigger()
     {
-        // Arrange: add a trigger collider first
+        // start with a trigger collider (like someone accidentally checked the box)
         var col = go.AddComponent<BoxCollider2D>();
         col.isTrigger = true;
 
-        // Act: adding MapBoundary calls Awake which calls EnforceSolid
+        // adding MapBoundary should immediately fix it via EnforceSolid
         go.AddComponent<MapBoundary>();
 
-        // Assert
+        // rb.Cast() only detects non-triggers so this absolutely has to be false
         Assert.IsFalse(col.isTrigger,
             "MapBoundary must force isTrigger = false so the player's rb.Cast() can detect it.");
     }
@@ -43,35 +40,30 @@ public class MapBoundaryEditModeTests
     [Test]
     public void Awake_LeavesNonTriggerCollider_Unchanged()
     {
-        // Arrange
         var col = go.AddComponent<BoxCollider2D>();
         col.isTrigger = false;
 
-        // Act
         go.AddComponent<MapBoundary>();
 
-        // Assert
         Assert.IsFalse(col.isTrigger, "Non-trigger collider should remain non-trigger.");
     }
 
     [Test]
     public void Awake_EnforcesAllColliders_WhenMultiplePresent()
     {
-        // Arrange: two colliders, both triggers
+        // edge case - two colliders both set to trigger, both should get fixed
         var col1 = go.AddComponent<BoxCollider2D>();
         var col2 = go.AddComponent<CapsuleCollider2D>();
         col1.isTrigger = true;
         col2.isTrigger = true;
 
-        // Act
         go.AddComponent<MapBoundary>();
 
-        // Assert
         Assert.IsFalse(col1.isTrigger, "First collider must be non-trigger.");
         Assert.IsFalse(col2.isTrigger, "Second collider must be non-trigger.");
     }
 
-    // ── Component integrity ───────────────────────────────────────────────────
+    // ── component integrity ───────────────────────────────────────────────────
 
     [Test]
     public void MapBoundary_CanCoexist_WithBoxCollider2D()

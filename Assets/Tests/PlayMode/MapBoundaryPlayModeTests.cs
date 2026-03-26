@@ -4,17 +4,13 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-/// <summary>
-/// PlayMode tests for MapBoundary.
-/// These enter Play mode so real 2D physics runs.
-///
-/// Run via: Window > General > Test Runner > PlayMode tab > Run All
-///
-/// What is being tested:
-///   PlayerController uses rb.Cast(direction, filter, hits, distance).
-///   If count > 0 it stops moving. These tests verify a MapBoundary wall
-///   produces a cast hit, and that the player position does not penetrate it.
-/// </summary>
+// play mode tests for MapBoundary - these actually spin up the physics engine
+// so they're slower than edit mode tests but way more realistic
+// run via: Window > General > Test Runner > PlayMode tab > Run All
+//
+// basically testing the same thing PlayerController does at runtime:
+//   rb.Cast() in movement direction -> if count > 0 don't move
+//   making sure a MapBoundary wall actually produces those hits
 public class MapBoundaryPlayModeTests
 {
     GameObject playerGO;
@@ -23,7 +19,7 @@ public class MapBoundaryPlayModeTests
     [UnitySetUp]
     public IEnumerator SetUp()
     {
-        // ── Player ────────────────────────────────────────────────────────────
+        // ── player setup ───────────────────────────────────────────────────────
         playerGO = new GameObject("TestPlayer");
         playerGO.tag = "Player";
 
@@ -37,17 +33,17 @@ public class MapBoundaryPlayModeTests
 
         playerGO.transform.position = Vector2.zero;
 
-        // ── Wall (MapBoundary) ────────────────────────────────────────────────
+        // ── wall setup ────────────────────────────────────────────────────────
         wallGO = new GameObject("TestWall");
 
         var wallCol  = wallGO.AddComponent<BoxCollider2D>();
         wallCol.size = new Vector2(1f, 10f);
         wallGO.AddComponent<MapBoundary>();
 
-        // Place wall 1.5 units to the right of the player
+        // put the wall 1.5 units to the right of the player
         wallGO.transform.position = new Vector2(1.5f, 0f);
 
-        // Wait one physics frame for colliders to register
+        // wait one physics tick for colliders to register
         yield return new WaitForFixedUpdate();
     }
 
@@ -58,7 +54,7 @@ public class MapBoundaryPlayModeTests
         Object.Destroy(wallGO);
     }
 
-    // ── Core blocking test ────────────────────────────────────────────────────
+    // ── core blocking tests ────────────────────────────────────────────────────
 
     [UnityTest]
     public IEnumerator PlayerCast_HitsWall_WhenMovingTowardsIt()
@@ -69,7 +65,7 @@ public class MapBoundaryPlayModeTests
         filter.SetLayerMask(Physics2D.AllLayers);
 
         var hits  = new List<RaycastHit2D>();
-        float castDist = 2f;   // cast 2 units to the right — enough to reach the wall
+        float castDist = 2f;   // 2 units to the right, wall is at 1.5 so this should definitely hit
 
         yield return new WaitForFixedUpdate();
 
@@ -91,7 +87,7 @@ public class MapBoundaryPlayModeTests
 
         yield return new WaitForFixedUpdate();
 
-        // Cast left — away from the wall which is on the right
+        // cast left - wall is on the right so nothing should be in the way
         int count = rb.Cast(Vector2.left, filter, hits, 2f);
 
         Assert.AreEqual(0, count,
@@ -115,7 +111,7 @@ public class MapBoundaryPlayModeTests
 
         yield return new WaitForFixedUpdate();
 
-        // Replicate exactly what PlayerController.FixedUpdate does
+        // this mirrors exactly what PlayerController.FixedUpdate does
         int count = rb.Cast(dir, filter, hits, dist);
         if (count == 0)
             rb.MovePosition(rb.position + dir * speed * Time.fixedDeltaTime);

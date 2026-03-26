@@ -1,15 +1,9 @@
 using UnityEngine;
 using TMPro;
 
-/// <summary>
-/// Singleton UI component that floats a "Press [E]" prompt above interactable objects.
-///
-/// Setup (do this once in your scene):
-///   1. Create a Canvas (Screen Space – Overlay, or World Space)
-///   2. Add a child Panel (the promptPanel)
-///   3. Add a TextMeshProUGUI inside the panel (assign to promptText)
-///   4. Attach this script to the Canvas (or a dedicated child GameObject)
-/// </summary>
+// singleton that handles the little "press E" bubble floating above NPCs
+// any interactable just calls Show/Hide and this thing figures out where to put it on screen
+// attach this to the PromptCanvas (or whatever canvas you're using for the prompt)
 public class InteractionPromptUI : MonoBehaviour
 {
     public static InteractionPromptUI Instance { get; private set; }
@@ -24,8 +18,6 @@ public class InteractionPromptUI : MonoBehaviour
     private Transform followTarget;
     private Camera mainCam;
 
-    // ── Lifecycle ──────────────────────────────────────────────────────────────
-
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -34,7 +26,7 @@ public class InteractionPromptUI : MonoBehaviour
         if (promptPanel != null) promptPanel.SetActive(false);
     }
 
-    /// <summary>Wire up UI references at runtime (used by RuntimeSceneSetup).</summary>
+    // used by RuntimeSceneSetup to wire up references without needing the inspector
     public void Initialize(GameObject panel, TextMeshProUGUI text, float offset = 1.2f)
     {
         promptPanel    = panel;
@@ -48,13 +40,11 @@ public class InteractionPromptUI : MonoBehaviour
     {
         if (followTarget == null || !promptPanel.activeSelf) return;
 
-        // Convert world position to screen position so the prompt floats above the sprite
+        // convert world pos to screen pos so the panel floats right above the npc
         Vector3 worldPos = followTarget.position + Vector3.up * verticalOffset;
         Vector3 screenPos = mainCam.WorldToScreenPoint(worldPos);
         promptPanel.transform.position = screenPos;
     }
-
-    // ── Public API ─────────────────────────────────────────────────────────────
 
     public void Show(string message, Transform target)
     {

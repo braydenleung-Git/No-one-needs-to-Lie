@@ -1,22 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// Base class for anything the player can interact with (NPCs, chests, items, etc.)
-/// Attach this (or a subclass) to any GameObject that should be interactable.
-///
-/// Requirements:
-///   - The interactable GameObject needs a Collider2D with "Is Trigger" = true
-///   - The Player GameObject must be tagged "Player"
-/// </summary>
+// base class for anything the player can walk up to and press E on
+// NPCs, doors, chests etc all extend this
+// just need a trigger collider on the object and the player tagged "Player"
 public abstract class Interactable : MonoBehaviour
 {
     [Header("Interaction Settings")]
     [SerializeField] protected string interactPrompt = "Press [E] to interact";
 
     protected bool playerInRange = false;
-
-    // ── Trigger detection ──────────────────────────────────────────────────────
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -34,21 +27,18 @@ public abstract class Interactable : MonoBehaviour
         InteractionPromptUI.Instance?.Hide();
     }
 
-    // ── Input ──────────────────────────────────────────────────────────────────
-
     private void Update()
     {
         if (!playerInRange) return;
 
-        // Don't re-trigger if dialogue is already running
+        // don't let the player re-trigger while dialogue is already open
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive()) return;
 
+        // using new input system here, old Input.GetKeyDown doesn't work with it
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
             Interact();
     }
 
-    // ── Override this in subclasses ────────────────────────────────────────────
-
-    /// <summary>Called once when the player presses E while in range.</summary>
+    // subclasses fill this in, e.g. NPCController starts dialogue
     public abstract void Interact();
 }

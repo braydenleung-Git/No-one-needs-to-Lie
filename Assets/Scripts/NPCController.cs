@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// attach this to any NPC - fill in the name and dialogue lines in the inspector
+// extends Interactable so the trigger + E key stuff is handled automatically
 [RequireComponent(typeof(Animator))]
 public class NPCController : Interactable
 {
@@ -16,8 +18,6 @@ public class NPCController : Interactable
         "...But what do I know? I'm just an old man."
     };
 
-    // ── Interact override ──────────────────────────────────────────────────────
-
     public override void Interact()
     {
         if (DialogueManager.Instance == null)
@@ -32,7 +32,7 @@ public class NPCController : Interactable
             return;
         }
 
-        // Hide the "Press E" prompt while talking
+        // hide the prompt while talking so it doesn't overlap the dialogue box
         InteractionPromptUI.Instance?.Hide();
 
         DialogueManager.Instance.StartDialogue(npcName, dialogueLines);
