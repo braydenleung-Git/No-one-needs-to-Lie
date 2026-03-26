@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChestInventory : MonoBehaviour, Inventory
+public class ChestInventory : MonoBehaviour, IInventory
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,7 +34,7 @@ public class ChestInventory : MonoBehaviour, Inventory
         throw new System.NotImplementedException();
     }
 
-    public void TransferItem(Inventory other, GameItem item)
+    public void TransferItem(IInventory other, GameItem item)
     {
         throw new System.NotImplementedException();
     }
