@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInventory : MonoBehaviour, Inventory
+public class PlayerInventory : MonoBehaviour, IInventory
 {
     void Start()
     {
@@ -32,7 +32,7 @@ public class PlayerInventory : MonoBehaviour, Inventory
         return null;
     }
 
-    public void TransferItem(Inventory other, GameItem item)
+    public void TransferItem(IInventory other, GameItem item)
     {
         
     }
