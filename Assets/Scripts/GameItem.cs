@@ -1,6 +1,9 @@
 using UnityEngine;
-
-public abstract class GameItem : ScriptableObject, Hintable
+/// <summary>
+/// This Abstract class is meant for any item used in the game.
+/// e.g dropped items would extend from this class
+/// </summary>
+public abstract class GameItem : MonoBehaviour, Hintable
 {
     [Header("Item Info")]
     [field: SerializeField] public string ItemName { get; set; }
