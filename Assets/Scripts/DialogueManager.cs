@@ -24,6 +24,7 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping;
     private bool dialogueActive;
     private Coroutine typewriterRoutine;
+    private System.Action _onComplete;
 
     private void Awake()
     {
@@ -55,11 +56,13 @@ public class DialogueManager : MonoBehaviour
     }
 
     // called by NPCController when the player interacts
-    public void StartDialogue(string speakerName, string[] dialogueLines)
+    // onComplete fires after the player dismisses the last line - optional, defaults to null
+    public void StartDialogue(string speakerName, string[] dialogueLines, System.Action onComplete = null)
     {
         lines = dialogueLines;
         lineIndex = 0;
         dialogueActive = true;
+        _onComplete = onComplete;
 
         speakerNameText.text = speakerName;
         dialoguePanel.SetActive(true);
@@ -117,5 +120,10 @@ public class DialogueManager : MonoBehaviour
         dialogueActive = false;
         dialoguePanel.SetActive(false);
         lines = null;
+
+        // cache and null before invoking so a callback that triggers new dialogue doesn't get stomped
+        var callback = _onComplete;
+        _onComplete = null;
+        callback?.Invoke();
     }
 }

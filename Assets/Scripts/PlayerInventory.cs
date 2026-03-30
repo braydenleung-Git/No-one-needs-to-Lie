@@ -3,33 +3,30 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour, Inventory
 {
-    void Start()
-    {
-        
-    }
+    private List<GameItem> _items = new List<GameItem>();
 
-    void Update()
-    {
-        
-    }
+    void Start() { }
+    void Update() { }
+
     public void AddItem(GameItem item)
     {
-        
+        if (item == null) return;
+        _items.Add(item);
     }
-    
+
     public void RemoveItem(GameItem item)
     {
-        
+        _items.Remove(item);
     }
 
     public bool HasItem(GameItem item)
     {
-        throw new System.NotImplementedException();
+        return _items.Contains(item);
     }
 
     public List<GameItem> ListItems()
     {
-        return null;
+        return _items;
     }
 
     public void TransferItem(Inventory other, GameItem item)
