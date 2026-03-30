@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 
 // attach this to the Main Camera in the Sunny Player scene
 // it builds the grandpa NPC, dialogue box, prompt UI and event system at runtime
@@ -215,7 +216,7 @@ public class RuntimeSceneSetup : MonoBehaviour
     {
         var es = new GameObject("EventSystem");
         es.AddComponent<EventSystem>();
-        es.AddComponent<StandaloneInputModule>();
+        es.AddComponent<InputSystemUIInputModule>();
         return es;
     }
 

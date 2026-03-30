@@ -223,9 +223,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f3c721b4e805d62c48f9a017b3e456, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: GameCode::RuntimeSceneSetup
-  npcSprite: {fileID: 0}
+  npcSprite: {fileID: 2101022590, guid: 76d4ca862f01a1546b44397f685695bd, type: 3}
 --- !u!114 &105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,10 +236,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: GameCode::Level2SceneBuilder
-  backgroundSprite: {fileID: 0}
-  witnessSprite: {fileID: 0}
+  backgroundSprite: {fileID: 5338777321340743033, guid: 5a2fe6aa3a9205e43929ff24970f6fcc, type: 3}
+  witnessSprite: {fileID: -1259768021, guid: 76d4ca862f01a1546b44397f685695bd, type: 3}
+  cassetteTapeSprite: {fileID: -1704765898498635827, guid: a707be3c3008985439ad8bc8c0daff6e, type: 3}
+  cassettePlayerSprite: {fileID: -1109105223636851671, guid: a707be3c3008985439ad8bc8c0daff6e, type: 3}
 --- !u!1 &200
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +273,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8651e1c380bf44978616d11b8be6c65, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: GameCode::PlayerController
   movespeed: 3
   collisionOffSet: 0.05
@@ -365,7 +367,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -6073032159742822776, guid: 6e5ebf71af5ca401da29a3288c2de9f4, type: 3}
+  m_Sprite: {fileID: 4334783836991956000, guid: d55c714f32c7d49eb804c52ee226c84a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -373,7 +375,7 @@ SpriteRenderer:
   m_Size: {x: 0.7, y: 1.13}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!4 &204
 Transform:
@@ -384,8 +386,8 @@ Transform:
   m_GameObject: {fileID: 200}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.5, y: -0.5, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -400,7 +402,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
   m_Actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_NotificationBehavior: 0
@@ -416,8 +418,8 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme:
-  m_DefaultActionMap:
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!70 &206
@@ -455,7 +457,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 0.9}
+  m_Size: {x: 0.07, y: 0.13}
   m_Direction: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

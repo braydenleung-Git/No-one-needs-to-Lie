@@ -2,6 +2,7 @@
     "name": "GameCode",
     "references": [
         "Unity.InputSystem",
+        "Unity.InputSystem.ForUI",
         "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
