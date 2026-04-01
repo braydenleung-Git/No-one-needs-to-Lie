@@ -29,12 +29,15 @@ public class CassetteTapePickup : Interactable
         DialogueManager.Instance?.StartDialogue("", new[] { "You found a cassette tape." }, DisableSelf);
     }
 
-    // hides the tape from the world - call comes back as dialogue onComplete
+    // hides the tape from the world after the pickup dialogue closes
     private void DisableSelf()
     {
-        var sr = GetComponent<SpriteRenderer>();
-        if (sr != null) sr.enabled = false;
+        // the tape visual is a child "Visual" object built by Level2SceneBuilder
+        // so GetComponent<SpriteRenderer>() on the parent finds nothing - gotta go through children
+        foreach (var sr in GetComponentsInChildren<SpriteRenderer>(includeInactive: true))
+            sr.enabled = false;
 
+        // kill the trigger so the "press E" prompt doesn't keep popping up on an invisible object
         var col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
 
