@@ -216,6 +216,11 @@ public class RuntimeSceneSetup : MonoBehaviour
     {
         var es = new GameObject("EventSystem");
         es.AddComponent<EventSystem>();
+
+        // DON'T use StandaloneInputModule here - that's the old input system's UI handler
+        // and it calls Input.mousePosition every single frame which throws a hard exception
+        // the moment you switch Player Settings to "New Input System" package
+        // InputSystemUIInputModule is the correct replacement from com.unity.inputsystem
         es.AddComponent<InputSystemUIInputModule>();
         return es;
     }
