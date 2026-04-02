@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Imported Assets/Police HUb/Main.meta
+guid: 725b097a9d65a704ea77eea872c3a2a4
+folderAsset: yes
+========
 guid: 37824f4f81ee7ab48a0f69a0bb809ff2
+>>>>>>>> origin/master:Assets/Scenes/Level1.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
