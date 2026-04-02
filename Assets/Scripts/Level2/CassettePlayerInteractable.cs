@@ -15,6 +15,7 @@ public class CassettePlayerInteractable : Interactable
         "*click* -- the tape starts playing*",
         "\"...I heard arguing around midnight. Something about missing keys.\"",
         "\"There was a loud crash, then silence. I was too scared to look.\"",
+        "\"...If you're listening to this — study every framed thing in the house. Start with the art room at the end of the hall.\"",
         "*the recording ends*"
     };
 
@@ -27,7 +28,7 @@ public class CassettePlayerInteractable : Interactable
             return;
         }
 
-        if (!PuzzleState.HasCassetteTape)
+        if (!PlayerHasCassetteTape())
         {
             DialogueManager.Instance?.StartDialogue("Cassette Player",
                 new[] { "You need a tape to play this." });
@@ -46,7 +47,26 @@ public class CassettePlayerInteractable : Interactable
 
     private void OnRecordingComplete()
     {
-        if (witnessNPC != null)
-            witnessNPC.gameObject.SetActive(true);
+        if (witnessNPC == null) return;
+
+        var p = GameObject.FindGameObjectWithTag("Player");
+        if (p != null)
+            witnessNPC.transform.position = p.transform.position + new Vector3(1.25f, -0.7f, 0f);
+
+        witnessNPC.gameObject.SetActive(true);
+    }
+
+    static bool PlayerHasCassetteTape()
+    {
+        if (PuzzleState.HasCassetteTape) return true;
+
+        var p = GameObject.FindGameObjectWithTag("Player");
+        var inv = p != null ? p.GetComponent<PlayerInventory>() : null;
+        if (inv == null) return false;
+
+        foreach (var it in inv.ListItems())
+            if (it != null && it.ItemName == "Cassette Tape") return true;
+
+        return false;
     }
 }

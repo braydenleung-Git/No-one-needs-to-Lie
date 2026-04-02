@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,8 +27,11 @@ public class Level2SceneBuilder : MonoBehaviour
     public Sprite cassetteTapeSprite;
     public Sprite cassettePlayerSprite;
 
-    [Tooltip("When false, existing colliders under WallsRoot are left alone so manual moves in the editor survive Play mode. Turn on again to re-apply coded layout.")]
-    public bool regenerateWallsFromLayout = true;
+    [Tooltip("When true, replaces all wall colliders from code (wipes manual edits). Set false to hand-tune positions in the scene; turn on once to regenerate defaults.")]
+    public bool regenerateWallsFromLayout = false;
+
+    [Tooltip("When true, replaces painting/safe triggers from code. When false, your moved colliders survive Play mode. Empty folder still gets defaults once.")]
+    public bool regeneratePaintingTriggersFromLayout = false;
 
     const string GeneratedRootName = "__Level2_Generated";
     bool _rebuildScheduled;
@@ -98,12 +102,13 @@ public class Level2SceneBuilder : MonoBehaviour
         if (!scene.isLoaded)
             return;
 
-        // Keep edit-time preview minimal: only background + walls (no puzzle objects/NPC).
-        // In play mode, we also want background + walls, but we avoid duplicates.
+        // Background always syncs to the assigned sprite. Walls / painting triggers can be
+        // regenerated from code or hand-edited under __Level2_Generated (see inspector flags).
         var root = FindOrCreateRoot(scene);
 
         var bgParent = FindOrCreateChild(root, "BackgroundRoot");
         var wallsParent = FindOrCreateChild(root, "WallsRoot");
+        var paintingParent = FindOrCreateChild(root, "PaintingPuzzleTriggers");
 
         ClearChildren(bgParent);
         CreateBackground(scene, bgParent.transform);
@@ -112,6 +117,16 @@ public class Level2SceneBuilder : MonoBehaviour
         {
             ClearChildren(wallsParent);
             CreateWalls(scene, wallsParent.transform);
+        }
+
+        if (regeneratePaintingTriggersFromLayout)
+        {
+            ClearChildren(paintingParent);
+            CreatePaintingPuzzleAndSafe(scene, paintingParent.transform);
+        }
+        else if (paintingParent.transform.childCount == 0)
+        {
+            CreatePaintingPuzzleAndSafe(scene, paintingParent.transform);
         }
 
         FrameCameraToBackground();
@@ -345,6 +360,11 @@ public class Level2SceneBuilder : MonoBehaviour
         col.isTrigger = true;
 
         go.AddComponent<YSortingOrder>();
+
+        var tapeItem = go.AddComponent<Item>();
+        tapeItem.ItemName   = "Cassette Tape";
+        tapeItem.Description = "A small cassette. It might fit the player in the living room.";
+
         go.AddComponent<CassetteTapePickup>();
 
         // child: just the renderer, scaled down so the pixel art looks right on screen
@@ -418,7 +438,8 @@ public class Level2SceneBuilder : MonoBehaviour
     GameObject CreateWitnessNPC(Scene scene)
     {
         var go = new GameObject("Witness");
-        go.transform.position   = new Vector3(0.5f, 0.8f, 0f);
+        // default pose: hall side of living room (OnRecordingComplete also nudges near player)
+        go.transform.position   = new Vector3(0.35f, 0.05f, 0f);
         go.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
 
         var sr          = go.AddComponent<SpriteRenderer>();
@@ -447,6 +468,124 @@ public class Level2SceneBuilder : MonoBehaviour
 
         SceneManager.MoveGameObjectToScene(go, scene);
         return go;
+    }
+
+    // ── Painting cipher + art room safe ─────────────────────────────────────
+    // Four interactables under CipherPaintings_LUCY spell L-U-C-Y by position (1→4). Decorative frames are optional.
+    // ArtRoom_Safe uses ArtRoomSafeInteractable: type PuzzleState.ArtRoomCodeSolution ("LUCY") + Enter.
+
+    void CreatePaintingPuzzleAndSafe(Scene scene, Transform paintingPuzzleRoot)
+    {
+        var cipherRoot = new GameObject("CipherPaintings_LUCY");
+        cipherRoot.transform.SetParent(paintingPuzzleRoot, false);
+
+        var decorRoot = new GameObject("DecorativePaintings");
+        decorRoot.transform.SetParent(paintingPuzzleRoot, false);
+
+        void AddPainting(Transform parent, string name, Vector3 pos, Vector2 size, System.Action<PaintingClueInteractable> setup)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            go.transform.position = pos;
+            var col = go.AddComponent<BoxCollider2D>();
+            col.isTrigger = true;
+            col.size = size;
+            var clue = go.AddComponent<PaintingClueInteractable>();
+            setup?.Invoke(clue);
+            // Do not call SceneManager.MoveGameObjectToScene on children — Unity only moves root objects.
+            // Parent is already in the target scene, so this object inherits the correct scene.
+        }
+
+        // ── 4 cipher boxes → anagram orders to LUCY (position index = letter slot in the name)
+        AddPainting(cipherRoot.transform, "Cipher_01_Pos1_L_Seascape", new Vector3(0.62f, 1.58f, 0f), new Vector2(0.5f, 0.45f), c =>
+        {
+            c.paintingTitle = "Seascape";
+            c.isCipherClue = true;
+            c.clueLetter = 'L';
+            c.positionIndex = 1;
+            c.countedObjectSingular = "boat";
+            c.countedObjectPlural = "boats";
+        });
+
+        AddPainting(cipherRoot.transform, "Cipher_02_Pos2_U_Cabin", new Vector3(-1.12f, 1.58f, 0f), new Vector2(0.5f, 0.45f), c =>
+        {
+            c.paintingTitle = "Landscape (cabin)";
+            c.isCipherClue = true;
+            c.clueLetter = 'U';
+            c.positionIndex = 2;
+            c.countedObjectSingular = "chimney stack";
+            c.countedObjectPlural = "chimney stacks";
+        });
+
+        AddPainting(cipherRoot.transform, "Cipher_03_Pos3_C_Skyline", new Vector3(5.18f, 1.92f, 0f), new Vector2(0.65f, 0.4f), c =>
+        {
+            c.paintingTitle = "City skyline";
+            c.isCipherClue = true;
+            c.clueLetter = 'C';
+            c.positionIndex = 3;
+            c.countedObjectSingular = "lit tower";
+            c.countedObjectPlural = "lit towers";
+        });
+
+        AddPainting(cipherRoot.transform, "Cipher_04_Pos4_Y_Map", new Vector3(4.92f, 0.35f, 0f), new Vector2(0.6f, 0.5f), c =>
+        {
+            c.paintingTitle = "World map";
+            c.isCipherClue = true;
+            c.clueLetter = 'Y';
+            c.positionIndex = 4;
+            c.countedObjectSingular = "compass tick";
+            c.countedObjectPlural = "compass ticks";
+        });
+
+        // Optional décor (not part of the four-letter code)
+        AddPainting(decorRoot.transform, "Decor_Kitchen_Family", new Vector3(-3.82f, 1.76f, 0f), new Vector2(0.55f, 0.45f), c =>
+        {
+            c.paintingTitle = "Family portrait";
+            c.isCipherClue = false;
+            c.flavorLinesNoCipher = new[]
+            {
+                "A posed family dinner. Warm, ordinary — no obvious code."
+            };
+        });
+
+        AddPainting(decorRoot.transform, "Decor_Art_Botanical", new Vector3(5.12f, -1.72f, 0f), new Vector2(0.45f, 0.65f), c =>
+        {
+            c.paintingTitle = "Botanical chart";
+            c.isCipherClue = false;
+            c.flavorLinesNoCipher = new[]
+            {
+                "Pressed flowers and Latin names. Pretty, but not part of the frame cipher."
+            };
+        });
+
+        AddPainting(decorRoot.transform, "Decor_Art_Easel", new Vector3(6.05f, -2.55f, 0f), new Vector2(0.5f, 0.55f), c =>
+        {
+            c.paintingTitle = "Easel study";
+            c.isCipherClue = false;
+            c.flavorLinesNoCipher = new[]
+            {
+                "A half-finished tree study. The brushwork is impatient."
+            };
+        });
+
+        // Wall safe — interact → dialogue → type letters (max 4) + Enter
+        var safe = new GameObject("ArtRoom_Safe_CodeLock");
+        safe.transform.SetParent(paintingPuzzleRoot, false);
+        safe.transform.position = new Vector3(4.85f, -2.05f, 0f);
+        var safeCol = safe.AddComponent<BoxCollider2D>();
+        safeCol.isTrigger = true;
+        safeCol.size = new Vector2(0.65f, 0.55f);
+        var safeComp = safe.AddComponent<ArtRoomSafeInteractable>();
+        safeComp.correctCode = PuzzleState.ArtRoomCodeSolution;
+        safeComp.maxCodeLength = PuzzleState.ArtRoomCodeSolution.Length;
+
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            UnityEditor.EditorUtility.SetDirty(paintingPuzzleRoot.gameObject);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+        }
+#endif
     }
 
     // ── Helper ────────────────────────────────────────────────────────────────

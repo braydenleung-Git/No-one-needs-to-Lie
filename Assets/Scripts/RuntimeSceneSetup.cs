@@ -259,7 +259,7 @@ public class RuntimeSceneSetup : MonoBehaviour
         tmp.text     = text;
         tmp.fontSize = fontSize;
         tmp.color    = color;
-        tmp.enableWordWrapping = true;
+        tmp.textWrappingMode = TextWrappingModes.Normal;
         if (bold) tmp.fontStyle = FontStyles.Bold;
         return tmp;
     }

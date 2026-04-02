@@ -12,14 +12,12 @@ public class CassetteTapePickup : Interactable
     {
         if (PuzzleState.HasCassetteTape) return; // already picked up, shouldn't be reachable
 
-        // add to player inventory
         var player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            var inv = player.GetComponent<PlayerInventory>();
-            if (inv != null && cassetteTapeItem != null)
-                inv.AddItem(cassetteTapeItem);
-        }
+        var inv    = player != null ? player.GetComponent<PlayerInventory>() : null;
+        var item   = cassetteTapeItem != null ? cassetteTapeItem : GetComponent<GameItem>();
+
+        if (inv != null && item != null)
+            inv.AddItem(item);
 
         PuzzleState.HasCassetteTape = true;
 

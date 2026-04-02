@@ -29,15 +29,30 @@ public abstract class Interactable : MonoBehaviour
 
     private void Update()
     {
+        OnInteractableUpdateEarly();
+
         if (!playerInRange) return;
 
         // don't let the player re-trigger while dialogue is already open
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive()) return;
 
+        OnInteractableUpdateInRange();
+
+        if (!AllowInteractWithE()) return;
+
         // using new input system here, old Input.GetKeyDown doesn't work with it
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
             Interact();
     }
+
+    /// <summary>Runs every frame before range/dialogue checks (e.g. multi-frame input flows).</summary>
+    protected virtual void OnInteractableUpdateEarly() { }
+
+    /// <summary>Runs every frame while the player is in range and no dialogue is open.</summary>
+    protected virtual void OnInteractableUpdateInRange() { }
+
+    /// <summary>When false, E will not fire Interact() (subclasses can absorb E for other UI).</summary>
+    protected virtual bool AllowInteractWithE() => true;
 
     // subclasses fill this in, e.g. NPCController starts dialogue
     public abstract void Interact();
