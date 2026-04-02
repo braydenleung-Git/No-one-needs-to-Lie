@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Backround.meta
+guid: 2b1501dce8d9d644c9ae3004df7db890
+========
 guid: 725b097a9d65a704ea77eea872c3a2a4
+>>>>>>>> origin/master:Assets/Imported Assets/Police HUb/Main.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

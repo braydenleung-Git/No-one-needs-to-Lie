@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: ff882a05e04ff6c468ca89d0d50f5c37
+<<<<<<<< HEAD:Assets/Adaptive Performance.meta
+guid: 5371009d8b5c01243ac0ff4b58beff75
+========
+guid: a5e263fd3306f134896f937c1d6a115c
+>>>>>>>> origin/master:Assets/Imported Assets/Police HUb.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
