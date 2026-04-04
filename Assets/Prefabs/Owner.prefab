@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5721637745520971657}
   - component: {fileID: 5141830371600180097}
   - component: {fileID: 1125914238881991090}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: VisionCone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5725122180056689678}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0.3, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -103,11 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c81c92b4d291247bfc14bcf8aa4845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfVision
-  viewRadius: 6
+  viewRadius: 7
   viewAngle: 28
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16
   yellowAlertTime: 0.3
   redAlertTime: 0.5
   chaseTime: 2.5
@@ -124,9 +124,9 @@ GameObject:
   - component: {fileID: 2297411932515318838}
   - component: {fileID: 790552813914975665}
   - component: {fileID: 5528131058948720854}
-  - component: {fileID: 210588433768720476}
   - component: {fileID: 3386806772684050483}
-  m_Layer: 0
+  - component: {fileID: 982529010767866558}
+  m_Layer: 3
   m_Name: Owner
   m_TagString: NPC
   m_Icon: {fileID: 0}
@@ -142,8 +142,8 @@ Transform:
   m_GameObject: {fileID: 6382966406915445828}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.62, y: -4.09, z: 0}
+  m_LocalScale: {x: 2.1110325, y: 1.8277693, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1336395088431160613}
@@ -196,7 +196,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 253833388553395835, guid: 0e0760af6ea0d5d4e84b444b43a9652e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -257,8 +257,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &210588433768720476
-CapsuleCollider2D:
+--- !u!114 &3386806772684050483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382966406915445828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f8207ab8e3fec247927b52cbe1c26f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPC_Patrol
+  patrolPoints:
+  - {x: -2.37, y: -5.11}
+  - {x: -2.45, y: -2.6}
+  - {x: -5.06, y: -3.6}
+  - {x: 0.62, y: -4.09}
+  speed: 1.8
+  chaseSpeed: 3.5
+  pauseDuration: 0.5
+  currentDirection: {x: 0, y: 0}
+--- !u!61 &982529010767866558
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -291,27 +312,15 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.012597799, y: 0.041392922}
-  m_Size: {x: 0.5828167, y: 1.0996242}
-  m_Direction: 0
---- !u!114 &3386806772684050483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6382966406915445828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f8207ab8e3fec247927b52cbe1c26f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPC_Patrol
-  patrolPoints:
-  - {x: -3.92, y: -0.1}
-  - {x: 5.3, y: 0.15}
-  - {x: 5, y: 3.03}
-  - {x: -4.27, y: 3.08}
-  speed: 1.5
-  chaseSpeed: 2.3
-  pauseDuration: 0.5
-  currentDirection: {x: 0, y: 0}
+  m_Offset: {x: 0.008417062, y: -0.048811436}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.68, y: 1.24}
+    newSize: {x: 0.68, y: 1.24}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.39360416, y: 0.82576215}
+  m_EdgeRadius: 0
