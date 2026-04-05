@@ -15,7 +15,7 @@ public class SafeOpenUI : MonoBehaviour
         closeButton?.onClick.AddListener(CloseUI);
 
         // show or hide based on whether safe is already solved
-        gameObject.SetActive(GameState.SafeSolved);
+        gameObject.SetActive(GameState.Instance.SafeSolved);
     }
 
     public void Show()

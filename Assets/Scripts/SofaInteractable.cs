@@ -75,7 +75,7 @@ public class SofaInteractable : Interactable
 
         // flag for GameState so SafeInteractable knows sofa has been investigated
         // safe prompt won't appear until this is true
-        GameState.SofaInvestigated = true;
+        GameState.Instance.SofaInvestigated = true;
     }
 
     // override Update from Interactable to also handle the sliding movement

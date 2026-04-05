@@ -38,7 +38,7 @@ public class SafeInteractable : Interactable
             safeUICanvas.SetActive(false);
 
         // if already solved on start, mark local flag too
-        if (GameState.SafeSolved)
+        if (GameState.Instance.SafeSolved)
             safeSolved = true;
 
         // wire up buttons
@@ -52,11 +52,11 @@ public class SafeInteractable : Interactable
     protected override void OnInteractableUpdateInRange()
     {
         // hide prompt if safe is open, safe open UI is open, or sofa not investigated yet
-        if (!GameState.SofaInvestigated || safeOpen || (safeOpenUI != null && safeOpenUI.IsOpen))
+        if (!GameState.Instance.SofaInvestigated || safeOpen || (safeOpenUI != null && safeOpenUI.IsOpen))
         {
             InteractionPromptUI.Instance?.Hide();
         }
-        else if (GameState.SafeSolved)
+        else if (GameState.Instance.SafeSolved)
         {
             interactPrompt = "Press [E] to examine safe";
             InteractionPromptUI.Instance?.Show(interactPrompt, transform);
@@ -70,10 +70,10 @@ public class SafeInteractable : Interactable
 
     public override void Interact()
     {
-        if (!GameState.SofaInvestigated) return;
+        if (!GameState.Instance.SofaInvestigated) return;
 
         // if already solved just show the open interior UI
-        if (GameState.SafeSolved)
+        if (GameState.Instance.SafeSolved)
         {
             if (safeOpenUI != null) safeOpenUI.Show();
             return;
@@ -131,7 +131,7 @@ public class SafeInteractable : Interactable
         {
             // correct!
             safeSolved = true;
-            GameState.SafeSolved = true;
+            GameState.Instance.SafeSolved = true;
             CloseSafe();
             DialogueManager.Instance?.StartDialogue(
                 "",
