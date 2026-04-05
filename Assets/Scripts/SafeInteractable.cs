@@ -33,15 +33,19 @@ public class SafeInteractable : Interactable
     {
         interactPrompt = "Press [E] to interact with safe";
 
-        // hide safe UI at start
         if (safeUICanvas != null)
             safeUICanvas.SetActive(false);
 
-        // if already solved on start, mark local flag too
+        // safety check for testing directly without Town scene
+        if (GameState.Instance == null)
+        {
+            var go = new GameObject("GameStateManager");
+            go.AddComponent<GameState>();
+        }
+
         if (GameState.Instance.SafeSolved)
             safeSolved = true;
 
-        // wire up buttons
         submitButton?.onClick.AddListener(OnSubmitCode);
         closeButton?.onClick.AddListener(CloseSafe);
 

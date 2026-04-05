@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// attach to an exit trigger inside each level scene
-// takes the player back to the Town scene
+// attach to exit trigger in each level
+// player presses E to leave and returns to Town in front of the correct building
 public class ReturnToTown : MonoBehaviour
 {
-    [SerializeField] private string exitPrompt = "Press [E] to exit";
+    [SerializeField] private int levelNumber;                    // which level this exit belongs to
+    [SerializeField] private string exitPrompt = "Press [E] to exit"; 
 
     private bool playerInRange = false;
 
@@ -27,6 +28,11 @@ public class ReturnToTown : MonoBehaviour
     {
         if (!playerInRange) return;
         if (UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            // save which level we're returning from
+            // so Town knows where to spawn the player
+            PlayerSpawnManager.ReturnFromLevel = levelNumber;
             SceneManager.LoadScene("Town");
+        }
     }
 }
