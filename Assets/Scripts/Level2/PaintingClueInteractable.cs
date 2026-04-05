@@ -1,10 +1,18 @@
 using UnityEngine;
 
 // put this on any framed painting in the art room (or anywhere really)
-// each cipher painting hides a letter and a position number, player collects all 4 to spell LUCY
+// each cipher painting hides a letter and a position number, player collects all 4 to spell JOHN
 // nothing useful shows up until the cassette recording has been played - that's the trigger
 public class PaintingClueInteractable : Interactable
 {
+    public enum LetterCorner
+    {
+        BottomLeft,
+        BottomRight,
+        TopLeft,
+        TopRight
+    }
+
     [Header("Identity")]
     [Tooltip("Shown as the dialogue speaker label.")]
     public string paintingTitle = "Painting";
@@ -17,6 +25,9 @@ public class PaintingClueInteractable : Interactable
     public int positionIndex = 1;
     public string countedObjectSingular = "boat";
     public string countedObjectPlural = "boats";
+
+    [Tooltip("Where the scratched letter appears on the canvas (for flavour text).")]
+    public LetterCorner letterInscribedCorner = LetterCorner.BottomLeft;
 
     [Header("Gating")]
     [Tooltip("If true, cipher lines only appear after the cassette has been played once.")]
@@ -33,6 +44,18 @@ public class PaintingClueInteractable : Interactable
     {
         "Nice frame. It doesn't seem to hide a message."
     };
+
+    static string CornerPhrase(LetterCorner c)
+    {
+        return c switch
+        {
+            LetterCorner.BottomLeft => "bottom-left",
+            LetterCorner.BottomRight => "bottom-right",
+            LetterCorner.TopLeft => "top-left",
+            LetterCorner.TopRight => "top-right",
+            _ => "bottom-left"
+        };
+    }
 
     // handles 1st, 2nd, 3rd, 4th etc - the 11/12/13 edge case trips people up so handling it explicitly
     static string Ordinal(int n)
@@ -58,16 +81,16 @@ public class PaintingClueInteractable : Interactable
     }
 
     // assembles the actual cipher dialogue lines from the letter + count data
-    // this is what the player reads and writes down to figure out the safe code
     string[] BuildCipherLines()
     {
         char L = char.ToUpper(clueLetter);
         string ord = Ordinal(positionIndex);
+        string corner = CornerPhrase(letterInscribedCorner);
         return new[]
         {
-            "You study the composition and the frame.",
-            $"A letter seems worked into the scene: '{L}'.",
-            $"You count {CountPhrase()} — as if marking the {ord} spot in a hidden name."
+            "You study the composition, the varnish, and the edge of the frame.",
+            $"You notice {CountPhrase()}. Faintly scratched into the {corner} of the image is the letter '{L}'.",
+            $"It feels deliberate — as if marking the {ord} letter of a hidden name."
         };
     }
 
@@ -91,7 +114,6 @@ public class PaintingClueInteractable : Interactable
             return;
         }
 
-        // show the actual cipher clue
         DialogueManager.Instance.StartDialogue(paintingTitle, BuildCipherLines());
     }
 
