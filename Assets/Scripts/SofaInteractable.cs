@@ -39,6 +39,13 @@ public class SofaInteractable : Interactable
         }
     }
 
+    // hides prompt permanently after sofa has been investigated
+    protected override void OnInteractableUpdateInRange()
+    {
+        if (hasBeenInteracted)
+            InteractionPromptUI.Instance?.Hide();
+    }
+
     public override void Interact()
     {
         if (hasBeenInteracted) return; // sofa already moved, don't re-trigger
