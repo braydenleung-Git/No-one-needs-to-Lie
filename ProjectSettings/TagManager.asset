@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - NPC
+  - L3 bck
   layers:
   - Default
   - TransparentFX
@@ -12,11 +13,11 @@ TagManager:
   - Furniture
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - l3-1
+  - l3-2
+  - l3-3
+  - l3-4
+  - l3-5
   - 
   - 
   - 
