@@ -108,7 +108,7 @@ public class DialogueManager : MonoBehaviour
         foreach (char c in line)
         {
             dialogueBodyText.text += c;
-            yield return new WaitForSeconds(charDelay);
+            yield return new WaitForSecondsRealtime(charDelay);
         }
 
         isTyping = false;
