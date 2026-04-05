@@ -9,8 +9,8 @@ public class IntroController : MonoBehaviour
     public Animator Text2Animator;
     public Animator TextFinalAnimator;
     
-    // [Header("Player")]
-    // public PlayerController playerController;
+    [Header("Player")]
+    public PlayerController playerController;
     
     private int _index = 1;
     private bool _isIntro = true;
@@ -19,20 +19,20 @@ public class IntroController : MonoBehaviour
     {
         //lock player input until animation is over
         Text1Animator.Play("Text1");
-        // playerController.canMove = false;
+        playerController.canMove = false;
     }
 
     void Update()
     {
         if (_isIntro && Keyboard.current.spaceKey.wasPressedThisFrame && !IsAnimating())
         {
-            //lock player input
             AdvanceCinematic();
         }
 
+        //release the control of the player once the intro is over
         if (!_isIntro && !IsAnimating())
         {
-            //release player lock input
+            playerController.canMove = true;
         }
     }
 

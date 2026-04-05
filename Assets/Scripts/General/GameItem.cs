@@ -3,7 +3,7 @@ using UnityEngine;
 /// This Abstract class is meant for any item used in the game.
 /// e.g dropped items would extend from this class
 /// </summary>
-public abstract class GameItem : MonoBehaviour, Hintable
+public abstract class GameItem : MonoBehaviour
 {
     [Header("Item Info")]
     [field: SerializeField] public string ItemName { get; set; }
@@ -13,6 +13,4 @@ public abstract class GameItem : MonoBehaviour, Hintable
     
     public bool IsVisible { get; set; }
     public bool IsOutlined { get; set; }
-    public bool IsHinted { get; set; }
-    public Sprite HintIcon { get; set; }
 }

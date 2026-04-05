@@ -10,12 +10,14 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected string interactPrompt = "Press [E] to interact";
 
     protected bool playerInRange = false;
+    protected GameObject player;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
 
         playerInRange = true;
+        player = other.gameObject;
         InteractionPromptUI.Instance?.Show(interactPrompt, transform);
     }
 
@@ -24,6 +26,7 @@ public abstract class Interactable : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         playerInRange = false;
+        player = null;
         InteractionPromptUI.Instance?.Hide();
     }
 
