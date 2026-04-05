@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 lastMoveDirection = Vector2.down;
 
     private List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+    
+    public bool canMove = true;
 
     void Start()
     {
@@ -30,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 animDirection = movementInput != Vector2.zero ? movementInput : lastMoveDirection;
 
-        if (animator != null)
+        if (animator != null && canMove)
         {
             animator.SetFloat("MoveX", animDirection.x);
             animator.SetFloat("MoveY", animDirection.y);
