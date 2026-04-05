@@ -4720,7 +4720,7 @@ TextureImporter:
         width: 50
         height: 57
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -4729,6 +4729,138 @@ TextureImporter:
       bones: []
       spriteID: 1a0638bc2795d4472b9e5cc7da6c29e6
       internalID: -74792768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Office Tileset All 48x48_190
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 360
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bb6d536c94f64800a6c3e632bc8495e
+      internalID: -1440177878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Office Tileset All 48x48_191
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 347
+        width: 18
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f593c82a1e3104d6a859cb2002a6cf90
+      internalID: 2006421152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Office Tileset All 48x48_192
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 331
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d25ec32387eb24d8eb57da6555249f65
+      internalID: -351050958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Office Tileset All 48x48_193
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 314
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa7a77350ec81439ab4e452b2533306d
+      internalID: 755646514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Office Tileset All 48x48_194
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 307
+        width: 6
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae9e6720e62084269962903876374d0b
+      internalID: 1517412646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Office Tileset All 48x48_195
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 299
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab0bf3ba2cdd9461ba53de532c6b1674
+      internalID: 1516658653
       vertices: []
       indices: 
       edges: []
@@ -4849,6 +4981,12 @@ TextureImporter:
       Office Tileset All 48x48_188: 387584156
       Office Tileset All 48x48_189: -74792768
       Office Tileset All 48x48_19: 1996569471134609174
+      Office Tileset All 48x48_190: -1440177878
+      Office Tileset All 48x48_191: 2006421152
+      Office Tileset All 48x48_192: -351050958
+      Office Tileset All 48x48_193: 755646514
+      Office Tileset All 48x48_194: 1517412646
+      Office Tileset All 48x48_195: 1516658653
       Office Tileset All 48x48_2: -3785313442848755371
       Office Tileset All 48x48_20: 976909387942404569
       Office Tileset All 48x48_21: 8990286111687023009
