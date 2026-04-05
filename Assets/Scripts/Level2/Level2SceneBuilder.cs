@@ -20,7 +20,8 @@ public class Level2SceneBuilder : MonoBehaviour
     // Scene_Lvl2.png - assign in inspector on the Main Camera
     public Sprite backgroundSprite;
 
-    // witness NPC sprite - assign in inspector
+    // witness NPC — prefer Owner prefab; else built from sprite
+    public GameObject witnessPrefab;
     public Sprite witnessSprite;
 
     // optional inspector overrides; auto-loaded from Resources/CassetteSheet if left empty
@@ -44,6 +45,11 @@ public class Level2SceneBuilder : MonoBehaviour
 
         if (!Application.isPlaying)
             return;
+
+#if UNITY_EDITOR
+        if (witnessPrefab == null)
+            witnessPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Owner.prefab");
+#endif
 
         LoadCassetteSpritesIfNeeded();
 
@@ -437,21 +443,38 @@ public class Level2SceneBuilder : MonoBehaviour
 
     GameObject CreateWitnessNPC(Scene scene)
     {
-        var go = new GameObject("Witness");
-        // default pose: hall side of living room (OnRecordingComplete also nudges near player)
-        go.transform.position   = new Vector3(0.35f, 0.05f, 0f);
-        go.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+        GameObject go;
 
-        var sr          = go.AddComponent<SpriteRenderer>();
-        sr.sprite       = witnessSprite;
-        sr.sortingOrder = 2;
+        if (witnessPrefab != null)
+        {
+            go = Instantiate(witnessPrefab);
+            go.name = "Witness";
+            go.transform.position   = new Vector3(0.35f, 0.05f, 0f);
+            go.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
 
-        go.AddComponent<Animator>();
-        go.AddComponent<YSortingOrder>();
+            NpcPrefabUtility.ConfigureOwnerPrefabForDialogueNpc(go);
 
-        var col       = go.AddComponent<CircleCollider2D>();
-        col.isTrigger = true;
-        col.radius    = 3.0f; // 3.0 * scale 0.4 = 1.2 world units interaction range
+            var sr = go.GetComponent<SpriteRenderer>();
+            if (sr != null)
+                sr.sortingOrder = 2;
+        }
+        else
+        {
+            go = new GameObject("Witness");
+            go.transform.position   = new Vector3(0.35f, 0.05f, 0f);
+            go.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+
+            var srNew          = go.AddComponent<SpriteRenderer>();
+            srNew.sprite       = witnessSprite;
+            srNew.sortingOrder = 2;
+
+            go.AddComponent<Animator>();
+            go.AddComponent<YSortingOrder>();
+
+            var col       = go.AddComponent<CircleCollider2D>();
+            col.isTrigger = true;
+            col.radius    = 3.0f;
+        }
 
         var npc           = go.AddComponent<NPCController>();
         npc.npcName       = "Witness";
@@ -463,7 +486,6 @@ public class Level2SceneBuilder : MonoBehaviour
             "Whatever happened here... it started in that room. Be careful."
         };
 
-        // hidden until CassettePlayerInteractable.OnRecordingComplete fires
         go.SetActive(false);
 
         SceneManager.MoveGameObjectToScene(go, scene);

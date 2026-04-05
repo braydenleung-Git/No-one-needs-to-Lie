@@ -47,6 +47,9 @@ public class FieldOfVision : MonoBehaviour
 
     void LateUpdate()
     {
+        if (patrol == null || ownerPatrol == null)
+            return;
+
         UpdateConeRotation();
         DrawCone();
         CheckVision();
@@ -143,6 +146,8 @@ public class FieldOfVision : MonoBehaviour
 
     private void HandleAlertState()
     {
+        if (patrol == null) return;
+
         if (playerInSight)
         {
             alertTimer += Time.deltaTime;
@@ -202,6 +207,7 @@ public class FieldOfVision : MonoBehaviour
         isChaseRunning = false;
         currentState = AlertState.None;
         alertTimer = 0f;
-        patrol.StopChase();
+        if (patrol != null)
+            patrol.StopChase();
     }
 }
