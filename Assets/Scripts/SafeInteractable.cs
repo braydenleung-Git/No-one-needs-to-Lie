@@ -3,14 +3,23 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+// Attach to your Safe GameObject
+// Requires:
+//   - BoxCollider2D (Is Trigger ON) for interaction detection
+//   - SafeUI canvas assigned in inspector
+//   - SafeOpenUI canvas assigned in inspector
+//   - GameState.cs in project
 public class SafeInteractable : Interactable
 {
     [Header("Safe UI")]
-    [SerializeField] private GameObject safeUICanvas;
-    [SerializeField] private TMP_InputField codeInputField;
-    [SerializeField] private TextMeshProUGUI attemptsText;
-    [SerializeField] private Button submitButton;
-    [SerializeField] private Button closeButton;
+    [SerializeField] private GameObject safeUICanvas;        // the SafeUI canvas GameObject
+    [SerializeField] private TMP_InputField codeInputField;  // CodeInput
+    [SerializeField] private TextMeshProUGUI attemptsText;   // AttemptsText
+    [SerializeField] private Button submitButton;            // SubmitButton
+    [SerializeField] private Button closeButton;             // CloseButton
+
+    [Header("Safe Open UI")]
+    [SerializeField] private SafeOpenUI safeOpenUI;          // drag SafeOpenUI canvas here
 
     [Header("Code")]
     // PLACEHOLDER - change to real DOB later (format DDMMYY or MMDDYY, confirm with team)
@@ -22,31 +31,54 @@ public class SafeInteractable : Interactable
 
     private void Start()
     {
-        interactPrompt = "Press [E] to interact";
+        interactPrompt = "Press [E] to interact with safe";
 
+        // hide safe UI at start
         if (safeUICanvas != null)
             safeUICanvas.SetActive(false);
 
+        // if already solved on start, mark local flag too
+        if (GameState.SafeSolved)
+            safeSolved = true;
+
+        // wire up buttons
         submitButton?.onClick.AddListener(OnSubmitCode);
         closeButton?.onClick.AddListener(CloseSafe);
 
         UpdateAttemptsText();
     }
 
-    // gate check happens here instead of OnTriggerEnter2D
-    // base class handles the trigger, we just block interaction if conditions aren't met
+    // gate check + prompt logic
     protected override void OnInteractableUpdateInRange()
     {
-        if (!GameState.SofaInvestigated || safeSolved || safeOpen) // ← add safeOpen check
+        // hide prompt if safe is open, safe open UI is open, or sofa not investigated yet
+        if (!GameState.SofaInvestigated || safeOpen || (safeOpenUI != null && safeOpenUI.IsOpen))
+        {
             InteractionPromptUI.Instance?.Hide();
-        else
+        }
+        else if (GameState.SafeSolved)
+        {
+            interactPrompt = "Press [E] to examine safe";
             InteractionPromptUI.Instance?.Show(interactPrompt, transform);
+        }
+        else
+        {
+            interactPrompt = "Press [E] to interact with safe";
+            InteractionPromptUI.Instance?.Show(interactPrompt, transform);
+        }
     }
 
     public override void Interact()
     {
-        if (!GameState.SofaInvestigated) return; // sofa must be done first
-        if (safeSolved) return;
+        if (!GameState.SofaInvestigated) return;
+
+        // if already solved just show the open interior UI
+        if (GameState.SafeSolved)
+        {
+            if (safeOpenUI != null) safeOpenUI.Show();
+            return;
+        }
+
         OpenSafe();
     }
 
@@ -54,14 +86,18 @@ public class SafeInteractable : Interactable
     {
         safeOpen = true;
         safeUICanvas.SetActive(true);
-    
-        InteractionPromptUI.Instance?.Hide(); // ← add this line
 
+        // hide prompt while safe UI is open
+        InteractionPromptUI.Instance?.Hide();
+
+        // freeze player while safe is open
         Time.timeScale = 0f;
 
+        // clear previous input
         if (codeInputField != null)
             codeInputField.text = "";
 
+        // show attempts dialogue
         DialogueManager.Instance?.StartDialogue(
             "",
             new[] { $"You have {attemptsLeft} attempt(s). Find clues related to the owner..." }
@@ -81,6 +117,7 @@ public class SafeInteractable : Interactable
 
         string entered = codeInputField.text.Trim();
 
+        // check if player actually entered something
         if (entered.Length < 6)
         {
             DialogueManager.Instance?.StartDialogue(
@@ -92,7 +129,9 @@ public class SafeInteractable : Interactable
 
         if (entered == correctCode)
         {
+            // correct!
             safeSolved = true;
+            GameState.SafeSolved = true;
             CloseSafe();
             DialogueManager.Instance?.StartDialogue(
                 "",
@@ -102,11 +141,13 @@ public class SafeInteractable : Interactable
         }
         else
         {
+            // wrong code
             attemptsLeft--;
             UpdateAttemptsText();
 
             if (attemptsLeft <= 0)
             {
+                // no attempts left - restart game
                 CloseSafe();
                 DialogueManager.Instance?.StartDialogue(
                     "",
@@ -116,6 +157,7 @@ public class SafeInteractable : Interactable
             }
             else
             {
+                // still have attempts
                 codeInputField.text = "";
                 DialogueManager.Instance?.StartDialogue(
                     "",
@@ -133,7 +175,8 @@ public class SafeInteractable : Interactable
 
     private void TriggerNextEvent()
     {
-        Debug.Log("Safe solved - trigger next event");
+        // safe is cracked - show the interior UI
+        if (safeOpenUI != null) safeOpenUI.Show();
     }
 
     private void RestartGame()
@@ -142,5 +185,6 @@ public class SafeInteractable : Interactable
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    // block E from firing Interact() while safe UI is open
     protected override bool AllowInteractWithE() => !safeOpen;
 }

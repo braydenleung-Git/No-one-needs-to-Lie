@@ -15,7 +15,7 @@ public class BulletinBoardInteractable : Interactable
 
     private void Start()
     {
-        interactPrompt = "Press [E] to examine board";
+        interactPrompt = "Press [E] to interact";
 
         if (bulletinBoardUI != null)
             bulletinBoardUI.SetActive(false);
