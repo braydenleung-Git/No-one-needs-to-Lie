@@ -10,12 +10,13 @@ public class CourtEvidenceUI : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private GameObject evidencePanel;
     [SerializeField] private Transform buttonContainer;
-    [SerializeField] private Button buttonPrefab;
+    [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private TextMeshProUGUI judgeResponseText;
-    [SerializeField] private Button closeButton;
+    [SerializeField] private GameObject closeButton;
 
     [Header("Player")]
     [SerializeField] private PlayerInventory playerInventory;
+    private UnityEngine.InputSystem.PlayerInput playerInput;
 
     // add more responses here matching your GameItem ItemNames exactly
     private Dictionary<string, string> judgeResponses = new Dictionary<string, string>()
@@ -32,12 +33,21 @@ public class CourtEvidenceUI : MonoBehaviour
         else { Destroy(gameObject); return; }
 
         evidencePanel.SetActive(false);
-        closeButton.onClick.AddListener(() => evidencePanel.SetActive(false));
+        closeButton.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            evidencePanel.SetActive(false);
+            if (playerInput != null) playerInput.enabled = true;
+        });
     }
 
     public void OpenPanel()
     {
         // clear any old buttons from last time
+        
+        if (playerInput == null)
+            playerInput = FindFirstObjectByType<UnityEngine.InputSystem.PlayerInput>();
+        if (playerInput != null) playerInput.enabled = false;
+        
         foreach (Transform child in buttonContainer)
             Destroy(child.gameObject);
 
@@ -52,7 +62,7 @@ public class CourtEvidenceUI : MonoBehaviour
             judgeResponseText.text = "Choose your evidence, counselor.";
             foreach (GameItem item in items)
             {
-                Button btn = Instantiate(buttonPrefab, buttonContainer);
+                Button btn = Instantiate(buttonPrefab, buttonContainer).GetComponent<Button>();
                 btn.GetComponentInChildren<TextMeshProUGUI>().text = item.ItemName;
                 GameItem captured = item;
                 btn.onClick.AddListener(() => PresentEvidence(captured));
