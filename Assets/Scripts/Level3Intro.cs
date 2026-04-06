@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
-using UnityEngine.InputSystem;
 
 public class Level3Intro : MonoBehaviour
 {
@@ -13,7 +12,6 @@ public class Level3Intro : MonoBehaviour
     [SerializeField] private float lightFadeDuration = 2f;
 
     private Image darkOverlay;
-    private PlayerInput cachedPlayerInput; // cached on Start
 
     private void Start()
     {
@@ -23,9 +21,6 @@ public class Level3Intro : MonoBehaviour
             go.AddComponent<GameState>();
         }
 
-        // cache player input reference immediately
-        cachedPlayerInput = Object.FindFirstObjectByType<PlayerInput>();
-
         // hide owner
         if (owner != null) owner.SetActive(false);
 
@@ -33,8 +28,6 @@ public class Level3Intro : MonoBehaviour
         if (GameState.Instance.Level3IntroSeen) return;
 
         darkOverlay = CreateDarkOverlay();
-
-        SetPlayerMovement(false);
 
         DialogueManager.Instance?.StartDialogue(
             "",
@@ -54,11 +47,7 @@ public class Level3Intro : MonoBehaviour
 
     private IEnumerator FadeLightsOn()
     {
-        if (darkOverlay == null)
-        {
-            SetPlayerMovement(true);
-            yield break;
-        }
+        if (darkOverlay == null) yield break;
 
         float elapsed = 0f;
         float startAlpha = darkOverlay.color.a;
@@ -72,7 +61,6 @@ public class Level3Intro : MonoBehaviour
         }
 
         Destroy(darkOverlay.gameObject);
-        SetPlayerMovement(true);
     }
 
     private Image CreateDarkOverlay()
@@ -99,18 +87,6 @@ public class Level3Intro : MonoBehaviour
         SceneManager.MoveGameObjectToScene(canvasGO, gameObject.scene);
 
         return img;
-    }
-
-    private void SetPlayerMovement(bool canMove)
-    {
-        if (cachedPlayerInput != null)
-            cachedPlayerInput.enabled = canMove;
-    }
-
-    private void OnDestroy()
-    {
-        // use cached reference - still valid during scene unload
-        SetPlayerMovement(true);
     }
 
     private void SetOverlayAlpha(float alpha)

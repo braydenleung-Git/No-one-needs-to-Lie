@@ -6366,11 +6366,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5183847241151080675, guid: abafcf98c1604134aa0bc5ceed8d282a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 7.2673287
+      value: 0.07266122
       objectReference: {fileID: 0}
     - target: {fileID: 5183847241151080675, guid: abafcf98c1604134aa0bc5ceed8d282a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 7.4885077
+      value: 0.07160781
       objectReference: {fileID: 0}
     - target: {fileID: 5183847241151080675, guid: abafcf98c1604134aa0bc5ceed8d282a, type: 3}
       propertyPath: m_LocalScale.z
@@ -6378,11 +6378,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5183847241151080675, guid: abafcf98c1604134aa0bc5ceed8d282a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5669
+      value: -1.7
       objectReference: {fileID: 0}
     - target: {fileID: 5183847241151080675, guid: abafcf98c1604134aa0bc5ceed8d282a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.2488
+      value: -4.66
       objectReference: {fileID: 0}
     - target: {fileID: 5183847241151080675, guid: abafcf98c1604134aa0bc5ceed8d282a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7755,8 +7755,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameCode::ReturnToTown
   levelNumber: 3
   exitPrompt: Press [E] to exit
-  autoExitOnEnter: 0
-  townSceneName: Town
 --- !u!61 &1045126825
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9037,7 +9035,7 @@ Transform:
   m_GameObject: {fileID: 1392231475}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.5669, y: -4.2488, z: -10}
+  m_LocalPosition: {x: -1.7, y: -4.66, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9510,7 +9508,7 @@ Transform:
   m_GameObject: {fileID: 1632973880}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5669, y: -4.2488, z: -10}
+  m_LocalPosition: {x: -1.7, y: -4.66, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
