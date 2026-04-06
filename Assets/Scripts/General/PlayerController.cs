@@ -57,8 +57,10 @@ public class PlayerController : MonoBehaviour
     // this gets called automatically by the input system when WASD or a stick moves
     void OnMove(InputValue movementValue)
     {
-        movementInput = movementValue.Get<Vector2>();
-
+        if (canMove)
+        {
+            movementInput = movementValue.Get<Vector2>();
+        }
         if (movementInput != Vector2.zero)
         {
             lastMoveDirection = movementInput;
