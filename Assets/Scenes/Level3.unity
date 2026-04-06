@@ -15747,6 +15747,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 353844498}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2036792775 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6382966406915445828, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
+  m_PrefabInstance: {fileID: 6341963607957430650}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2036792782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036792775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e71148a62bb00146858cc7d4ab85234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: GameCode::OwnerPlayerCollision
 --- !u!1 &2139310778
 GameObject:
   m_ObjectHideFlags: 0
@@ -16124,7 +16141,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6382966406915445828, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2036792782}
   m_SourcePrefab: {fileID: 100100000, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

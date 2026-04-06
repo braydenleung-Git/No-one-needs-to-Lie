@@ -75,4 +75,11 @@ public class GameState : MonoBehaviour
         Level1Complete = true;
         Level2Complete = true;
     }
+    public void ResetLevel3()
+    {
+        SofaInvestigated = false;
+        SafeSolved = false;
+        savedPositions.Remove("Level3_Sofa_pos");
+        savedStates.Remove("Level3_Sofa_active");
+    }
 }

@@ -20,8 +20,15 @@ public class Owner_Patrol : MonoBehaviour, IPatroller
 
     void Start()
     {
+        // if level already completed, owner doesn't exist
+        if (GameState.Instance != null && GameState.Instance.Level3Complete)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>(); 
+        anim = GetComponent<Animator>();
         target = patrolPoints[0].position;
     }
 
