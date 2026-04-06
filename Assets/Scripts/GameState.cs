@@ -12,6 +12,15 @@ public class GameState : MonoBehaviour
     [HideInInspector] public bool Level4Complete = false;
     [HideInInspector] public bool Level5Complete = false;
 
+    // Level 2 specific flags - owned by Level 2 teammate
+    [HideInInspector] public bool Level2_CassetteInteracted = false;
+    [HideInInspector] public bool Level2_CassetteInserted = false;
+    [HideInInspector] public bool Level2_Painting1Viewed = false;
+    [HideInInspector] public bool Level2_Painting2Viewed = false;
+    [HideInInspector] public bool Level2_Painting3Viewed = false;
+    [HideInInspector] public bool Level2_Painting4Viewed = false;
+    [HideInInspector] public bool Level2_PinSolved = false;
+    
     // level 3 specific flags
     [HideInInspector] public bool SofaInvestigated = false;
     [HideInInspector] public bool SafeSolved       = false;
@@ -34,6 +43,20 @@ public class GameState : MonoBehaviour
             case 4: return Level3Complete;
             case 5: return Level4Complete;
             default: return false;
+        }
+    }
+    
+    public void CheckLevel2Complete()
+    {
+        if (Level2_CassetteInteracted &&
+            Level2_CassetteInserted &&
+            Level2_Painting1Viewed &&
+            Level2_Painting2Viewed &&
+            Level2_Painting3Viewed &&
+            Level2_Painting4Viewed &&
+            Level2_PinSolved)
+        {
+            Level2Complete = true;
         }
     }
 
