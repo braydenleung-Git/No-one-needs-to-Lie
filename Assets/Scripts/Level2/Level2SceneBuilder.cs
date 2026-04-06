@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 // attach to the Main Camera in the Crime Scene level alongside RuntimeSceneSetup
 // builds all the level-specific stuff: background, walls, cassette tape, cassette player, witness NPC
+// (victim body is a prefab instance placed in Crime Scene — not spawned here)
 // runs after RuntimeSceneSetup (which handles player collider, dialogue canvas, prompt canvas, event system)
 //
 // Cassette sprites load automatically from Assets/Resources/CassetteSheet.png
@@ -20,7 +21,8 @@ public class Level2SceneBuilder : MonoBehaviour
     // Scene_Lvl2.png - assign in inspector on the Main Camera
     public Sprite backgroundSprite;
 
-    // witness NPC sprite - assign in inspector
+    // witness NPC — prefer Owner prefab; else built from sprite
+    public GameObject witnessPrefab;
     public Sprite witnessSprite;
 
     // optional inspector overrides; auto-loaded from Resources/CassetteSheet if left empty
@@ -45,9 +47,16 @@ public class Level2SceneBuilder : MonoBehaviour
         if (!Application.isPlaying)
             return;
 
+#if UNITY_EDITOR
+        if (witnessPrefab == null)
+            witnessPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Owner.prefab");
+#endif
+
         LoadCassetteSpritesIfNeeded();
 
         PuzzleState.Reset();
+        if (GameProgress.HasUvFlashlight)
+            PuzzleState.ArtRoomCodeSolved = true;
 
         Scene myScene = gameObject.scene;
         var tapeGO    = CreateCassetteTape(myScene);
@@ -124,10 +133,8 @@ public class Level2SceneBuilder : MonoBehaviour
             ClearChildren(paintingParent);
             CreatePaintingPuzzleAndSafe(scene, paintingParent.transform);
         }
-        else if (paintingParent.transform.childCount == 0)
-        {
-            CreatePaintingPuzzleAndSafe(scene, paintingParent.transform);
-        }
+        else
+            EnsureJohnPaintingPuzzle(scene, paintingParent.transform);
 
         FrameCameraToBackground();
 
@@ -437,21 +444,38 @@ public class Level2SceneBuilder : MonoBehaviour
 
     GameObject CreateWitnessNPC(Scene scene)
     {
-        var go = new GameObject("Witness");
-        // default pose: hall side of living room (OnRecordingComplete also nudges near player)
-        go.transform.position   = new Vector3(0.35f, 0.05f, 0f);
-        go.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+        GameObject go;
 
-        var sr          = go.AddComponent<SpriteRenderer>();
-        sr.sprite       = witnessSprite;
-        sr.sortingOrder = 2;
+        if (witnessPrefab != null)
+        {
+            go = Instantiate(witnessPrefab);
+            go.name = "Witness";
+            go.transform.position   = new Vector3(0.35f, 0.05f, 0f);
+            go.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
 
-        go.AddComponent<Animator>();
-        go.AddComponent<YSortingOrder>();
+            NpcPrefabUtility.ConfigureOwnerPrefabForDialogueNpc(go);
 
-        var col       = go.AddComponent<CircleCollider2D>();
-        col.isTrigger = true;
-        col.radius    = 3.0f; // 3.0 * scale 0.4 = 1.2 world units interaction range
+            var sr = go.GetComponent<SpriteRenderer>();
+            if (sr != null)
+                sr.sortingOrder = 2;
+        }
+        else
+        {
+            go = new GameObject("Witness");
+            go.transform.position   = new Vector3(0.35f, 0.05f, 0f);
+            go.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+
+            var srNew          = go.AddComponent<SpriteRenderer>();
+            srNew.sprite       = witnessSprite;
+            srNew.sortingOrder = 2;
+
+            go.AddComponent<Animator>();
+            go.AddComponent<YSortingOrder>();
+
+            var col       = go.AddComponent<CircleCollider2D>();
+            col.isTrigger = true;
+            col.radius    = 3.0f;
+        }
 
         var npc           = go.AddComponent<NPCController>();
         npc.npcName       = "Witness";
@@ -463,21 +487,52 @@ public class Level2SceneBuilder : MonoBehaviour
             "Whatever happened here... it started in that room. Be careful."
         };
 
-        // hidden until CassettePlayerInteractable.OnRecordingComplete fires
         go.SetActive(false);
 
         SceneManager.MoveGameObjectToScene(go, scene);
         return go;
     }
 
-    // ── Painting cipher + art room safe ─────────────────────────────────────
-    // Four interactables under CipherPaintings_LUCY spell L-U-C-Y by position (1→4). Decorative frames are optional.
-    // ArtRoom_Safe uses ArtRoomSafeInteractable: type PuzzleState.ArtRoomCodeSolution ("LUCY") + Enter.
+    // ── Painting cipher + art room code painting ────────────────────────────
+    // Four interactables under CipherPaintings_JOHN spell J-O-H-N by position (1→4). Decorative frames are optional.
+    // ArtRoom_JohnCodePainting: enter PuzzleState.ArtRoomCodeSolution ("JOHN") → UV flashlight (persistent).
+
+    static Transform FindDirectChild(Transform parent, string name)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            var c = parent.GetChild(i);
+            if (c.name == name) return c;
+        }
+        return null;
+    }
+
+    void EnsureJohnPaintingPuzzle(Scene scene, Transform paintingPuzzleRoot)
+    {
+        if (FindDirectChild(paintingPuzzleRoot, "CipherPaintings_JOHN") == null)
+        {
+            var cipherRoot = new GameObject("CipherPaintings_JOHN");
+            cipherRoot.transform.SetParent(paintingPuzzleRoot, false);
+            PopulateCipherPaintings(cipherRoot.transform);
+        }
+
+        if (FindDirectChild(paintingPuzzleRoot, "ArtRoom_JohnCodePainting") == null)
+            CreateArtRoomJohnCodePainting(paintingPuzzleRoot);
+
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            UnityEditor.EditorUtility.SetDirty(paintingPuzzleRoot.gameObject);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+        }
+#endif
+    }
 
     void CreatePaintingPuzzleAndSafe(Scene scene, Transform paintingPuzzleRoot)
     {
-        var cipherRoot = new GameObject("CipherPaintings_LUCY");
+        var cipherRoot = new GameObject("CipherPaintings_JOHN");
         cipherRoot.transform.SetParent(paintingPuzzleRoot, false);
+        PopulateCipherPaintings(cipherRoot.transform);
 
         var decorRoot = new GameObject("DecorativePaintings");
         decorRoot.transform.SetParent(paintingPuzzleRoot, false);
@@ -492,50 +547,7 @@ public class Level2SceneBuilder : MonoBehaviour
             col.size = size;
             var clue = go.AddComponent<PaintingClueInteractable>();
             setup?.Invoke(clue);
-            // Do not call SceneManager.MoveGameObjectToScene on children — Unity only moves root objects.
-            // Parent is already in the target scene, so this object inherits the correct scene.
         }
-
-        // ── 4 cipher boxes → anagram orders to LUCY (position index = letter slot in the name)
-        AddPainting(cipherRoot.transform, "Cipher_01_Pos1_L_Seascape", new Vector3(0.62f, 1.58f, 0f), new Vector2(0.5f, 0.45f), c =>
-        {
-            c.paintingTitle = "Seascape";
-            c.isCipherClue = true;
-            c.clueLetter = 'L';
-            c.positionIndex = 1;
-            c.countedObjectSingular = "boat";
-            c.countedObjectPlural = "boats";
-        });
-
-        AddPainting(cipherRoot.transform, "Cipher_02_Pos2_U_Cabin", new Vector3(-1.12f, 1.58f, 0f), new Vector2(0.5f, 0.45f), c =>
-        {
-            c.paintingTitle = "Landscape (cabin)";
-            c.isCipherClue = true;
-            c.clueLetter = 'U';
-            c.positionIndex = 2;
-            c.countedObjectSingular = "chimney stack";
-            c.countedObjectPlural = "chimney stacks";
-        });
-
-        AddPainting(cipherRoot.transform, "Cipher_03_Pos3_C_Skyline", new Vector3(5.18f, 1.92f, 0f), new Vector2(0.65f, 0.4f), c =>
-        {
-            c.paintingTitle = "City skyline";
-            c.isCipherClue = true;
-            c.clueLetter = 'C';
-            c.positionIndex = 3;
-            c.countedObjectSingular = "lit tower";
-            c.countedObjectPlural = "lit towers";
-        });
-
-        AddPainting(cipherRoot.transform, "Cipher_04_Pos4_Y_Map", new Vector3(4.92f, 0.35f, 0f), new Vector2(0.6f, 0.5f), c =>
-        {
-            c.paintingTitle = "World map";
-            c.isCipherClue = true;
-            c.clueLetter = 'Y';
-            c.positionIndex = 4;
-            c.countedObjectSingular = "compass tick";
-            c.countedObjectPlural = "compass ticks";
-        });
 
         // Optional décor (not part of the four-letter code)
         AddPainting(decorRoot.transform, "Decor_Kitchen_Family", new Vector3(-3.82f, 1.76f, 0f), new Vector2(0.55f, 0.45f), c =>
@@ -568,16 +580,7 @@ public class Level2SceneBuilder : MonoBehaviour
             };
         });
 
-        // Wall safe — interact → dialogue → type letters (max 4) + Enter
-        var safe = new GameObject("ArtRoom_Safe_CodeLock");
-        safe.transform.SetParent(paintingPuzzleRoot, false);
-        safe.transform.position = new Vector3(4.85f, -2.05f, 0f);
-        var safeCol = safe.AddComponent<BoxCollider2D>();
-        safeCol.isTrigger = true;
-        safeCol.size = new Vector2(0.65f, 0.55f);
-        var safeComp = safe.AddComponent<ArtRoomSafeInteractable>();
-        safeComp.correctCode = PuzzleState.ArtRoomCodeSolution;
-        safeComp.maxCodeLength = PuzzleState.ArtRoomCodeSolution.Length;
+        CreateArtRoomJohnCodePainting(paintingPuzzleRoot);
 
 #if UNITY_EDITOR
         if (!Application.isPlaying)
@@ -586,6 +589,79 @@ public class Level2SceneBuilder : MonoBehaviour
             UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
         }
 #endif
+    }
+
+    void PopulateCipherPaintings(Transform cipherRoot)
+    {
+        void AddPainting(Transform parent, string name, Vector3 pos, Vector2 size, System.Action<PaintingClueInteractable> setup)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            go.transform.position = pos;
+            var col = go.AddComponent<BoxCollider2D>();
+            col.isTrigger = true;
+            col.size = size;
+            var clue = go.AddComponent<PaintingClueInteractable>();
+            setup?.Invoke(clue);
+        }
+
+        // 4 cipher triggers → JOHN (position index = letter slot). Corners rotate: BL, BR, TL, TR.
+        AddPainting(cipherRoot, "Cipher_01_Pos1_J_Jetty", new Vector3(0.62f, 1.58f, 0f), new Vector2(0.5f, 0.45f), c =>
+        {
+            c.paintingTitle = "Harbor jetty";
+            c.isCipherClue = true;
+            c.clueLetter = 'J';
+            c.positionIndex = 1;
+            c.countedObjectSingular = "jetty";
+            c.countedObjectPlural = "jetties";
+            c.letterInscribedCorner = PaintingClueInteractable.LetterCorner.BottomLeft;
+        });
+
+        AddPainting(cipherRoot, "Cipher_02_Pos2_O_Owls", new Vector3(-1.12f, 1.58f, 0f), new Vector2(0.5f, 0.45f), c =>
+        {
+            c.paintingTitle = "Owl wood";
+            c.isCipherClue = true;
+            c.clueLetter = 'O';
+            c.positionIndex = 2;
+            c.countedObjectSingular = "owl";
+            c.countedObjectPlural = "owls";
+            c.letterInscribedCorner = PaintingClueInteractable.LetterCorner.BottomRight;
+        });
+
+        AddPainting(cipherRoot, "Cipher_03_Pos3_H_Haystacks", new Vector3(5.18f, 1.92f, 0f), new Vector2(0.65f, 0.4f), c =>
+        {
+            c.paintingTitle = "Harvest field";
+            c.isCipherClue = true;
+            c.clueLetter = 'H';
+            c.positionIndex = 3;
+            c.countedObjectSingular = "haystack";
+            c.countedObjectPlural = "haystacks";
+            c.letterInscribedCorner = PaintingClueInteractable.LetterCorner.TopLeft;
+        });
+
+        AddPainting(cipherRoot, "Cipher_04_Pos4_N_Nests", new Vector3(4.92f, 0.35f, 0f), new Vector2(0.6f, 0.5f), c =>
+        {
+            c.paintingTitle = "Spring canopy";
+            c.isCipherClue = true;
+            c.clueLetter = 'N';
+            c.positionIndex = 4;
+            c.countedObjectSingular = "nest";
+            c.countedObjectPlural = "nests";
+            c.letterInscribedCorner = PaintingClueInteractable.LetterCorner.TopRight;
+        });
+    }
+
+    void CreateArtRoomJohnCodePainting(Transform paintingPuzzleRoot)
+    {
+        var codePainting = new GameObject("ArtRoom_JohnCodePainting");
+        codePainting.transform.SetParent(paintingPuzzleRoot, false);
+        codePainting.transform.position = new Vector3(4.85f, -2.05f, 0f);
+        var col = codePainting.AddComponent<BoxCollider2D>();
+        col.isTrigger = true;
+        col.size = new Vector2(0.85f, 0.75f);
+        var comp = codePainting.AddComponent<ArtRoomJohnCodePaintingInteractable>();
+        comp.correctCode = PuzzleState.ArtRoomCodeSolution;
+        comp.maxCodeLength = PuzzleState.ArtRoomCodeSolution.Length;
     }
 
     // ── Helper ────────────────────────────────────────────────────────────────

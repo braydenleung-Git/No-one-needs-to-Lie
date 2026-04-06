@@ -102,4 +102,5 @@ InitTestScene*.unity*
 .DS_Store
 .vscode
 .idea/
-
+.claude/
+.vsconfig

@@ -1,0 +1,650 @@
+fileFormatVersion: 2
+guid: 87f843f6b546e1d419e1ae2cf0ea8ea0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7703183953923743388
+    second: Victim_0
+  - first:
+      213: -376362341639683823
+    second: Victim_1
+  - first:
+      213: -5362258574723874788
+    second: Victim_2
+  - first:
+      213: 1318825068913909132
+    second: Victim_3
+  - first:
+      213: 7747007860662544440
+    second: Victim_4
+  - first:
+      213: 8750108023118052825
+    second: Victim_5
+  - first:
+      213: -8190368838158745991
+    second: Victim_6
+  - first:
+      213: 8320180282565914151
+    second: Victim_7
+  - first:
+      213: -8947539918620052932
+    second: Victim_8
+  - first:
+      213: -1494994113995993186
+    second: Victim_9
+  - first:
+      213: -1954180882175652832
+    second: Victim_10
+  - first:
+      213: 6052222138146691612
+    second: Victim_11
+  - first:
+      213: -8800107230129647815
+    second: Victim_12
+  - first:
+      213: 6676091464694632343
+    second: Victim_13
+  - first:
+      213: -5451656495031474453
+    second: Victim_14
+  - first:
+      213: -559174054635369060
+    second: Victim_15
+  - first:
+      213: -7325369241338183785
+    second: Victim_16
+  - first:
+      213: 3135300028197882863
+    second: Victim_17
+  - first:
+      213: 1088611971435928763
+    second: Victim_18
+  - first:
+      213: 2574953981517650668
+    second: Victim_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Victim_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 108
+        width: 54
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 461e2e2d10bc81590800000000000000
+      internalID: -7703183953923743388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_1
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 113
+        width: 67
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1118bbfb174e6caf0800000000000000
+      internalID: -376362341639683823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_2
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 111
+        width: 54
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c108acb9c3e6595b0800000000000000
+      internalID: -5362258574723874788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_3
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 106
+        width: 47
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8d5e79a9686d4210800000000000000
+      internalID: 1318825068913909132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_4
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 110
+        width: 54
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83823f69a96e28b60800000000000000
+      internalID: 7747007860662544440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_5
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 108
+        width: 50
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dd3f3013e0ae6970800000000000000
+      internalID: 8750108023118052825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_6
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 106
+        width: 51
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97e7e16afe6f55e80800000000000000
+      internalID: -8190368838158745991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_7
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 106
+        width: 48
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72eec8182e7377370800000000000000
+      internalID: 8320180282565914151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_8
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 106
+        width: 49
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c323601a9d3f3d380800000000000000
+      internalID: -8947539918620052932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_9
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 108
+        width: 52
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9f08fd26c6b04be0800000000000000
+      internalID: -1494994113995993186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_10
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 3
+        width: 52
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02c8f0367da51e4e0800000000000000
+      internalID: -1954180882175652832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_11
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 3
+        width: 48
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1a1df5f7ffcdf350800000000000000
+      internalID: 6052222138146691612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_12
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 5
+        width: 46
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93f86c2691dbfd580800000000000000
+      internalID: -8800107230129647815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_13
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 5
+        width: 29
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79f0421d0dd36ac50800000000000000
+      internalID: 6676091464694632343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_14
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 5
+        width: 29
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be6a2384d43d754b0800000000000000
+      internalID: -5451656495031474453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_15
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 5
+        width: 48
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9d08d1f82a6d38f0800000000000000
+      internalID: -559174054635369060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_16
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 5
+        width: 49
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79ff6798c7f075a90800000000000000
+      internalID: -7325369241338183785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_17
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 5
+        width: 48
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: febc10d93c2d28b20800000000000000
+      internalID: 3135300028197882863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_18
+      rect:
+        serializedVersion: 2
+        x: 678
+        y: 5
+        width: 45
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbc1daff1d68b1f00800000000000000
+      internalID: 1088611971435928763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Victim_19
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 6
+        width: 81
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cea5655e0031cb320800000000000000
+      internalID: 2574953981517650668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Victim_0: -7703183953923743388
+      Victim_1: -376362341639683823
+      Victim_10: -1954180882175652832
+      Victim_11: 6052222138146691612
+      Victim_12: -8800107230129647815
+      Victim_13: 6676091464694632343
+      Victim_14: -5451656495031474453
+      Victim_15: -559174054635369060
+      Victim_16: -7325369241338183785
+      Victim_17: 3135300028197882863
+      Victim_18: 1088611971435928763
+      Victim_19: 2574953981517650668
+      Victim_2: -5362258574723874788
+      Victim_3: 1318825068913909132
+      Victim_4: 7747007860662544440
+      Victim_5: 8750108023118052825
+      Victim_6: -8190368838158745991
+      Victim_7: 8320180282565914151
+      Victim_8: -8947539918620052932
+      Victim_9: -1494994113995993186
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
