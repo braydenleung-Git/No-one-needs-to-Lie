@@ -593,7 +593,7 @@ public class Level2SceneBuilder : MonoBehaviour
 
                 clue.showFullScreenOnInteract = true; // always show the image popup now
                 clue.showClueDialogueAfterClose = false; // image IS the clue, don't show text on top of it
-                clue.requireCassetteForCipher = clue.requireCassetteForCipher; // no-op, just explicit
+                // leave requireCassetteForCipher as configured in the scene
 
                 // Ensure sprite is wired (in case Resources folder was added later).
                 // re-load the sprite in case it wasn't assigned when the scene was first saved

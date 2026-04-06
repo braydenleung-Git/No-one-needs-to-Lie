@@ -3,17 +3,14 @@ using UnityEngine;
 public class SwipeCardDropped : Interactable
 {
     [SerializeField] private SwipeCardItem swipeCardItem;
+
     public override void Interact()
     {
-        if (player != null)
-        {
-            PlayerInventory inventory = player.GetComponent<PlayerInventory>();
-            if (inventory != null)
-            {
-                // Add your item here
-                inventory.AddItem(swipeCardItem);
-            }
-        }
+        var player = GameObject.FindGameObjectWithTag("Player");
+        var inventory = player != null ? player.GetComponent<PlayerInventory>() : null;
+        if (inventory != null && swipeCardItem != null)
+            inventory.AddItem(swipeCardItem);
+
         Destroy(gameObject);
     }
 }

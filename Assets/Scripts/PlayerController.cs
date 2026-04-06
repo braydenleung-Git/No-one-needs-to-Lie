@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
 {
     public float movespeed = 1f;
     public float collisionOffSet = 0.05f;
+    
+    // Used by Level 1 intro / cutscenes to temporarily lock movement.
+    public bool canMove = true;
 
     public ContactFilter2D movementFilter;
     Vector2 movementInput;
@@ -42,6 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!canMove) return;
         if (movementInput == Vector2.zero) return;
 
         // cast a ray in the direction we're trying to move
@@ -55,6 +59,12 @@ public class PlayerController : MonoBehaviour
     // this gets called automatically by the input system when WASD or a stick moves
     void OnMove(InputValue movementValue)
     {
+        if (!canMove)
+        {
+            movementInput = Vector2.zero;
+            return;
+        }
+
         movementInput = movementValue.Get<Vector2>();
 
         if (movementInput != Vector2.zero)
