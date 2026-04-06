@@ -48,10 +48,6 @@ public class IntroController : MonoBehaviour
     {
         float animCheckInterval = 0.1f;
         float lastAnimCheckTime;
-        if (_index == 2)
-        {
-            _isIntro = false;
-        }
         switch (_index)
         {
             case 1:
@@ -88,6 +84,10 @@ public class IntroController : MonoBehaviour
                 }
                 TextFinalAnimator.Play("TFinal");
                 break;
+        }
+        if (_index == 2)
+        {
+            _isIntro = false;
         }
         _index++;
     }
