@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -118,6 +119,7 @@ public class Level2SceneBuilder : MonoBehaviour
         var bgParent = FindOrCreateChild(root, "BackgroundRoot");
         var wallsParent = FindOrCreateChild(root, "WallsRoot");
         var paintingParent = FindOrCreateChild(root, "PaintingPuzzleTriggers");
+        var exitParent = FindOrCreateChild(root, "ExitTriggers");
 
         ClearChildren(bgParent);
         CreateBackground(scene, bgParent.transform);
@@ -127,6 +129,8 @@ public class Level2SceneBuilder : MonoBehaviour
             ClearChildren(wallsParent);
             CreateWalls(scene, wallsParent.transform);
         }
+
+        EnsureExitToTown(scene, exitParent.transform);
 
         if (regeneratePaintingTriggersFromLayout)
         {
@@ -205,6 +209,50 @@ public class Level2SceneBuilder : MonoBehaviour
             if (cassetteTapeSprite   == null && s.name == "CassetteTape")   cassetteTapeSprite   = s;
             if (cassettePlayerSprite == null && s.name == "CassettePlayer") cassettePlayerSprite = s;
         }
+    }
+
+    void EnsureExitToTown(Scene scene, Transform parent)
+    {
+        // Only create once; user can move it in hierarchy if desired.
+        if (FindDirectChild(parent, "Exit_ToTown") != null)
+            return;
+
+        if (backgroundSprite == null)
+            return;
+
+        float halfH = backgroundSprite.bounds.extents.y;
+        float doorHalfWidth = 1.05f; // matches CreateWalls door gap
+
+        var go = new GameObject("Exit_ToTown");
+        go.transform.SetParent(parent, false);
+        go.transform.position = new Vector3(0f, -halfH + 0.35f, 0f); // bottom-center
+
+        var col = go.AddComponent<BoxCollider2D>();
+        col.isTrigger = true;
+        col.size = new Vector2(doorHalfWidth * 2.0f, 0.8f);
+
+        var rtt = go.AddComponent<ReturnToTown>();
+        // Configure ReturnToTown (private serialized fields) via reflection.
+        SetPrivateField(rtt, "levelNumber", 2);
+        SetPrivateField(rtt, "exitPrompt", ""); // no prompt, auto exit
+        SetPrivateField(rtt, "autoExitOnEnter", true);
+        SetPrivateField(rtt, "townSceneName", "Town");
+
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            UnityEditor.EditorUtility.SetDirty(parent.gameObject);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+        }
+#endif
+    }
+
+    static void SetPrivateField(object obj, string fieldName, object value)
+    {
+        if (obj == null) return;
+        var f = obj.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+        if (f == null) return;
+        f.SetValue(obj, value);
     }
 
     // ── Background ────────────────────────────────────────────────────────────
