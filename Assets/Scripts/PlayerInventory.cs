@@ -5,7 +5,10 @@ public class PlayerInventory : MonoBehaviour, IInventory
 {
     private List<GameItem> _items = new List<GameItem>();
 
-    void Start() { }
+    void Start()
+    {
+        PersistentGameItems.HydrateUvFlashlight(this);
+    }
     void Update() { }
 
     public void AddItem(GameItem item)

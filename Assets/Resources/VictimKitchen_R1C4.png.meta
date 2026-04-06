@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 27fb9e637b1284eda8230c0eadb100f9
+guid: aadd2d7d07d6a7f43b2145e49fb9b5d7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1693268769007369731
-    second: A5 Office Floors & Walls_0
-  - first:
-      213: 8181137726054200883
-    second: A5 Office Floors & Walls_1
-  - first:
-      213: -442897922148966313
-    second: A5 Office Floors & Walls_2
-  - first:
-      213: -1661902958210553717
-    second: A5 Office Floors & Walls_3
+      213: -4035796706794134936
+    second: VictimKitchen_R1C4_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -105,83 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: A5 Office Floors & Walls_0
-      rect:
-        serializedVersion: 2
-        x: 19
-        y: 435
-        width: 58
-        height: 77
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: df18d02a60d4088e0800000000000000
-      internalID: -1693268769007369731
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: A5 Office Floors & Walls_1
-      rect:
-        serializedVersion: 2
-        x: 63
-        y: 287
-        width: 162
-        height: 225
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 336f1049a6d398170800000000000000
-      internalID: 8181137726054200883
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: A5 Office Floors & Walls_2
-      rect:
-        serializedVersion: 2
-        x: 19
-        y: 351
-        width: 26
-        height: 66
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7506d86bfa28ad9f0800000000000000
-      internalID: -442897922148966313
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: A5 Office Floors & Walls_3
+      name: VictimKitchen_R1C4_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 159
-        width: 256
-        height: 98
+        y: 0
+        width: 166
+        height: 275
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b8860bc801cbfe8e0800000000000000
-      internalID: -1661902958210553717
+      spriteID: 86228d91748fdf7c0800000000000000
+      internalID: -4035796706794134936
       vertices: []
       indices: 
       edges: []
@@ -210,10 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      A5 Office Floors & Walls_0: -1693268769007369731
-      A5 Office Floors & Walls_1: 8181137726054200883
-      A5 Office Floors & Walls_2: -442897922148966313
-      A5 Office Floors & Walls_3: -1661902958210553717
+      VictimKitchen_R1C4_0: -4035796706794134936
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
