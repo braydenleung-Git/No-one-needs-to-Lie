@@ -12,9 +12,6 @@ public class PlayerSpawnManager : MonoBehaviour
 
     private void Start()
     {
-        // no scale override here - the Detective prefab is (1, 1, 1) and that's correct for all scenes
-        // previously we forced (0.4, 0.4, 1) here which was making the player tiny after returning from Crime Scene
-
         if (ReturnFromLevel > 0 && ReturnFromLevel < spawnPoints.Length)
         {
             // spawn player in front of the building they just came from

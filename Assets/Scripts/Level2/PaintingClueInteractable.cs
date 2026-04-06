@@ -45,16 +45,6 @@ public class PaintingClueInteractable : Interactable
         "Nice frame. It doesn't seem to hide a message."
     };
 
-    [Header("Full-screen view")]
-    [Tooltip("Optional: if set, interacting pops up a full-screen view of this painting.")]
-    public Sprite fullScreenSprite; // drag the J/O/H/N sprite in here from the inspector, leave null if this painting has no image
-
-    [Tooltip("If true, show the painting full-screen before any clue dialogue.")]
-    public bool showFullScreenOnInteract = true; // basically always want this true for the cipher paintings
-
-    [Tooltip("If true, show this painting's clue dialogue after closing the full-screen view.")]
-    public bool showClueDialogueAfterClose = true; // set to false if the image alone is the clue and you don't want the text after
-
     static string CornerPhrase(LetterCorner c)
     {
         return c switch
@@ -106,52 +96,9 @@ public class PaintingClueInteractable : Interactable
 
     public override void Interact()
     {
-        InteractionPromptUI.Instance?.Hide();
-
-        // If we have a sprite, let the player inspect it full-screen first.
-        // this is the new flow - show the image popup, THEN run the clue dialogue once they close it
-        if (showFullScreenOnInteract && fullScreenSprite != null && PaintingViewerUI.Instance != null)
-        {
-            PaintingViewerUI.Instance.Show(fullScreenSprite, paintingTitle, onClosed: () =>
-            {
-                // player closed the painting viewer, now decide if we show dialogue
-                if (!showClueDialogueAfterClose)
-                    return;
-
-                if (DialogueManager.Instance == null) return;
-
-                // tape hasn't been played yet - player shouldn't know to look for cipher stuff
-                if (requireCassetteForCipher && !PuzzleState.CassettePlayerUsed)
-                {
-                    DialogueManager.Instance.StartDialogue(paintingTitle, genericLinesBeforeCassette);
-                    return;
-                }
-
-                // not a cipher painting, just show generic flavour text
-                if (!isCipherClue)
-                {
-                    DialogueManager.Instance.StartDialogue(paintingTitle, flavorLinesNoCipher);
-                    return;
-                }
-
-                // cipher painting + cassette heard = show the actual letter/position clue
-                DialogueManager.Instance.StartDialogue(paintingTitle, BuildCipherLines());
-            });
-
-            return;
-        }
-
-        // If this painting is meant to be viewed full-screen but the sprite is missing, don't show fallback dialogue.
-        // (Otherwise players see clue text instead of the image and think the popup is broken.)
-        // just log a warning so we know to fix it in the editor, don't silently fail
-        if (showFullScreenOnInteract && fullScreenSprite == null)
-        {
-            Debug.LogWarning($"{name}: PaintingClueInteractable missing fullScreenSprite. " +
-                             "Place J/O/H/N PNGs under Assets/Resources/L1/ and ensure they import as Sprites.");
-            return;
-        }
-
         if (DialogueManager.Instance == null) return;
+
+        InteractionPromptUI.Instance?.Hide();
 
         // tape hasn't been played yet - player shouldn't know to look for cipher stuff
         if (requireCassetteForCipher && !PuzzleState.CassettePlayerUsed)
