@@ -27,7 +27,6 @@ public class SafeInteractable : Interactable
 
     private int attemptsLeft = 3;
     private bool safeOpen = false;
-    private bool safeSolved = false;
 
     private void Start()
     {
@@ -44,7 +43,7 @@ public class SafeInteractable : Interactable
         }
 
         if (GameState.Instance.SafeSolved)
-            safeSolved = true;
+            attemptsLeft = 0;
 
         submitButton?.onClick.AddListener(OnSubmitCode);
         closeButton?.onClick.AddListener(CloseSafe);
@@ -134,7 +133,6 @@ public class SafeInteractable : Interactable
         if (entered == correctCode)
         {
             // correct!
-            safeSolved = true;
             GameState.Instance.SafeSolved = true;
             CloseSafe();
             DialogueManager.Instance?.StartDialogue(

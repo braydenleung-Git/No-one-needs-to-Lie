@@ -14,11 +14,9 @@ public class SafeOpenUI : MonoBehaviour
     {
         closeButton?.onClick.AddListener(CloseUI);
 
-        // safety check for testing directly without Town scene
-        if (GameState.Instance != null)
-            gameObject.SetActive(GameState.Instance.SafeSolved);
-        else
-            gameObject.SetActive(false); // always hide when testing directly
+        // never auto-show on scene load, always start hidden
+        // player must interact with safe again to see it
+        gameObject.SetActive(false);
     }
 
     public void Show()

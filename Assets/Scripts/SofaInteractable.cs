@@ -22,13 +22,11 @@ public class SofaInteractable : Interactable
     private Vector3 targetPosition;
     private Collider2D blockingCollider;    // the non-trigger collider that physically blocks the player
 
+    // add these to Start() in SofaInteractable after existing code:
     private void Start()
     {
-        // overrides the default prompt from Interactable base class
         interactPrompt = "Press [E] to investigate";
 
-        // find the solid (non-trigger) collider specifically
-        // the trigger collider is handled by the base Interactable class
         foreach (var col in GetComponents<Collider2D>())
         {
             if (!col.isTrigger)
@@ -36,6 +34,24 @@ public class SofaInteractable : Interactable
                 blockingCollider = col;
                 break;
             }
+        }
+
+        // safety check
+        if (GameState.Instance == null)
+        {
+            var go = new GameObject("GameStateManager");
+            go.AddComponent<GameState>();
+        }
+
+        // restore sofa state if returning to this scene
+        if (GameState.Instance.TryGetPosition("Level3_Sofa_pos", out Vector3 savedPos))
+        {
+            transform.position = savedPos;
+            hasBeenInteracted = true; // sofa was already moved
+
+            // disable blocking collider since sofa already moved
+            if (blockingCollider != null)
+                blockingCollider.enabled = false;
         }
     }
 
@@ -69,13 +85,13 @@ public class SofaInteractable : Interactable
         targetPosition = transform.position +
                          (Vector3)(moveDirection.normalized * moveDistance);
 
-        // disable the physical blocker so the player can walk into the revealed area
         if (blockingCollider != null)
             blockingCollider.enabled = false;
 
-        // flag for GameState so SafeInteractable knows sofa has been investigated
-        // safe prompt won't appear until this is true
         GameState.Instance.SofaInvestigated = true;
+
+        // save sofa target position so it restores correctly on scene reload
+        GameState.Instance.SavePosition("Level3_Sofa_pos", targetPosition);
     }
 
     // override Update from Interactable to also handle the sliding movement

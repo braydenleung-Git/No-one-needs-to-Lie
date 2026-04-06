@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Owner_Patrol : MonoBehaviour, IPatroller
 {
-    public Vector2[] patrolPoints;
+    public Transform[] patrolPoints;
     public float speed = 2;
     public float chaseSpeed = 4f;
     public float pauseDuration = 1.5f;
@@ -20,9 +20,16 @@ public class Owner_Patrol : MonoBehaviour, IPatroller
 
     void Start()
     {
+        // if level already completed, owner doesn't exist
+        if (GameState.Instance != null && GameState.Instance.Level3Complete)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>(); 
-        target = patrolPoints[0];
+        anim = GetComponent<Animator>();
+        target = patrolPoints[0].position;
     }
 
     void Update()
@@ -67,7 +74,7 @@ public class Owner_Patrol : MonoBehaviour, IPatroller
         currentDirection = Vector2.down;
         yield return new WaitForSeconds(pauseDuration);
         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
-        target = patrolPoints[currentPatrolIndex];
+        target = patrolPoints[currentPatrolIndex].position;
         isPaused = false;
         anim.Play("Walk");
     }
@@ -85,6 +92,6 @@ public class Owner_Patrol : MonoBehaviour, IPatroller
         isChasing = false;
         chaseTarget = null;
         currentPatrolIndex = 0;
-        target = patrolPoints[0];
+        target = patrolPoints[0].position;
     }
 }

@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
+// handles all the player movement stuff
+// uses the new input system so make sure that's set up in project settings
 public class PlayerController : MonoBehaviour
 {
     public float movespeed = 1f;
@@ -24,9 +26,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-<<<<<<< HEAD:Assets/Scripts/PlayerController.cs
         spriteRenderer = GetComponent<SpriteRenderer>();
-=======
     }
 
     // Drive animator from Update so blend trees / sprite swaps stay in sync with the frame (ACPlayer uses 2D blend trees).
@@ -42,11 +42,11 @@ public class PlayerController : MonoBehaviour
         }
 
         // Facing left/right comes from ACPlayer blend tree (side clip + Mirror on the -X node). Avoid flipX here or it doubles up.
->>>>>>> 1ad3f4cf10fc03af419d2e513b32b057aa5bb2d4:Assets/Scripts/General/PlayerController.cs
     }
 
     private void FixedUpdate()
     {
+        if (!canMove) return;
         if (movementInput != Vector2.zero)
         {
             int count = rb.Cast(
