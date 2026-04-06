@@ -1,21 +1,24 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class OwnerPlayerCollision : MonoBehaviour
 {
+    private bool triggered = false;
+
+    // if owner collider is TRIGGER
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (triggered) return;
+        if (!other.CompareTag("Player")) return;
+        triggered = true;
+        CaughtUI.Instance?.Show();
+    }
+
+    // if owner collider is NOT trigger
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (triggered) return;
         if (!other.gameObject.CompareTag("Player")) return;
-
-        // reset all level 3 progress
-        GameState.Instance.ResetLevel3();
-
-        // tell town to spawn player in front of level 3 house
-        PlayerSpawnManager.ReturnFromLevel = 3;
-
-        Time.timeScale = 1f;
-
-        // go back to town
-        SceneManager.LoadScene("Town");
+        triggered = true;
+        CaughtUI.Instance?.Show();
     }
 }

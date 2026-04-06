@@ -6125,6 +6125,7 @@ GameObject:
   - component: {fileID: 437689454}
   - component: {fileID: 437689453}
   - component: {fileID: 437689452}
+  - component: {fileID: 437689456}
   m_Layer: 5
   m_Name: GameOver
   m_TagString: Untagged
@@ -6216,6 +6217,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &437689456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437689451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f8a394e92eddd4796925c5593bf971, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: GameCode::CaughtUI
+  caughtPanel: {fileID: 437689451}
+  retryButton: {fileID: 186255996}
 --- !u!1 &465825678
 GameObject:
   m_ObjectHideFlags: 0
@@ -8937,7 +8952,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8962,7 +8977,7 @@ Transform:
   m_GameObject: {fileID: 1392231475}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.6655, y: 11.2685, z: -10}
+  m_LocalPosition: {x: -21.5947, y: -31.9112, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
