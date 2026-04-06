@@ -30,7 +30,7 @@ public abstract class Interactable : MonoBehaviour
         InteractionPromptUI.Instance?.Hide();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         OnInteractableUpdateEarly();
 

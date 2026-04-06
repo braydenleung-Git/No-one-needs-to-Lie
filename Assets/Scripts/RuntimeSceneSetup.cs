@@ -14,20 +14,30 @@ using UnityEngine.InputSystem.UI;
 // the wrong scene and 2D physics wouldn't fire across scene boundaries
 public class RuntimeSceneSetup : MonoBehaviour
 {
-    [Header("NPC Sprite")]
+    [Header("NPC")]
+    [Tooltip("Assign Assets/Prefabs/Owner — used instead of building from a raw sprite.")]
+    public GameObject npcPrefab;
+
+    [Tooltip("Legacy fallback if npcPrefab is not assigned.")]
     public Sprite npcSprite;
 
     void Awake()
     {
         Scene myScene = gameObject.scene;
 
+#if UNITY_EDITOR
+        if (npcPrefab == null)
+            npcPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Owner.prefab");
+#endif
+
         EnsurePlayerColliderAndSorting(myScene);
 
         // only create stuff that doesn't already exist
-        if (!FindInScene(myScene, "Grandpa"))
+        if (!FindInScene(myScene, "Owner") && !FindInScene(myScene, "Grandpa"))
         {
             var go = CreateNPC();
-            SceneManager.MoveGameObjectToScene(go, myScene);
+            if (go != null)
+                SceneManager.MoveGameObjectToScene(go, myScene);
         }
 
         if (!FindInScene(myScene, "DialogueCanvas"))
@@ -97,35 +107,61 @@ public class RuntimeSceneSetup : MonoBehaviour
         return null;
     }
 
-    // ── Grandpa NPC ───────────────────────────────────────────────────────────
+    // ── Dialogue NPC (Owner prefab or legacy sprite) ────────────────────────
 
     GameObject CreateNPC()
     {
-        var npc = new GameObject("Grandpa");
-        npc.transform.position   = new Vector3(3f, 0f, 0f);
-        npc.transform.localScale = new Vector3(0.4f, 0.4f, 1f);  // scaled down, looks better
+        if (npcPrefab != null)
+        {
+            var npc = Instantiate(npcPrefab);
+            npc.name = "Owner";
+            npc.transform.position   = new Vector3(3f, 0f, 0f);
+            npc.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
 
-        var sr    = npc.AddComponent<SpriteRenderer>();
+            NpcPrefabUtility.ConfigureOwnerPrefabForDialogueNpc(npc);
+
+            var ctrl           = npc.AddComponent<NPCController>();
+            ctrl.npcName       = "Old Man";
+            ctrl.dialogueLines = new[]
+            {
+                "Oh... a visitor. Haven't seen one of those in a while.",
+                "They say the old manor has a secret. I wouldn't go snooping if I were you.",
+                "...But what do I know? I'm just an old man."
+            };
+
+            return npc;
+        }
+
+        if (npcSprite == null)
+        {
+            Debug.LogError("RuntimeSceneSetup: Assign the Owner prefab on the Main Camera, or a legacy npcSprite, or use Tools → Crime Scene → Place Owner (dialogue NPC).");
+            return null;
+        }
+
+        var legacy = new GameObject("Grandpa");
+        legacy.transform.position   = new Vector3(3f, 0f, 0f);
+        legacy.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+
+        var sr    = legacy.AddComponent<SpriteRenderer>();
         sr.sprite = npcSprite;
 
-        npc.AddComponent<Animator>();
-        npc.AddComponent<YSortingOrder>();
+        legacy.AddComponent<Animator>();
+        legacy.AddComponent<YSortingOrder>();
 
-        // trigger zone - radius 3.0 at scale 0.4 = 1.2 world units, feels natural
-        var col       = npc.AddComponent<CircleCollider2D>();
+        var col       = legacy.AddComponent<CircleCollider2D>();
         col.isTrigger = true;
         col.radius    = 3.0f;
 
-        var ctrl           = npc.AddComponent<NPCController>();
-        ctrl.npcName       = "Old Man";
-        ctrl.dialogueLines = new[]
+        var ctrlLegacy           = legacy.AddComponent<NPCController>();
+        ctrlLegacy.npcName       = "Old Man";
+        ctrlLegacy.dialogueLines = new[]
         {
             "Oh... a visitor. Haven't seen one of those in a while.",
             "They say the old manor has a secret. I wouldn't go snooping if I were you.",
             "...But what do I know? I'm just an old man."
         };
 
-        return npc;
+        return legacy;
     }
 
     // ── Dialogue Canvas ───────────────────────────────────────────────────────
