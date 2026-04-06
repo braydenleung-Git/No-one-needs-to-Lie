@@ -21,18 +21,19 @@ public class RuntimeSceneSetup : MonoBehaviour
     [Tooltip("Legacy fallback if npcPrefab is not assigned.")]
     public Sprite npcSprite;
 
-    
-    private static TMP_FontAsset _defaultTextFontAsset = Resources.Load<TMP_FontAsset>("Fonts & Materials/ari_w9500(default)/ari-w9500 SDF");
+
+    private static TMP_FontAsset _defaultTextFontAsset;
     
     void Awake()
     {
         Scene myScene = gameObject.scene;
 
-#if UNITY_EDITOR
-        if (npcPrefab == null)
-            npcPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Owner.prefab");
-#endif
+        #if UNITY_EDITOR
+                if (npcPrefab == null)
+                    npcPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Owner.prefab");
+        #endif
 
+        _defaultTextFontAsset = Resources.Load<TMP_FontAsset>("Fonts & Materials/ari_w9500(default)/ari-w9500 SDF");
         EnsurePlayerColliderAndSorting(myScene);
 
         // only create stuff that doesn't already exist
