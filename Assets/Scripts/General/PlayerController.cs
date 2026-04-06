@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!canMove) return;
         if (movementInput == Vector2.zero) return;
 
         // cast a ray in the direction we're trying to move
