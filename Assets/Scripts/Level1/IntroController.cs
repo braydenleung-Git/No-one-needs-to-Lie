@@ -12,26 +12,34 @@ public class IntroController : MonoBehaviour
     [Header("Player")]
     public PlayerController playerController;
     
-    private int _index = 1;
-    private bool _isIntro = true;
+    private int _index;
+    private bool _isIntro;
 
     private void Start()
     {
+        _index = 1;
+        _isIntro = true;
         //lock player input until animation is over
         Text1Animator.Play("Text1");
+        cameraAnimator.Play("Tstart");
         playerController.canMove = false;
     }
 
     void Update()
     {
-        if (_isIntro && Keyboard.current.spaceKey.wasPressedThisFrame && !IsAnimating())
+        bool isNotAnimating = !IsAnimating();
+        if (_isIntro && Keyboard.current.spaceKey.wasPressedThisFrame && isNotAnimating)
         {
             AdvanceCinematic();
         }
 
         //release the control of the player once the intro is over
-        if (!_isIntro && !IsAnimating())
+        if (!_isIntro && isNotAnimating)
         {
+            TextFinalAnimator.enabled = false;
+            Text1Animator.enabled = false;
+            Text2Animator.enabled = false;
+            cameraAnimator.Play("TransferControl");
             playerController.canMove = true;
         }
     }
@@ -40,10 +48,6 @@ public class IntroController : MonoBehaviour
     {
         float animCheckInterval = 0.1f;
         float lastAnimCheckTime;
-        if (_index == 2)
-        {
-            _isIntro = false;
-        }
         switch (_index)
         {
             case 1:
@@ -80,6 +84,10 @@ public class IntroController : MonoBehaviour
                 }
                 TextFinalAnimator.Play("TFinal");
                 break;
+        }
+        if (_index == 2)
+        {
+            _isIntro = false;
         }
         _index++;
     }
