@@ -41,6 +41,10 @@ public class ReturnToTown : MonoBehaviour
         if (!playerInRange) return;
         if (UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
         {
+            // Preserve master behavior for Level 3 completion tracking.
+            if (levelNumber == 3 && GameState.Instance != null)
+                GameState.Instance.Level3Complete = true;
+
             ExitNow();
         }
     }
