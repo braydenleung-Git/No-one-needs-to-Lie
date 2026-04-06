@@ -130,6 +130,8 @@ public class Level2SceneBuilder : MonoBehaviour
             CreateWalls(scene, wallsParent.transform);
         }
 
+        EnsureCinemachineFollowsPlayer(scene);
+
         EnsureExitToTown(scene, exitParent.transform);
 
         if (regeneratePaintingTriggersFromLayout)
@@ -149,6 +151,20 @@ public class Level2SceneBuilder : MonoBehaviour
             root.hideFlags = HideFlags.None;
         }
 #endif
+    }
+
+    static void EnsureCinemachineFollowsPlayer(Scene scene)
+    {
+        // CinemachineCamera is a root object in this scene. Add a tiny helper so it always
+        // follows the object tagged Player, even if the player is swapped to a prefab instance.
+        foreach (var root in scene.GetRootGameObjects())
+        {
+            if (root == null) continue;
+            if (root.name != "CinemachineCamera") continue;
+            if (root.GetComponent<CinemachineFollowTaggedTarget>() == null)
+                root.AddComponent<CinemachineFollowTaggedTarget>();
+            break;
+        }
     }
 
     GameObject FindOrCreateRoot(Scene scene)
