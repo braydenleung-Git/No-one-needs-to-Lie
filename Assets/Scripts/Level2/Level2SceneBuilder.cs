@@ -509,11 +509,32 @@ public class Level2SceneBuilder : MonoBehaviour
 
     void EnsureJohnPaintingPuzzle(Scene scene, Transform paintingPuzzleRoot)
     {
-        if (FindDirectChild(paintingPuzzleRoot, "CipherPaintings_JOHN") == null)
+        var existingCipherRoot = FindDirectChild(paintingPuzzleRoot, "CipherPaintings_JOHN");
+        if (existingCipherRoot == null)
         {
             var cipherRoot = new GameObject("CipherPaintings_JOHN");
             cipherRoot.transform.SetParent(paintingPuzzleRoot, false);
             PopulateCipherPaintings(cipherRoot.transform);
+        }
+        else
+        {
+            // If these objects were already serialized into the scene, force-update them to the desired behavior:
+            // show full-screen PNG only (no clue dialogue).
+            // this else block handles the case where the paintings were already in the scene before we added the full-screen feature
+            // basically a migration path so old scenes don't break when we open them
+            foreach (Transform child in existingCipherRoot)
+            {
+                var clue = child.GetComponent<PaintingClueInteractable>();
+                if (clue == null) continue; // skip GameObjects that aren't paintings
+
+                clue.showFullScreenOnInteract = true; // always show the image popup now
+                clue.showClueDialogueAfterClose = false; // image IS the clue, don't show text on top of it
+                clue.requireCassetteForCipher = clue.requireCassetteForCipher; // no-op, just explicit
+
+                // Ensure sprite is wired (in case Resources folder was added later).
+                // re-load the sprite in case it wasn't assigned when the scene was first saved
+                clue.fullScreenSprite = PaintingSpriteLibrary.LoadLetter(clue.clueLetter);
+            }
         }
 
         if (FindDirectChild(paintingPuzzleRoot, "ArtRoom_JohnCodePainting") == null)
@@ -615,6 +636,8 @@ public class Level2SceneBuilder : MonoBehaviour
             c.countedObjectSingular = "jetty";
             c.countedObjectPlural = "jetties";
             c.letterInscribedCorner = PaintingClueInteractable.LetterCorner.BottomLeft;
+            c.fullScreenSprite = PaintingSpriteLibrary.LoadLetter('J'); // load J.png from Resources/L1/
+            c.showClueDialogueAfterClose = false; // image only, no dialogue popup after viewing
         });
 
         AddPainting(cipherRoot, "Cipher_02_Pos2_O_Owls", new Vector3(-1.12f, 1.58f, 0f), new Vector2(0.5f, 0.45f), c =>
@@ -622,10 +645,12 @@ public class Level2SceneBuilder : MonoBehaviour
             c.paintingTitle = "Owl wood";
             c.isCipherClue = true;
             c.clueLetter = 'O';
-            c.positionIndex = 2;
+            c.positionIndex = 2; // O is the 2nd letter of JOHN
             c.countedObjectSingular = "owl";
             c.countedObjectPlural = "owls";
             c.letterInscribedCorner = PaintingClueInteractable.LetterCorner.BottomRight;
+            c.fullScreenSprite = PaintingSpriteLibrary.LoadLetter('O'); // load O.png from Resources/L1/
+            c.showClueDialogueAfterClose = false;
         });
 
         AddPainting(cipherRoot, "Cipher_03_Pos3_H_Haystacks", new Vector3(5.18f, 1.92f, 0f), new Vector2(0.65f, 0.4f), c =>
@@ -633,10 +658,12 @@ public class Level2SceneBuilder : MonoBehaviour
             c.paintingTitle = "Harvest field";
             c.isCipherClue = true;
             c.clueLetter = 'H';
-            c.positionIndex = 3;
+            c.positionIndex = 3; // H is the 3rd letter of JOHN
             c.countedObjectSingular = "haystack";
             c.countedObjectPlural = "haystacks";
             c.letterInscribedCorner = PaintingClueInteractable.LetterCorner.TopLeft;
+            c.fullScreenSprite = PaintingSpriteLibrary.LoadLetter('H'); // load H.png from Resources/L1/
+            c.showClueDialogueAfterClose = false;
         });
 
         AddPainting(cipherRoot, "Cipher_04_Pos4_N_Nests", new Vector3(4.92f, 0.35f, 0f), new Vector2(0.6f, 0.5f), c =>
@@ -644,10 +671,12 @@ public class Level2SceneBuilder : MonoBehaviour
             c.paintingTitle = "Spring canopy";
             c.isCipherClue = true;
             c.clueLetter = 'N';
-            c.positionIndex = 4;
+            c.positionIndex = 4; // N is the last letter of JOHN
             c.countedObjectSingular = "nest";
             c.countedObjectPlural = "nests";
             c.letterInscribedCorner = PaintingClueInteractable.LetterCorner.TopRight;
+            c.fullScreenSprite = PaintingSpriteLibrary.LoadLetter('N'); // load N.png from Resources/L1/
+            c.showClueDialogueAfterClose = false;
         });
     }
 
