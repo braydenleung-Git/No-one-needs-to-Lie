@@ -24,7 +24,25 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+<<<<<<< HEAD:Assets/Scripts/PlayerController.cs
         spriteRenderer = GetComponent<SpriteRenderer>();
+=======
+    }
+
+    // Drive animator from Update so blend trees / sprite swaps stay in sync with the frame (ACPlayer uses 2D blend trees).
+    void Update()
+    {
+        Vector2 animDirection = movementInput != Vector2.zero ? movementInput : lastMoveDirection;
+
+        if (animator != null && canMove)
+        {
+            animator.SetFloat("MoveX", animDirection.x);
+            animator.SetFloat("MoveY", animDirection.y);
+            animator.SetBool("IsMoving", movementInput != Vector2.zero);
+        }
+
+        // Facing left/right comes from ACPlayer blend tree (side clip + Mirror on the -X node). Avoid flipX here or it doubles up.
+>>>>>>> 1ad3f4cf10fc03af419d2e513b32b057aa5bb2d4:Assets/Scripts/General/PlayerController.cs
     }
 
     private void FixedUpdate()

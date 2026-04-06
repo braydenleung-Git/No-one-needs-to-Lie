@@ -18,8 +18,10 @@ GameObject:
   - component: {fileID: 3068742465998727316}
   - component: {fileID: 268316107488553292}
   - component: {fileID: 8039885474149376898}
+  - component: {fileID: 3068742465998727316}
+  - component: {fileID: 268316107488553292}
   m_Layer: 3
-  m_Name: Detective
+  m_Name: Detective 1
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +127,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!114 &4038450933646910463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8651e1c380bf44978616d11b8be6c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  movespeed: 5
+  movespeed: 2
   collisionOffSet: 0.05
   movementFilter:
     useTriggers: 0
@@ -264,7 +266,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.08683069}
+  m_Offset: {x: -0.0021162257, y: -0.0469803}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
