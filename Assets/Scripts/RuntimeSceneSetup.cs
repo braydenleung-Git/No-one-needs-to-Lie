@@ -22,7 +22,7 @@ public class RuntimeSceneSetup : MonoBehaviour
     public Sprite npcSprite;
 
     
-    private static TMP_FontAsset defaultTextFontAsset = Resources.Load<TMP_FontAsset>("Fonts & Materials/ari_w9500(default)/ari-w9500 SDF");
+    private static TMP_FontAsset _defaultTextFontAsset = Resources.Load<TMP_FontAsset>("Fonts & Materials/ari_w9500(default)/ari-w9500 SDF");
     
     void Awake()
     {
@@ -206,7 +206,7 @@ public class RuntimeSceneSetup : MonoBehaviour
         cRT.offsetMax     = new Vector2(-10f, 0f);
         var contTMP       = contGO.AddComponent<TextMeshProUGUI>();
         contTMP.text      = "[ E ]";        // unicode triangle caused a font warning so using this instead
-        contTMP.font      = defaultTextFontAsset;
+        contTMP.font      = _defaultTextFontAsset;
         contTMP.fontSize  = 24;
         contTMP.color     = new Color(0.4f, 1f, 1f);
         contTMP.alignment = TextAlignmentOptions.BottomRight;
@@ -297,7 +297,7 @@ public class RuntimeSceneSetup : MonoBehaviour
         rt.offsetMax = offsetMax;
         var tmp      = go.AddComponent<TextMeshProUGUI>();
         tmp.text     = text;
-        tmp.font     = defaultTextFontAsset;
+        tmp.font     = _defaultTextFontAsset;
         tmp.fontSize = fontSize;
         tmp.color    = color;
         tmp.textWrappingMode = TextWrappingModes.Normal;
