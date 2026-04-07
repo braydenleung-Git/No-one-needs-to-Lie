@@ -14,6 +14,6 @@ public class SwipeCardDropped : Interactable
                 inventory.AddItem(swipeCardItem);
             }
         }
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
