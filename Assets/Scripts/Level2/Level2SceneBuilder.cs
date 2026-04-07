@@ -55,9 +55,8 @@ public class Level2SceneBuilder : MonoBehaviour
 
         LoadCassetteSpritesIfNeeded();
 
+        GameProgress.Reset();
         PuzzleState.Reset();
-        if (GameProgress.HasUvFlashlight)
-            PuzzleState.ArtRoomCodeSolved = true;
 
         Scene myScene = gameObject.scene;
         var tapeGO    = CreateCassetteTape(myScene);
