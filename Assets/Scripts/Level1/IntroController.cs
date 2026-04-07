@@ -25,7 +25,7 @@ public class IntroController : MonoBehaviour
         playerController.canMove = false;
     }
 
-    void Update()
+    void Update() 
     {
         bool isNotAnimating = !IsAnimating();
         if (_isIntro && Keyboard.current.spaceKey.wasPressedThisFrame && isNotAnimating)
@@ -41,6 +41,7 @@ public class IntroController : MonoBehaviour
             Text2Animator.enabled = false;
             cameraAnimator.Play("TransferControl");
             playerController.canMove = true;
+            playerController.gameObject.transform.parent = null;
         }
     }
 
