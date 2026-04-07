@@ -13,7 +13,7 @@ public class BulletinBoardInteractable : Interactable
 
     private bool boardOpen = false;
 
-    private void Start()
+    private new void Start()
     {
         interactPrompt = "Press [E] to interact";
 

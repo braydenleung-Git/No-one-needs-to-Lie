@@ -16,10 +16,7 @@ GameObject:
   - component: {fileID: -4086847821564763359}
   - component: {fileID: 3876622871657674336}
   - component: {fileID: 3068742465998727316}
-  - component: {fileID: 268316107488553292}
   - component: {fileID: 8039885474149376898}
-  - component: {fileID: 3068742465998727316}
-  - component: {fileID: 268316107488553292}
   m_Layer: 3
   m_Name: Detective 1
   m_TagString: Player
@@ -186,6 +183,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  canMove: 1
 --- !u!95 &-4086847821564763359
 Animator:
   serializedVersion: 7
@@ -270,7 +268,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.15, y: 0.23}
+    oldSize: {x: 15, y: 23}
     newSize: {x: 0.15, y: 0.23}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

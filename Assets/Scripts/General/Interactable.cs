@@ -4,20 +4,43 @@ using UnityEngine.InputSystem;
 // base class for anything the player can walk up to and press E on
 // NPCs, doors, chests etc all extend this
 // just need a trigger collider on the object and the player tagged "Player"
-public abstract class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour, Hintable
 {
     [Header("Interaction Settings")]
     [SerializeField] protected string interactPrompt = "Press [E] to interact";
-
+    
+    [SerializeField] private bool _isHinted = false;
+    [SerializeField] private Sprite _hintIcon = null;
+    
     protected bool playerInRange = false;
     protected GameObject player;
+    
+    public bool IsHinted { get; }
+    public Sprite HintIcon
+    {
+        get => _hintIcon;
+        set => _hintIcon = value;
+    }
 
+    private bool _previousHintedState = false;
+    
+    public void Hint(bool isHinted)
+    {
+        _isHinted = isHinted;
+        _previousHintedState = isHinted;
+    }
+
+    protected virtual void Start()
+    {
+        gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
 
         playerInRange = true;
         player = other.gameObject;
+        _isHinted = false;
         InteractionPromptUI.Instance?.Show(interactPrompt, transform);
     }
 
@@ -27,11 +50,16 @@ public abstract class Interactable : MonoBehaviour
 
         playerInRange = false;
         player = null;
+        _isHinted = _previousHintedState;
         InteractionPromptUI.Instance?.Hide();
     }
 
     protected virtual void Update()
     {
+        if (IsHinted)
+        {
+            
+        }
         OnInteractableUpdateEarly();
 
         if (!playerInRange) return;

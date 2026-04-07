@@ -23,7 +23,7 @@ public class SofaInteractable : Interactable
     private Collider2D blockingCollider;    // the non-trigger collider that physically blocks the player
 
     // add these to Start() in SofaInteractable after existing code:
-    private void Start()
+    private new void Start()
     {
         interactPrompt = "Press [E] to investigate";
 
