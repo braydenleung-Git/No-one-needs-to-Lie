@@ -16,4 +16,14 @@ public class SwipeCardDropped : Interactable
         }
         gameObject.SetActive(false);
     }
+    protected override void Start()
+    {
+        base.Start();
+        Hint(true);
+    }
+
+    protected override void Update()
+    {
+        
+    }
 }
