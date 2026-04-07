@@ -22,6 +22,7 @@ public class GameState : MonoBehaviour
     [HideInInspector] public bool Level2_PinSolved = false;
     
     // level 3 specific flags
+    [HideInInspector] public bool Level3IntroSeen = false;
     [HideInInspector] public bool SofaInvestigated = false;
     [HideInInspector] public bool SafeSolved       = false;
 
