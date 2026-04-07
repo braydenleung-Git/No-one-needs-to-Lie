@@ -25,7 +25,6 @@ public class DialogueManager : MonoBehaviour
     private bool dialogueActive;
     private Coroutine typewriterRoutine;
     private System.Action _onComplete;
-    private UnityEngine.InputSystem.PlayerInput playerInput;
 
     private void Awake()
     {
@@ -66,11 +65,6 @@ public class DialogueManager : MonoBehaviour
         _onComplete = onComplete;
 
         speakerNameText.text = speakerName;
-        
-        if (playerInput == null)
-            playerInput = FindFirstObjectByType<UnityEngine.InputSystem.PlayerInput>();
-        if (playerInput != null) playerInput.enabled = false;
-        
         dialoguePanel.SetActive(true);
         continuePrompt.SetActive(false);
 
@@ -124,9 +118,6 @@ public class DialogueManager : MonoBehaviour
     private void EndDialogue()
     {
         dialogueActive = false;
-        
-        if (playerInput != null) playerInput.enabled = true;
-        
         dialoguePanel.SetActive(false);
         lines = null;
 

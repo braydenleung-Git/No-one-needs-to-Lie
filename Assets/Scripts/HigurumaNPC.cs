@@ -20,7 +20,7 @@ public class HigurumaNPC : Interactable
         if (sessionStarted) return;
 
         DialogueManager.Instance.StartDialogue(
-            "Higuruma",
+            "Judge",
             new string[] { "...", "Court is now in session.", "Begin." },
             OnSessionBegin
         );
