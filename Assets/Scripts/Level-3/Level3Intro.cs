@@ -11,6 +11,11 @@ public class Level3Intro : MonoBehaviour
     [Header("Dark Overlay")]
     [SerializeField] private float lightFadeDuration = 2f;
 
+    [Header("Owner Tracking")]
+    [SerializeField] private GameObject cmCamPlayer;
+    [SerializeField] private GameObject cmCamOwner;
+    private GameObject visionCone;
+
     private Image darkOverlay;
 
     private void Start()
@@ -21,10 +26,12 @@ public class Level3Intro : MonoBehaviour
             go.AddComponent<GameState>();
         }
 
-        // hide owner
         if (owner != null) owner.SetActive(false);
+        if (cmCamOwner != null) cmCamOwner.SetActive(false);
 
-        // if intro already seen, skip everything
+        visionCone = owner.transform.Find("VisionCone")?.gameObject;
+        if (visionCone != null) visionCone.SetActive(false);
+
         if (GameState.Instance.Level3IntroSeen) return;
 
         darkOverlay = CreateDarkOverlay();
@@ -42,7 +49,45 @@ public class Level3Intro : MonoBehaviour
     private void OnDialogueDone()
     {
         GameState.Instance.Level3IntroSeen = true;
-        StartCoroutine(FadeLightsOn());
+        StartCoroutine(IntroSequence());
+    }
+
+    private IEnumerator IntroSequence()
+    {
+        yield return StartCoroutine(FadeLightsOn());
+
+        yield return new WaitForSeconds(3f);
+
+        if (owner != null) owner.SetActive(true);
+        if (visionCone != null) visionCone.SetActive(false);
+
+        if (cmCamPlayer != null) cmCamPlayer.SetActive(false);
+        if (cmCamOwner != null) cmCamOwner.SetActive(true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        DialogueManager.Instance?.StartDialogue(
+            "John",
+            new[] {
+                "Huh... I turned off the light and went out.",
+                "Looks like someone broke into my house...",
+                "I'll kill whoever did this!"
+            },
+            onComplete: OnOwnerDialogueDone
+        );
+    }
+
+    private void OnOwnerDialogueDone()
+    {
+        if (cmCamOwner != null) cmCamOwner.SetActive(false);
+        if (cmCamPlayer != null) cmCamPlayer.SetActive(true);
+        if (visionCone != null) visionCone.SetActive(true);
+
+        if (owner != null)
+        {
+            var patrol = owner.GetComponent<Owner_Patrol>();
+            if (patrol != null) patrol.enabled = true;
+        }
     }
 
     private IEnumerator FadeLightsOn()
