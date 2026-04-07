@@ -15,25 +15,29 @@ public class Owner_Patrol : MonoBehaviour, IPatroller
     private Rigidbody2D rb;
     private Animator anim;
     private Transform chaseTarget;
+    private bool canPatrol = false;
 
     public Vector2 currentDirection = Vector2.down;
 
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+    }
+
     void Start()
     {
-        // if level already completed, owner doesn't exist
         if (GameState.Instance != null && GameState.Instance.Level3Complete)
         {
             gameObject.SetActive(false);
             return;
         }
-
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        target = patrolPoints[0].position;
     }
 
     void Update()
     {
+        if (!canPatrol) return;
+
         if (isPaused)
         {
             rb.linearVelocity = Vector2.zero;
@@ -55,6 +59,13 @@ public class Owner_Patrol : MonoBehaviour, IPatroller
 
         if (!isChasing && Vector2.Distance(transform.position, target) < .1f)
             StartCoroutine(SetPatrolPoint());
+    }
+    
+    public void StartPatrol()
+    {
+        currentPatrolIndex = 0;
+        target = patrolPoints[0].position;
+        canPatrol = true;
     }
 
     private void UpdateAnimator(Vector2 direction)
