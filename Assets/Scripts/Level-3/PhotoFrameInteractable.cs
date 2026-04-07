@@ -9,7 +9,7 @@ public class PhotoFrameInteractable : Interactable
 
     private bool photoOpen = false;
 
-    private void Start()
+    private new void Start()
     {
         interactPrompt = "Press [E] to inspect";
 

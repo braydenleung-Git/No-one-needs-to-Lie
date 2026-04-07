@@ -28,7 +28,7 @@ public class SafeInteractable : Interactable
     private int attemptsLeft = 3;
     private bool safeOpen = false;
 
-    private void Start()
+    private new void Start()
     {
         interactPrompt = "Press [E] to interact with safe";
 
