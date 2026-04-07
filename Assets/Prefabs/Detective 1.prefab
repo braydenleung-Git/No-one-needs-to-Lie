@@ -17,8 +17,11 @@ GameObject:
   - component: {fileID: 3876622871657674336}
   - component: {fileID: 3068742465998727316}
   - component: {fileID: 268316107488553292}
+  - component: {fileID: 8039885474149376898}
+  - component: {fileID: 3068742465998727316}
+  - component: {fileID: 268316107488553292}
   m_Layer: 3
-  m_Name: Detective
+  m_Name: Detective 1
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +37,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.37193, y: 0.86855, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -90,7 +93,7 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4334783836991956000, guid: d55c714f32c7d49eb804c52ee226c84a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.15, y: 0.23}
@@ -124,7 +127,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!114 &4038450933646910463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8651e1c380bf44978616d11b8be6c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  movespeed: 5
+  movespeed: 2
   collisionOffSet: 0.05
   movementFilter:
     useTriggers: 0
@@ -229,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2bf53530e399784cbfe3e0eeb0cce6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GameCode::MapBoundary
---- !u!61 &268316107488553292
+--- !u!61 &8039885474149376898
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -273,5 +276,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.10005702, y: 0.085249856}
+  m_Size: {x: 0.15, y: 0.05633864}
   m_EdgeRadius: 0

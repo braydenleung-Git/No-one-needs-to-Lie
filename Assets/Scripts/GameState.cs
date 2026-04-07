@@ -1,32 +1,88 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameState : MonoBehaviour
 {
     public static GameState Instance { get; private set; }
 
     // level completion flags
-    public bool Level1Complete = true;// chnage to false later
-    public bool Level2Complete = true;
-    public bool Level3Complete = false;
-    public bool Level4Complete = false;
-    public bool Level5Complete = false;
+    [HideInInspector] public bool Level1Complete = false;
+    [HideInInspector] public bool Level2Complete = false;
+    [HideInInspector] public bool Level3Complete = false;
+    [HideInInspector] public bool Level4Complete = false;
+    [HideInInspector] public bool Level5Complete = false;
 
+    // Level 2 specific flags - owned by Level 2 teammate
+    [HideInInspector] public bool Level2_CassetteInteracted = false;
+    [HideInInspector] public bool Level2_CassetteInserted = false;
+    [HideInInspector] public bool Level2_Painting1Viewed = false;
+    [HideInInspector] public bool Level2_Painting2Viewed = false;
+    [HideInInspector] public bool Level2_Painting3Viewed = false;
+    [HideInInspector] public bool Level2_Painting4Viewed = false;
+    [HideInInspector] public bool Level2_PinSolved = false;
+    
     // level 3 specific flags
-    public bool SofaInvestigated = false;
-    public bool SafeSolved       = false;
+    [HideInInspector] public bool Level3IntroSeen = false;
+    [HideInInspector] public bool SofaInvestigated = false;
+    [HideInInspector] public bool SafeSolved       = false;
 
-    // check if a level is unlocked based on previous completion
+    // stores positions of moved objects across scene reloads
+    // key = object unique ID, value = saved position
+    private Dictionary<string, Vector3> savedPositions = new Dictionary<string, Vector3>();
+
+    // stores bool states of objects across scene reloads
+    // key = object unique ID, value = saved bool
+    private Dictionary<string, bool> savedStates = new Dictionary<string, bool>();
+
     public bool IsLevelUnlocked(int level)
     {
         switch (level)
         {
-            case 1: return true;                    // always unlocked
+            case 1: return true;
             case 2: return Level1Complete;
             case 3: return Level2Complete;
             case 4: return Level3Complete;
             case 5: return Level4Complete;
             default: return false;
         }
+    }
+    
+    public void CheckLevel2Complete()
+    {
+        if (Level2_CassetteInteracted &&
+            Level2_CassetteInserted &&
+            Level2_Painting1Viewed &&
+            Level2_Painting2Viewed &&
+            Level2_Painting3Viewed &&
+            Level2_Painting4Viewed &&
+            Level2_PinSolved)
+        {
+            Level2Complete = true;
+        }
+    }
+
+    // ── Position saving ───────────────────────────────────────────────
+
+    public void SavePosition(string id, Vector3 position)
+    {
+        savedPositions[id] = position;
+    }
+
+    public bool TryGetPosition(string id, out Vector3 position)
+    {
+        return savedPositions.TryGetValue(id, out position);
+    }
+
+    // ── Bool state saving ─────────────────────────────────────────────
+
+    public void SaveState(string id, bool state)
+    {
+        savedStates[id] = state;
+    }
+
+    public bool TryGetState(string id, out bool state)
+    {
+        return savedStates.TryGetValue(id, out state);
     }
 
     void Awake()
@@ -38,5 +94,16 @@ public class GameState : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // TEMP for testing - remove before final build
+        Level1Complete = true;
+        Level2Complete = true;
+    }
+    public void ResetLevel3()
+    {
+        SofaInvestigated = false;
+        SafeSolved = false;
+        savedPositions.Remove("Level3_Sofa_pos");
+        savedStates.Remove("Level3_Sofa_active");
     }
 }
