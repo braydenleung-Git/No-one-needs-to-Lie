@@ -211,9 +211,9 @@ public class CharacterCustomizationUI : MonoBehaviour
         var baseSr = player.GetComponent<SpriteRenderer>()
                      ?? player.GetComponentInChildren<SpriteRenderer>();
 
-        // sensible fallback if we can't read the sprite bounds for some reason
+        // hardcoded local Y = 10 because the math kept being wrong lmao
         float localX = 0f;
-        float localY = 0.15f;
+        float localY = 10f;
         float localScale = 1f;
 
         if (baseSr != null && baseSr.sprite != null)
@@ -228,14 +228,8 @@ public class CharacterCustomizationUI : MonoBehaviour
             localScale = hatNativeWorldWidth > 0f ? wantedWorldWidth / hatNativeWorldWidth : 1f;
 
             // hat pivot is (0.5, 0.5) center so placing at worldX puts the hat center there
-            // no pivot offset math needed anymore, thank god
             float worldX = baseSr.bounds.center.x;
             localX = (worldX - player.transform.position.x) / lossy.x;
-
-            // sit the hat center just above the top edge of the detective sprite
-            float hatHalfHeightWorld = hatSprite.bounds.extents.y * lossy.y * localScale;
-            float worldY = baseSr.bounds.max.y + hatHalfHeightWorld * 0.6f;
-            localY = (worldY - player.transform.position.y) / lossy.y;
         }
 
         hatGO.transform.localPosition = new Vector3(localX, localY, 0f);

@@ -92,9 +92,20 @@ public class InteractionPromptUI : MonoBehaviour
     {
         if (followTarget == null || promptPanel == null || !promptPanel.activeSelf) return;
 
+        var cam = mainCam != null ? mainCam : Camera.main;
+        if (cam == null) return;
+
         // convert world pos to screen pos so the panel floats right above the object
-        Vector3 worldPos = followTarget.position + Vector3.up * verticalOffset;
-        Vector3 screenPos = (mainCam != null ? mainCam : Camera.main).WorldToScreenPoint(worldPos);
+        // for 2D scenes the interactable z might be behind the camera (e.g. z=100 but cam at z=89)
+        // so we force the world point to use the same z as the camera before projecting
+        Vector3 worldPos = followTarget.position;
+        worldPos.z = cam.transform.position.z; // flatten to camera z so it's never "behind" it
+        worldPos += Vector3.up * verticalOffset;
+        Vector3 screenPos = cam.WorldToScreenPoint(worldPos);
+
+        // bail if somehow still behind camera
+        if (screenPos.z < 0) return;
+
         promptPanel.transform.position = screenPos;
     }
 
