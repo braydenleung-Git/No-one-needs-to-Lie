@@ -20,19 +20,19 @@ public class Owner_Patrol : MonoBehaviour, IPatroller
     public Vector2 currentDirection = Vector2.down;
 
     void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-    }
+{
+    rb = GetComponent<Rigidbody2D>();
+    anim = GetComponent<Animator>();
+}
 
-    void Start()
+void Start()
+{
+    if (GameState.Instance != null && GameState.Instance.Level3Complete)
     {
-        if (GameState.Instance != null && GameState.Instance.Level3Complete)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
+        gameObject.SetActive(false);
+        return;
     }
+}
 
     void Update()
     {

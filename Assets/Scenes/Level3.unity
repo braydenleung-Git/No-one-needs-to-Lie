@@ -2532,7 +2532,6 @@ Transform:
   m_Children:
   - {fileID: 415161522}
   - {fileID: 2024724173}
-  - {fileID: 1702469865}
   - {fileID: 1631755474}
   - {fileID: 1842590}
   - {fileID: 1183541308}
@@ -6620,6 +6619,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GameCode::SofaInteractable
   interactPrompt: Press [E] to interact
+  _isHinted: 0
+  _hintIcon: {fileID: 0}
   sofaDialogue: Oh! Looks like there is something hidden behind the sofa...
   moveDirection: {x: 0, y: -1}
   moveDistance: 1
@@ -7944,6 +7945,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GameCode::BulletinBoardInteractable
   interactPrompt: Press [E] to interact
+  _isHinted: 0
+  _hintIcon: {fileID: 0}
   bulletinBoardUI: {fileID: 854996940}
   closeButton: {fileID: 58547056}
 --- !u!114 &1074198044
@@ -8610,6 +8613,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GameCode::PhotoFrameInteractable
   interactPrompt: Press [E] to interact
+  _isHinted: 0
+  _hintIcon: {fileID: 0}
   photoFrameUI: {fileID: 501208260}
   closeButton: {fileID: 1028123669}
 --- !u!114 &1316170225
@@ -8898,6 +8903,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GameCode::SafeInteractable
   interactPrompt: Press [E] to interact
+  _isHinted: 0
+  _hintIcon: {fileID: 0}
   safeUICanvas: {fileID: 628317900}
   codeInputField: {fileID: 2139310780}
   attemptsText: {fileID: 1639350593}
@@ -8968,7 +8975,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.536296
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8993,7 +9000,7 @@ Transform:
   m_GameObject: {fileID: 1392231475}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -2.6, y: -4.7, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9671,36 +9678,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.41, y: 3.84, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 353844498}
-  m_LocalEulerAnglesHint: {x: 0--- !u!1 &1702469864
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1702469865}
-  m_Layer: 0
-  m_Name: 3
-  m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1702469865
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1702469864}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.11, y: -4.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16566,7 +16543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: pauseDuration
@@ -16574,7 +16551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: patrolPoints.Array.size
-      value: 20
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
@@ -16587,71 +16564,71 @@ PrefabInstance:
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[2]'
       value: 
-      objectReference: {fileID: 1702469865}
+      objectReference: {fileID: 1631755474}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[3]'
       value: 
-      objectReference: {fileID: 1631755474}
+      objectReference: {fileID: 1842590}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[4]'
       value: 
-      objectReference: {fileID: 1842590}
+      objectReference: {fileID: 1183541308}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[5]'
       value: 
-      objectReference: {fileID: 1183541308}
+      objectReference: {fileID: 465825679}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[6]'
       value: 
-      objectReference: {fileID: 465825679}
+      objectReference: {fileID: 67942002}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[7]'
       value: 
-      objectReference: {fileID: 67942002}
+      objectReference: {fileID: 110846413}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[8]'
       value: 
-      objectReference: {fileID: 110846413}
+      objectReference: {fileID: 1658823144}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[9]'
       value: 
-      objectReference: {fileID: 1658823144}
+      objectReference: {fileID: 423364572}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[10]'
       value: 
-      objectReference: {fileID: 423364572}
+      objectReference: {fileID: 1921069767}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[11]'
       value: 
-      objectReference: {fileID: 1921069767}
+      objectReference: {fileID: 1681923085}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[12]'
       value: 
-      objectReference: {fileID: 1681923085}
+      objectReference: {fileID: 2003934519}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[13]'
       value: 
-      objectReference: {fileID: 2003934519}
+      objectReference: {fileID: 809205169}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[14]'
       value: 
-      objectReference: {fileID: 809205169}
+      objectReference: {fileID: 1077599656}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[15]'
       value: 
-      objectReference: {fileID: 1077599656}
+      objectReference: {fileID: 1552545130}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[16]'
       value: 
-      objectReference: {fileID: 1552545130}
+      objectReference: {fileID: 1985358715}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[17]'
       value: 
-      objectReference: {fileID: 1985358715}
+      objectReference: {fileID: 1966173377}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[18]'
       value: 
-      objectReference: {fileID: 1966173377}
+      objectReference: {fileID: 1309069723}
     - target: {fileID: 3386806772684050483, guid: af7ad9dac2a8ff747b5033e65792b94b, type: 3}
       propertyPath: 'patrolPoints.Array.data[19]'
       value: 
