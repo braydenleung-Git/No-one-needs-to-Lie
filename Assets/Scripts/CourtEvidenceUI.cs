@@ -21,7 +21,7 @@ public class CourtEvidenceUI : MonoBehaviour
     // add more responses here matching your GameItem ItemNames exactly
     private Dictionary<string, string> judgeResponses = new Dictionary<string, string>()
     {
-        { "Alibi Photograph", "That timestamp is three hours off. Anyone could have edited it. OBJECTION!" },
+        { "Casette Tape", "That timestamp is three hours off. Anyone could have edited it. OBJECTION!" },
         { "Witness Statement", "Your witness never saw the defendant directly. That is hearsay!" },
         { "Medical Report", "These injuries are inconsistent with your account. Explain that." },
         { "Security Footage", "There is a 40-minute gap in this footage. What happened in that window?" },
