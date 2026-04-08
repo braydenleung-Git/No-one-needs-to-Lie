@@ -86,7 +86,7 @@ public class Level3Intro : MonoBehaviour
         if (owner != null)
         {
             var patrol = owner.GetComponent<Owner_Patrol>();
-            if (patrol != null) patrol.StartPatrol();
+            if (patrol != null) patrol.enabled = true;
         }
     }
 

@@ -41,7 +41,7 @@ public class GameState : MonoBehaviour
             case 1: return true;
             case 2: return Level1Complete;
             case 3: return Level2Complete;
-            case 4: return Level3Complete && SofaInvestigated && SafeSolved;
+            case 4: return Level3Complete;
             case 5: return Level4Complete;
             default: return false;
         }
