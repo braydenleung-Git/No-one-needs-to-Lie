@@ -6620,6 +6620,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GameCode::SofaInteractable
   interactPrompt: Press [E] to interact
+  _isHinted: 0
+  _hintIcon: {fileID: 0}
   sofaDialogue: Oh! Looks like there is something hidden behind the sofa...
   moveDirection: {x: 0, y: -1}
   moveDistance: 1
@@ -7944,6 +7946,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GameCode::BulletinBoardInteractable
   interactPrompt: Press [E] to interact
+  _isHinted: 0
+  _hintIcon: {fileID: 0}
   bulletinBoardUI: {fileID: 854996940}
   closeButton: {fileID: 58547056}
 --- !u!114 &1074198044
@@ -8610,6 +8614,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GameCode::PhotoFrameInteractable
   interactPrompt: Press [E] to interact
+  _isHinted: 0
+  _hintIcon: {fileID: 0}
   photoFrameUI: {fileID: 501208260}
   closeButton: {fileID: 1028123669}
 --- !u!114 &1316170225
@@ -8898,6 +8904,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GameCode::SafeInteractable
   interactPrompt: Press [E] to interact
+  _isHinted: 0
+  _hintIcon: {fileID: 0}
   safeUICanvas: {fileID: 628317900}
   codeInputField: {fileID: 2139310780}
   attemptsText: {fileID: 1639350593}
@@ -8968,7 +8976,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.536296
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8993,7 +9001,7 @@ Transform:
   m_GameObject: {fileID: 1392231475}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -2.93, y: -4.62, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
