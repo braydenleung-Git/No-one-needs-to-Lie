@@ -30,6 +30,9 @@ public class DossierInteractable : Interactable
                     DialogueManager.Instance.StartDialogue(speakerName, dialogueLines);
                 }
                 
+                // Add XP for grabbing the dossier
+                ExperienceManager.Instance.AddXP(30);
+                
                 // Hide the dossier object after collection, and enable the exit
                 gameObject.SetActive(false);
                 exit.SetActive(true);

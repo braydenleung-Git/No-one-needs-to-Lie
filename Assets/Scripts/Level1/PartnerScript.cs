@@ -22,6 +22,10 @@ public class PartnerScript : Interactable
         // hide the prompt while talking so it doesn't overlap the dialogue box
         InteractionPromptUI.Instance?.Hide();
         DialogueManager.Instance.StartDialogue(_npcName, dialogueLines);
+        
+        // Add XP for talking to partner
+        ExperienceManager.Instance.AddXP(15);
+        
         _isDialogueFinished = true;
     }
 }

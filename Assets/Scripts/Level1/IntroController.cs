@@ -15,6 +15,7 @@ public class IntroController : MonoBehaviour
     [Header("Police Hub")]
     public GameObject enterPoliceHub;
     
+    
     private int _index;
     private bool _isIntro;
     private Animator _cameraAnimator;
@@ -28,6 +29,7 @@ public class IntroController : MonoBehaviour
         Text1Animator.Play("Text1");
         _cameraAnimator.Play("Tstart");
         playerController.canMove = false;
+        ExperienceManager.Instance.gameObject.SetActive(false);
     }
 
     void Update() 
@@ -51,7 +53,7 @@ public class IntroController : MonoBehaviour
             _cameraAnimator.Play("TransferControl");
             playerController.canMove = true;
             playerController.gameObject.transform.parent = null;
-            StartDelayedCoroutine(30);
+            StartDelayedCoroutine(60);
         }
     }
 
@@ -134,6 +136,7 @@ public class IntroController : MonoBehaviour
         if (enterPoliceHub != null)
         {
             enterPoliceHub.SetActive(true);
+            ExperienceManager.Instance.gameObject.SetActive(true);
         }
     }
 }
