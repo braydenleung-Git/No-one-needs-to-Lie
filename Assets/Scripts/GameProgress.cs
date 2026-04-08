@@ -1,21 +1,23 @@
-using UnityEngine;
-
-// Persists across scenes and editor play sessions (PlayerPrefs)
+// Tracks progress across scenes within one play session.
+// Intentionally NOT backed by PlayerPrefs — resets cleanly each time you press Play
+// so playtesting never carries over stale state from a previous run.
 public static class GameProgress
 {
-    const string KeyUv = "GameProgress_HasUvFlashlight";
+    static bool _hasUvFlashlight;
 
-    public static bool HasUvFlashlight => PlayerPrefs.GetInt(KeyUv, 0) == 1;
+    public static bool HasUvFlashlight => _hasUvFlashlight;
 
     public static void SetUvFlashlightOwned()
     {
-        PlayerPrefs.SetInt(KeyUv, 1);
-        PlayerPrefs.Save();
+        _hasUvFlashlight = true;
     }
 
-    public static void ClearUvFlashlightForTesting()
+    // resets all progress — called at scene load so each playtest starts clean
+    public static void Reset()
     {
-        PlayerPrefs.DeleteKey(KeyUv);
-        PlayerPrefs.Save();
+        _hasUvFlashlight = false;
     }
+
+    // kept for backwards compat — same as Reset() now that PlayerPrefs is gone
+    public static void ClearUvFlashlightForTesting() => Reset();
 }
