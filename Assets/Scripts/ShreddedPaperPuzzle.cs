@@ -15,10 +15,24 @@ public class ShreddedPaperPuzzle : MonoBehaviour
 
     private List<int> playerOrder = new List<int>();
     private int[] correctOrder = { 0, 2, 3, 1 };
-
-    void Update()
+    
+    void Start()
     {
-        if (playerInRange && Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame && !puzzleSolved)
+        if (GameState.Instance != null && GameState.Instance.Level4_PaperSolved)
+        {
+            puzzleSolved = true;
+            resultText.text = "Correct! The document has been reconstructed.";
+            reconstructedClueText.text = "Recovered Record: The office report was modified after the meeting.";
+        }
+    }
+
+void Update()
+{
+    if (playerInRange && Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
+    {
+        if (puzzleSolved)
+            DialogueManager.Instance?.StartDialogue("", new[] { "You've already solved this." });
+        else
         {
             puzzlePanel.SetActive(true);
             playerOrder.Clear();
@@ -27,6 +41,7 @@ public class ShreddedPaperPuzzle : MonoBehaviour
             reconstructedClueText.text = "";
         }
     }
+}
 
     public void SelectPiece(int pieceIndex)
     {
@@ -74,6 +89,8 @@ public class ShreddedPaperPuzzle : MonoBehaviour
         resultText.text = "Correct! The document has been reconstructed.";
         reconstructedClueText.text = "Recovered Record: The office report was modified after the meeting.";
         puzzleSolved = true;
+        GameState.Instance.Level4_PaperSolved = true;
+        GameState.Instance.CheckLevel4Complete();
     }
 
     public void ResetOrder()

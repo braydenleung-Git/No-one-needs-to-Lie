@@ -25,6 +25,15 @@ public class GameState : MonoBehaviour
     [HideInInspector] public bool Level3IntroSeen = false;
     [HideInInspector] public bool SofaInvestigated = false;
     [HideInInspector] public bool SafeSolved       = false;
+    
+    // Level 4 specific flags
+    [HideInInspector] public bool Level4_PrinterSolved = true;
+    [HideInInspector] public bool Level4_Notebook1Viewed = true;
+    [HideInInspector] public bool Level4_Notebook2Viewed = true;
+    [HideInInspector] public bool Level4_Notebook3Viewed = true;
+    [HideInInspector] public bool Level4_Notebook4Viewed = true;
+    [HideInInspector] public bool Level4_ComputerSolved = true;
+    [HideInInspector] public bool Level4_PaperSolved = true;
 
     // stores positions of moved objects across scene reloads
     // key = object unique ID, value = saved position
@@ -41,8 +50,10 @@ public class GameState : MonoBehaviour
             case 1: return true;
             case 2: return Level1Complete;
             case 3: return Level2Complete;
-            case 4: return Level3Complete;
+            case 4: return Level3Complete && SofaInvestigated && SafeSolved;
             case 5: return Level4Complete;
+            case 6: return Level5Complete;
+            
             default: return false;
         }
     }
@@ -58,6 +69,20 @@ public class GameState : MonoBehaviour
             Level2_PinSolved)
         {
             Level2Complete = true;
+        }
+    }
+    
+    public void CheckLevel4Complete()
+    {
+        if (Level4_PrinterSolved &&
+            Level4_Notebook1Viewed &&
+            Level4_Notebook2Viewed &&
+            Level4_Notebook3Viewed &&
+            Level4_Notebook4Viewed &&
+            Level4_ComputerSolved &&
+            Level4_PaperSolved)
+        {
+            Level4Complete = true;
         }
     }
 

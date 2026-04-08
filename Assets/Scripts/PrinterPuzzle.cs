@@ -9,12 +9,25 @@ public class PrinterPuzzle : MonoBehaviour
 
     public bool playerInRange = false;
     private bool puzzleSolved = false;
+    
+    
+    void Start()
+    {
+        if (GameState.Instance != null && GameState.Instance.Level4_PrinterSolved)
+        {
+            puzzleSolved = true;
+            resultText.text = "Correct! You found the printed report clue.";
+        }
+    }
 
     void Update()
     {
-        if (playerInRange && Keyboard.current.eKey.wasPressedThisFrame && !puzzleSolved)
+        if (playerInRange && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            puzzlePanel.SetActive(true);
+            if (puzzleSolved)
+                DialogueManager.Instance?.StartDialogue("", new[] { "You've already solved this." });
+            else
+                puzzlePanel.SetActive(true);
         }
     }
 
@@ -26,6 +39,11 @@ public class PrinterPuzzle : MonoBehaviour
         {
             resultText.text = "Correct! You found the printed report clue.";
             puzzleSolved = true;
+            if (GameState.Instance != null)
+            {
+                GameState.Instance.Level4_PrinterSolved = true;
+                GameState.Instance.CheckLevel4Complete();
+            }
         }
         else
         {

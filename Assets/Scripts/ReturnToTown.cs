@@ -31,6 +31,9 @@ public class ReturnToTown : MonoBehaviour
         {
             if (levelNumber == 3)
                 GameState.Instance.Level3Complete = true;
+            
+            if (levelNumber == 4)
+                GameState.Instance.Level4Complete = true; // remove this line since CheckLevel4Complete handles it
 
             PlayerSpawnManager.ReturnFromLevel = levelNumber;
             SceneManager.LoadScene("Town");
