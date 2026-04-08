@@ -22,5 +22,6 @@ public class SwipeCard : MonoBehaviour
     private void OnMouseUp()
     {
         _isDragging = false;
+        // gameObject.transform.position = gameObject.GetComponentInParent<CardSwiperUI>().swipeCardOriginalPosition;
     }
 }
