@@ -29,8 +29,9 @@ public class ReturnToTown : MonoBehaviour
         if (!playerInRange) return;
         if (UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
         {
-            // save which level we're returning from
-            // so Town knows where to spawn the player
+            if (levelNumber == 3)
+                GameState.Instance.Level3Complete = true;
+
             PlayerSpawnManager.ReturnFromLevel = levelNumber;
             SceneManager.LoadScene("Town");
         }
