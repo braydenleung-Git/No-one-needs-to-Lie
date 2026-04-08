@@ -891,7 +891,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &836572791
 SpriteRenderer:
   serializedVersion: 2
@@ -981,6 +981,9 @@ MonoBehaviour:
   interactPrompt: Press [E] to interact
   _isHinted: 0
   _hintIcon: {fileID: 0}
+  cardSwiperUI: {fileID: 0}
+  playerController: {fileID: 0}
+  inputActionAsset: {fileID: 0}
 --- !u!61 &836572794
 BoxCollider2D:
   m_ObjectHideFlags: 0
