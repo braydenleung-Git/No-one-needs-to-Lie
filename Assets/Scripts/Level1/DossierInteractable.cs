@@ -9,7 +9,8 @@ public class DossierInteractable : Interactable
     [SerializeField] private string speakerName = "System";
     [SerializeField] private string[] dialogueLines = {
         "You've collected the dossier!",
-        "Now you can exit through the door."
+        "It the crime scene is located at house 218",
+        "Now you can exit through the door.",
     };
 
     public override void Interact()
