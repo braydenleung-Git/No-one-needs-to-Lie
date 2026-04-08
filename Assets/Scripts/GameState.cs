@@ -12,7 +12,7 @@ public class GameState : MonoBehaviour
     [HideInInspector] public bool Level4Complete = false;
     [HideInInspector] public bool Level5Complete = false;
 
-    // Level 2 specific flags - owned by Level 2 teammate
+    // Level 2 specific flags
     [HideInInspector] public bool Level2_CassetteInteracted = false;
     [HideInInspector] public bool Level2_CassetteInserted = false;
     [HideInInspector] public bool Level2_Painting1Viewed = false;
@@ -20,27 +20,22 @@ public class GameState : MonoBehaviour
     [HideInInspector] public bool Level2_Painting3Viewed = false;
     [HideInInspector] public bool Level2_Painting4Viewed = false;
     [HideInInspector] public bool Level2_PinSolved = false;
-    
-    // level 3 specific flags
+
+    // Level 3 specific flags
     [HideInInspector] public bool Level3IntroSeen = false;
     [HideInInspector] public bool SofaInvestigated = false;
-    [HideInInspector] public bool SafeSolved       = false;
-    
+    [HideInInspector] public bool SafeSolved = false;
+
     // Level 4 specific flags
-    [HideInInspector] public bool Level4_PrinterSolved = true;
-    [HideInInspector] public bool Level4_Notebook1Viewed = true;
-    [HideInInspector] public bool Level4_Notebook2Viewed = true;
-    [HideInInspector] public bool Level4_Notebook3Viewed = true;
-    [HideInInspector] public bool Level4_Notebook4Viewed = true;
-    [HideInInspector] public bool Level4_ComputerSolved = true;
-    [HideInInspector] public bool Level4_PaperSolved = true;
+    [HideInInspector] public bool Level4_PrinterSolved = false;
+    [HideInInspector] public bool Level4_Notebook1Viewed = false;
+    [HideInInspector] public bool Level4_Notebook2Viewed = false;
+    [HideInInspector] public bool Level4_Notebook3Viewed = false;
+    [HideInInspector] public bool Level4_Notebook4Viewed = false;
+    [HideInInspector] public bool Level4_ComputerSolved = false;
+    [HideInInspector] public bool Level4_PaperSolved = false;
 
-    // stores positions of moved objects across scene reloads
-    // key = object unique ID, value = saved position
     private Dictionary<string, Vector3> savedPositions = new Dictionary<string, Vector3>();
-
-    // stores bool states of objects across scene reloads
-    // key = object unique ID, value = saved bool
     private Dictionary<string, bool> savedStates = new Dictionary<string, bool>();
 
     public bool IsLevelUnlocked(int level)
@@ -53,11 +48,10 @@ public class GameState : MonoBehaviour
             case 4: return Level3Complete && SofaInvestigated && SafeSolved;
             case 5: return Level4Complete;
             case 6: return Level5Complete;
-            
             default: return false;
         }
     }
-    
+
     public void CheckLevel2Complete()
     {
         if (Level2_CassetteInteracted &&
@@ -71,7 +65,7 @@ public class GameState : MonoBehaviour
             Level2Complete = true;
         }
     }
-    
+
     public void CheckLevel4Complete()
     {
         if (Level4_PrinterSolved &&
@@ -86,8 +80,6 @@ public class GameState : MonoBehaviour
         }
     }
 
-    // ── Position saving ───────────────────────────────────────────────
-
     public void SavePosition(string id, Vector3 position)
     {
         savedPositions[id] = position;
@@ -97,8 +89,6 @@ public class GameState : MonoBehaviour
     {
         return savedPositions.TryGetValue(id, out position);
     }
-
-    // ── Bool state saving ─────────────────────────────────────────────
 
     public void SaveState(string id, bool state)
     {
@@ -123,7 +113,9 @@ public class GameState : MonoBehaviour
         // TEMP for testing - remove before final build
         Level1Complete = true;
         Level2Complete = true;
+        Level4Complete = true;
     }
+
     public void ResetLevel3()
     {
         SofaInvestigated = false;
