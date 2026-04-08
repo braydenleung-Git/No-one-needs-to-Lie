@@ -9,7 +9,8 @@ public class DossierInteractable : Interactable
     [SerializeField] private string speakerName = "System";
     [SerializeField] private string[] dialogueLines = {
         "You've collected the dossier!",
-        "Now you can exit through the door."
+        "It the crime scene is located at house 218",
+        "Now you can exit through the door.",
     };
 
     public override void Interact()
@@ -28,6 +29,9 @@ public class DossierInteractable : Interactable
                 {
                     DialogueManager.Instance.StartDialogue(speakerName, dialogueLines);
                 }
+                
+                // Add XP for grabbing the dossier
+                ExperienceManager.Instance.AddXP(30);
                 
                 // Hide the dossier object after collection, and enable the exit
                 gameObject.SetActive(false);
