@@ -8,8 +8,5 @@ public class L1TransitionExitInteractable : Interactable
     {
         introScene.SetActive(false);
         policeHub.SetActive(true);
-        
-        // Add XP for using exit icon
-        ExperienceManager.Instance.AddXP(10);
     }
 }
