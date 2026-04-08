@@ -47,7 +47,7 @@ public class IntroController : MonoBehaviour
         cameraAnimator.Play("Tstart");
     }
 
-    void Update()
+    void Update() 
     {
         bool isNotAnimating = !IsAnimating();
 
@@ -65,6 +65,7 @@ public class IntroController : MonoBehaviour
             Text2Animator.enabled = false;
             cameraAnimator.Play("TransferControl");
             playerController.canMove = true;
+            playerController.gameObject.transform.parent = null;
         }
     }
 

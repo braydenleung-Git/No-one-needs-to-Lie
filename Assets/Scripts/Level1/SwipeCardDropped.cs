@@ -21,9 +21,4 @@ public class SwipeCardDropped : Interactable
         base.Start();
         Hint(true);
     }
-
-    protected override void Update()
-    {
-        
-    }
 }
