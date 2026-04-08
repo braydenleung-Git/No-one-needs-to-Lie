@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - L3 bck
+  - Barrier
   layers:
   - Default
   - TransparentFX
