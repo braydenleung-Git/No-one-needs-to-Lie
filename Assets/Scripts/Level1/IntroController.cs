@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// handles the whole level 1 intro cinematic
+// locks the player, shows the customization screen first, then plays the animations
 public class IntroController : MonoBehaviour
 {
     [Header("Animators")]
@@ -8,32 +10,54 @@ public class IntroController : MonoBehaviour
     public Animator Text1Animator;
     public Animator Text2Animator;
     public Animator TextFinalAnimator;
-    
+
     [Header("Player")]
     public PlayerController playerController;
-    
+
+    [Header("Customization")]
+    // drag the CharacterCustomization object here in the inspector
+    public CharacterCustomizationUI customizationUI;
+
     private int _index;
     private bool _isIntro;
 
     private void Start()
     {
+        // lock movement immediately so the player can't run off during the UI
+        playerController.canMove = false;
+
+        if (customizationUI != null)
+        {
+            // show the hat picker first, then kick off the cinematic once they pick
+            customizationUI.Show(StartIntro, playerController != null ? playerController.gameObject : null);
+        }
+        else
+        {
+            // no customization UI wired up, just go straight into the intro
+            StartIntro();
+        }
+    }
+
+    // called after the player picks hat or no hat
+    void StartIntro()
+    {
         _index = 1;
         _isIntro = true;
-        //lock player input until animation is over
         Text1Animator.Play("Text1");
         cameraAnimator.Play("Tstart");
-        playerController.canMove = false;
     }
 
     void Update()
     {
         bool isNotAnimating = !IsAnimating();
+
+        // let the player press space to advance the cinematic
         if (_isIntro && Keyboard.current.spaceKey.wasPressedThisFrame && isNotAnimating)
         {
             AdvanceCinematic();
         }
 
-        //release the control of the player once the intro is over
+        // once the whole intro is done, hand control back to the player
         if (!_isIntro && isNotAnimating)
         {
             TextFinalAnimator.enabled = false;
@@ -53,7 +77,7 @@ public class IntroController : MonoBehaviour
             case 1:
                 cameraAnimator.Play("T1-T2");
                 lastAnimCheckTime = 0f;
-                //wait for the animation to finish, through constantly asking at a certain interval
+                // wait for the animation to finish before playing the next text
                 while (true)
                 {
                     if (Time.time - lastAnimCheckTime >= animCheckInterval)
@@ -70,7 +94,7 @@ public class IntroController : MonoBehaviour
             case 2:
                 cameraAnimator.Play("T2-Tfinal");
                 lastAnimCheckTime = 0f;
-                //wait for the animation to finish, through constantly asking at a certain interval
+                // same deal, wait for it
                 while (true)
                 {
                     if (Time.time - lastAnimCheckTime >= animCheckInterval)
@@ -95,18 +119,11 @@ public class IntroController : MonoBehaviour
     bool IsAnimating()
     {
         if (Text1Animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-        {
             return true;
-        }
-
         if (Text2Animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-        {
             return true;
-        }
         if (TextFinalAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-        {
             return true;
-        }
         return false;
     }
 }
