@@ -23,9 +23,6 @@ public class NewCardSwiperInteractable : Interactable
             unlockedDoor.SetActive(true);
             block.SetActive(false);
             normal.SetActive(false);
-            
-            // Add XP for using card swiper
-            ExperienceManager.Instance.AddXP(25);
         }
     }
     
