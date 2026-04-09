@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
-        {
-            gameObject.GetComponentInParent<CardSwiperUI>().ReportTrigger(gameObject);
-        }
+        gameObject.GetComponentInParent<CardSwiper>().ReportTrigger(gameObject, true);
     }
     
+    private void OnTriggerExit(Collider other)
+    {
+        gameObject.GetComponentInParent<CardSwiper>().ReportTrigger(gameObject, false);
+    }
 }
