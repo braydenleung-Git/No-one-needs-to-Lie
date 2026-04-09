@@ -1,7 +1,4 @@
 
-# No one needs to Lie
-
-
 
 <a href="Assets/Sprites/Game Title.png">
     <img src="Assets/Sprites/Game Title.png" alt="Click to enlarge" style="width: 40%; height: auto;">
