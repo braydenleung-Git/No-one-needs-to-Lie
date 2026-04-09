@@ -45,17 +45,7 @@ public class GameState : MonoBehaviour
 
     public bool IsLevelUnlocked(int level)
     {
-        switch (level)
-        {
-            case 1: return true;
-            case 2: return Level1Complete;
-            case 3: return Level2Complete;
-            case 4: return Level3Complete && SofaInvestigated && SafeSolved;
-            case 5: return Level4Complete;
-            case 6: return Level5Complete;
-            
-            default: return false;
-        }
+        return true; // TEMP for testing - remove before final build
     }
     
     public void CheckLevel2Complete()
@@ -123,6 +113,11 @@ public class GameState : MonoBehaviour
         // TEMP for testing - remove before final build
         Level1Complete = true;
         Level2Complete = true;
+        Level3Complete = true;
+        SofaInvestigated = true;
+        SafeSolved = true;
+        Level4Complete = true;
+        Level5Complete = true;
     }
     public void ResetLevel3()
     {
