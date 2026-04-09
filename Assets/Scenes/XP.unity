@@ -719,7 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200ffbf7e75d0408280385ae62a32045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExperienceManager
-  currentXP: 0
+  currentXP: 20
   currentLevel: 1
   xpToNextLevel: 100
   OnXPChanged:
@@ -910,7 +910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200ffbf7e75d0408280385ae62a32045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GameCode::ExperienceManager
-  currentXP: 0
+  currentXP: 20
   currentLevel: 1
   xpToNextLevel: 100
   OnXPChanged:

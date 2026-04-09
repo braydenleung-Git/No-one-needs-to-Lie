@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // attach to the Main Camera in the Crime Scene level alongside RuntimeSceneSetup
-// builds all the level-specific stuff: background, walls, cassette tape, cassette player, witness NPC
+// builds all the level-specific stuff: background, walls, cassette tape, cassette player
 // (victim body is a prefab instance placed in Crime Scene — not spawned here)
 // runs after RuntimeSceneSetup (which handles player collider, dialogue canvas, prompt canvas, event system)
 //
@@ -21,10 +21,6 @@ public class Level2SceneBuilder : MonoBehaviour
 {
     // Scene_Lvl2.png - assign in inspector on the Main Camera
     public Sprite backgroundSprite;
-
-    // witness NPC — prefer Owner prefab; else built from sprite
-    public GameObject witnessPrefab;
-    public Sprite witnessSprite;
 
     // optional inspector overrides; auto-loaded from Resources/CassetteSheet if left empty
     public Sprite cassetteTapeSprite;
@@ -48,25 +44,14 @@ public class Level2SceneBuilder : MonoBehaviour
         if (!Application.isPlaying)
             return;
 
-#if UNITY_EDITOR
-        if (witnessPrefab == null)
-            witnessPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Owner.prefab");
-#endif
-
         LoadCassetteSpritesIfNeeded();
 
         GameProgress.Reset();
         PuzzleState.Reset();
 
         Scene myScene = gameObject.scene;
-        var tapeGO    = CreateCassetteTape(myScene);
-        var playerGO  = CreateCassettePlayer(myScene);
-        var witness   = CreateWitnessNPC(myScene);
-
-        // wire the cassette player to the witness NPC so it activates after playback
-        var cassetteComp = playerGO.GetComponent<CassettePlayerInteractable>();
-        if (cassetteComp != null)
-            cassetteComp.witnessNPC = witness.GetComponent<NPCController>();
+        CreateCassetteTape(myScene);
+        CreateCassettePlayer(myScene);
     }
 
     void OnEnable()
@@ -498,59 +483,6 @@ public class Level2SceneBuilder : MonoBehaviour
             sr.sprite = CreatePlaceholderSprite(new Color(0.25f, 0.25f, 0.25f));
             visual.transform.localScale = new Vector3(1.0f, 0.8f, 1f);
         }
-
-        SceneManager.MoveGameObjectToScene(go, scene);
-        return go;
-    }
-
-    // ── Witness NPC ───────────────────────────────────────────────────────────
-
-    GameObject CreateWitnessNPC(Scene scene)
-    {
-        GameObject go;
-
-        if (witnessPrefab != null)
-        {
-            go = Instantiate(witnessPrefab);
-            go.name = "Witness";
-            go.transform.position   = new Vector3(0.35f, 0.05f, 0f);
-            go.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
-
-            NpcPrefabUtility.ConfigureOwnerPrefabForDialogueNpc(go);
-
-            var sr = go.GetComponent<SpriteRenderer>();
-            if (sr != null)
-                sr.sortingOrder = 2;
-        }
-        else
-        {
-            go = new GameObject("Witness");
-            go.transform.position   = new Vector3(0.35f, 0.05f, 0f);
-            go.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
-
-            var srNew          = go.AddComponent<SpriteRenderer>();
-            srNew.sprite       = witnessSprite;
-            srNew.sortingOrder = 2;
-
-            go.AddComponent<Animator>();
-            go.AddComponent<YSortingOrder>();
-
-            var col       = go.AddComponent<CircleCollider2D>();
-            col.isTrigger = true;
-            col.radius    = 3.0f;
-        }
-
-        var npc           = go.AddComponent<NPCController>();
-        npc.npcName       = "Witness";
-        npc.dialogueLines = new[]
-        {
-            "Oh, you found the tape! I recorded that the night it happened.",
-            "I saw someone leave the art room around 1 AM. I didn't recognise them.",
-            "They were carrying something wrapped in cloth. I should have called someone.",
-            "Whatever happened here... it started in that room. Be careful."
-        };
-
-        go.SetActive(false);
 
         SceneManager.MoveGameObjectToScene(go, scene);
         return go;

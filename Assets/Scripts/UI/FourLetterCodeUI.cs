@@ -45,8 +45,9 @@ public class FourLetterCodeUI : MonoBehaviour
 
         if (kb.escapeKey.wasPressedThisFrame)
         {
+            var cb = _onSubmitted;
             Hide();
-            _onSubmitted?.Invoke(false);
+            cb?.Invoke(false);
             return;
         }
 
@@ -191,8 +192,9 @@ public class FourLetterCodeUI : MonoBehaviour
         _closeButton = closeGo.AddComponent<Button>();
         _closeButton.onClick.AddListener(() =>
         {
+            var cb = _onSubmitted;
             Hide();
-            _onSubmitted?.Invoke(false);
+            cb?.Invoke(false);
         });
 
         var closeTextGo = new GameObject("X");
@@ -226,8 +228,9 @@ public class FourLetterCodeUI : MonoBehaviour
         string b = _correct.Trim().ToUpperInvariant();
         bool ok = a == b;
 
+        var cb = _onSubmitted;
         Hide();
-        _onSubmitted?.Invoke(ok);
+        cb?.Invoke(ok);
     }
 
     public void Show(string correctCode, int maxLen, System.Action<bool> onSubmitted)

@@ -6,7 +6,8 @@ public class ExperienceManager : MonoBehaviour
     public static ExperienceManager Instance { get; private set; }
 
     [Header("XP Settings")]
-    public int currentXP    = 0;
+    [Tooltip("Starting progress toward level 2 (e.g. 20 / xpToNextLevel ≈ one fifth of the bar).")]
+    public int currentXP    = 20;
     public int currentLevel = 1;
     public int xpToNextLevel = 100;
 
@@ -19,6 +20,10 @@ public class ExperienceManager : MonoBehaviour
 
     private void Awake()
     {
+        // Runtime-created managers (e.g. bootstrap) do not get UnityEvent fields serialized — leave them null unless we init here.
+        if (OnXPChanged == null) OnXPChanged = new UnityEvent<int>();
+        if (OnLevelUp == null) OnLevelUp = new UnityEvent<int>();
+
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);

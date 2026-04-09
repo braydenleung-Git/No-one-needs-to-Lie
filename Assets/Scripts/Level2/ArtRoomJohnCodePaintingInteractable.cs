@@ -82,6 +82,9 @@ public class ArtRoomJohnCodePaintingInteractable : LucyFourLetterCodeInteractabl
         PuzzleState.ArtRoomCodeSolved = true;
         PersistentGameItems.GrantUvFlashlightToPlayer();
 
+        if (ExperienceManager.Instance != null)
+            ExperienceManager.Instance.AddXP(20);
+
         DialogueManager.Instance?.StartDialogue("Framed print",
             new[]
             {

@@ -2,10 +2,9 @@ using UnityEngine;
 
 // attach to the cassette player on the coffee table
 // requires the cassette tape to be in inventory before it'll play
-// after the recording finishes the witness NPC gets activated
+// optional: assign a witness NPC in the inspector if you want someone to appear after playback
 public class CassettePlayerInteractable : Interactable
 {
-    // wired by Level2SceneBuilder at runtime
     [HideInInspector] public NPCController witnessNPC;
 
     private bool _hasBeenPlayed = false;
