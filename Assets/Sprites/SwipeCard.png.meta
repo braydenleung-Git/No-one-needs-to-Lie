@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f118d2db1cc5d4fdb809d4a871e2f87d
+guid: b6d961bce4fbc43a597b1c8e1b038966
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3269259690761621563
-    second: CardSwiper_Bottom_0
+      213: -2659244955995682118
+    second: SwipeCard_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,11 +48,11 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 1
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 7, y: 28, z: 5, w: 27}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CardSwiper_Bottom_0
+      name: SwipeCard_0
       rect:
         serializedVersion: 2
-        x: 120
-        y: 257
-        width: 799
-        height: 474
+        x: 6
+        y: 27
+        width: 147
+        height: 104
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b3099521e5ebe5d20800000000000000
-      internalID: 3269259690761621563
+      spriteID: abac0234dc6781bd0800000000000000
+      internalID: -2659244955995682118
       vertices: []
       indices: 
       edges: []
@@ -126,7 +126,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CardSwiper_Bottom_0: 3269259690761621563
+      SwipeCard_0: -2659244955995682118
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,27 +1,30 @@
 using UnityEngine;
 
+//Code derived from https://youtu.be/izag_ZHwOtM
+//This code is meant for only making dragging possible on the card
+
+
 public class SwipeCard : MonoBehaviour
 {
-    private bool _isDragging = false;
-    private Vector3 _offset;
-    
+    private bool dragging = false;
+    private Vector3 offset;
+
     private void Update()
     {
-        if (_isDragging)
+        if (dragging)
         {
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + _offset;
+            transform.position  = Camera.main.ScreenToWorldPoint(Input.mousePosition)+offset;
         }
     }
-    
+
     private void OnMouseDown()
     {
-        _isDragging = true;
-        _offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        dragging = true;
     }
-    
+
     private void OnMouseUp()
     {
-        _isDragging = false;
-        // gameObject.transform.position = gameObject.GetComponentInParent<CardSwiperUI>().swipeCardOriginalPosition;
+        dragging = false;
     }
 }

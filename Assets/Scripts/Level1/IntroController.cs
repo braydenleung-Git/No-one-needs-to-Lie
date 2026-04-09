@@ -1,10 +1,10 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class IntroController : MonoBehaviour
 {
     [Header("Animators")]
+    public Animator cameraAnimator;
     public Animator Text1Animator;
     public Animator Text2Animator;
     public Animator TextFinalAnimator;
@@ -12,27 +12,20 @@ public class IntroController : MonoBehaviour
     [Header("Player")]
     public PlayerController playerController;
     
-    [Header("Police Hub")]
-    public GameObject enterPoliceHub;
-    
-    
     private int _index;
     private bool _isIntro;
-    private Animator _cameraAnimator;
 
     private void Start()
     {
-        _cameraAnimator = gameObject.GetComponent<Animator>();
         _index = 1;
         _isIntro = true;
         //lock player input until animation is over
         Text1Animator.Play("Text1");
-        _cameraAnimator.Play("Tstart");
+        cameraAnimator.Play("Tstart");
         playerController.canMove = false;
-        ExperienceManager.Instance.gameObject.SetActive(false);
     }
 
-    void Update() 
+    void Update()
     {
         bool isNotAnimating = !IsAnimating();
         if (_isIntro && Keyboard.current.spaceKey.wasPressedThisFrame && isNotAnimating)
@@ -40,20 +33,14 @@ public class IntroController : MonoBehaviour
             AdvanceCinematic();
         }
 
-        if (_index == 3)
-        {
-            _isIntro = false;
-        }
         //release the control of the player once the intro is over
         if (!_isIntro && isNotAnimating)
         {
+            TextFinalAnimator.enabled = false;
             Text1Animator.enabled = false;
             Text2Animator.enabled = false;
-            TextFinalAnimator.enabled = false;
-            _cameraAnimator.Play("TransferControl");
+            cameraAnimator.Play("TransferControl");
             playerController.canMove = true;
-            playerController.gameObject.transform.parent = null;
-            StartDelayedCoroutine(60);
         }
     }
 
@@ -64,7 +51,7 @@ public class IntroController : MonoBehaviour
         switch (_index)
         {
             case 1:
-                _cameraAnimator.Play("T1-T2");
+                cameraAnimator.Play("T1-T2");
                 lastAnimCheckTime = 0f;
                 //wait for the animation to finish, through constantly asking at a certain interval
                 while (true)
@@ -81,7 +68,7 @@ public class IntroController : MonoBehaviour
                 Text2Animator.Play("Text2");
                 break;
             case 2:
-                _cameraAnimator.Play("T2-Tfinal");
+                cameraAnimator.Play("T2-Tfinal");
                 lastAnimCheckTime = 0f;
                 //wait for the animation to finish, through constantly asking at a certain interval
                 while (true)
@@ -97,6 +84,10 @@ public class IntroController : MonoBehaviour
                 }
                 TextFinalAnimator.Play("TFinal");
                 break;
+        }
+        if (_index == 2)
+        {
+            _isIntro = false;
         }
         _index++;
     }
@@ -116,27 +107,6 @@ public class IntroController : MonoBehaviour
         {
             return true;
         }
-        if (_cameraAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-        {
-            return true;
-        }
         return false;
-    }
-
-    public void StartDelayedCoroutine(float delay)
-    {
-        StartCoroutine(DelayedCoroutine(delay));
-    }
-
-    private IEnumerator DelayedCoroutine(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        
-        // Enable the EnterPoliceHub GameObject
-        if (enterPoliceHub != null)
-        {
-            enterPoliceHub.SetActive(true);
-            ExperienceManager.Instance.gameObject.SetActive(true);
-        }
     }
 }

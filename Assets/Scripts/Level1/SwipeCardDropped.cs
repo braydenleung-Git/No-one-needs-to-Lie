@@ -12,9 +12,6 @@ public class SwipeCardDropped : Interactable
             {
                 // Add your item here
                 inventory.AddItem(swipeCardItem);
-                
-                // Add XP for picking up swipecard
-                ExperienceManager.Instance.AddXP(20);
             }
         }
         gameObject.SetActive(false);
@@ -23,5 +20,10 @@ public class SwipeCardDropped : Interactable
     {
         base.Start();
         Hint(true);
+    }
+
+    protected override void Update()
+    {
+        
     }
 }
