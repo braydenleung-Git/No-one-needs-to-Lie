@@ -36,8 +36,8 @@ public class RuntimeSceneSetup : MonoBehaviour
         _defaultTextFontAsset = Resources.Load<TMP_FontAsset>("Fonts & Materials/ari_w9500(default)/ari-w9500 SDF");
         EnsurePlayerColliderAndSorting(myScene);
 
-        // only create stuff that doesn't already exist
-        if (!FindInScene(myScene, "Owner") && !FindInScene(myScene, "Grandpa"))
+        // only create NPC if no dialogue NPCs already exist in the scene
+        if (!HasAnyDialogueNPC(myScene))
         {
             var go = CreateNPC();
             if (go != null)
@@ -69,6 +69,37 @@ public class RuntimeSceneSetup : MonoBehaviour
         foreach (var root in scene.GetRootGameObjects())
             if (root.name == name) return true;
         return false;
+    }
+
+    // checks if the scene already has any dialogue NPCs (NPCController components)
+    static bool HasAnyDialogueNPC(Scene scene)
+    {
+        foreach (var root in scene.GetRootGameObjects())
+        {
+            // Check if this root object has an NPCController
+            if (root.GetComponent<NPCController>() != null)
+                return true;
+            
+            // Check all children for NPCController components
+            if (FindNPCControllerInChildren(root) != null)
+                return true;
+        }
+        return false;
+    }
+
+    // recursively searches for NPCController in children
+    static GameObject FindNPCControllerInChildren(GameObject parent)
+    {
+        foreach (Transform child in parent.transform)
+        {
+            if (child.GetComponent<NPCController>() != null)
+                return child.gameObject;
+            
+            var found = FindNPCControllerInChildren(child.gameObject);
+            if (found != null)
+                return found;
+        }
+        return null;
     }
 
     // ── Player ────────────────────────────────────────────────────────────────

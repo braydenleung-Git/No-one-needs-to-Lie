@@ -1,5 +1,8 @@
 
 # No one needs to Lie
+
+![Game Title](Assets/Sprites/Game Title.png)
+
 You are playing as Det. Adams, working on a murder mystery case, where the victim is a lawyer who may or may not made friends that they should not have.
 
 
