@@ -3,6 +3,9 @@
 
 ![Game Title](Assets/Sprites/Game Title.png)
 
+<a href="Assets/Sprites/Game Title.png">
+    <img src="tAssets/Sprites/Game Title.png" alt="Click to enlarge" style="width: 40%; height: auto;">
+</a>
 You are playing as Det. Adams, working on a murder mystery case, where the victim is a lawyer who may or may not made friends that they should not have.
 
 
